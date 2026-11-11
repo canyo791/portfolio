@@ -691,5 +691,15 @@
    "period": "2025.03.23 – 2025.04.22",
    "tools": "Spine · Clip Studio Paint · Adobe Photoshop · Adobe Premiere Pro"
   }
- ]
+ ],
+ "sections": {
+  "projects": {
+   "en": "Game Projects",
+   "ko": "참여 게임 프로젝트"
+  },
+  "animation": {
+   "en": "Animation Works",
+   "ko": "애니메이션 작업물"
+  }
+ }
 }

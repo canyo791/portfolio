@@ -83,7 +83,7 @@ nav.top .links a.on:hover{border-color:var(--ink)}
 .lace.on-dark{--lace-c:var(--paper);--lace-hole:var(--ink);background-color:var(--ink)}
 .lace.on-light{--lace-c:var(--ink);--lace-hole:var(--paper);background-color:var(--paper)}
 .band{background:var(--ink);color:var(--white)}
-.band .in{max-width:1180px;margin:0 auto;padding:30px 24px 22px;display:flex;align-items:end;gap:16px;flex-wrap:wrap}
+.band .in{max-width:1180px;margin:0 auto;padding:44px 24px 36px;display:flex;align-items:end;gap:16px;flex-wrap:wrap}
 .band .no{font-family:var(--serif);font-style:italic;font-size:22px;opacity:.6}
 .band h2{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,52px);line-height:1}
 .band .ko{font-family:var(--kserif);font-size:15px;opacity:.75;margin-left:auto}
@@ -123,6 +123,18 @@ nav.top .links a.on:hover{border-color:var(--ink)}
 #toast.err{background:#fff;color:var(--ink);border:2px solid var(--ink)}
 #conn{font-size:12px;opacity:.85}
 #saveBtn[disabled]{opacity:.4;cursor:default}
+body.editing .ed{outline:1.5px dashed rgba(127,127,127,.7);outline-offset:3px;border-radius:4px;cursor:text;min-width:2em;display:inline-block}
+body.editing .ed:hover{outline-color:currentColor}
+body.editing .ed:focus{outline:2px solid currentColor;background:rgba(127,127,127,.12)}
+body.editing .ed:empty::before{content:"(비어 있음)";opacity:.45}
+.mv{display:none;position:absolute;top:8px;left:8px;z-index:6;gap:4px}
+body.editing .card .mv{display:flex}
+.mv button{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink);background:var(--white);font-size:14px;cursor:pointer;line-height:1;transition:.15s}
+.mv button:hover{background:var(--ink);color:var(--white)}
+.mv .grip{cursor:grab}
+.card.dragging{opacity:.35}
+.card.drop-before{box-shadow:-5px 0 0 0 var(--ink)}
+.card.drop-after{box-shadow:5px 0 0 0 var(--ink)}
 .ytin{display:none;margin-top:10px;gap:8px;align-items:center}
 body.editing .ytin{display:flex}
 .ytin input{flex:1;min-width:0;border:1.5px solid var(--ink);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;background:#fff}
@@ -198,7 +210,7 @@ body.editing .ytin{display:flex}
 .extra .card .m{aspect-ratio:16/9}
 
 /* ---------- contact ---------- */
-.contact{position:relative;background:var(--ink);color:var(--white);text-align:center;padding:64px 24px 72px;overflow:hidden}
+.contact{position:relative;background:var(--ink);color:var(--white);text-align:center;padding:64px 24px 72px;overflow:hidden;margin-top:40px}
 .contact .damask{filter:invert(1);opacity:.06}
 .contact .ribbon{width:min(480px,90%);margin:0 auto 14px;display:block}
 .contact h2{font-family:var(--serif);font-weight:600;font-style:italic;font-size:48px;line-height:1.1}
@@ -312,7 +324,7 @@ body.editing .addcard{display:flex}
  </div>
 </nav>
 <div id="editbar"><div class="in">
- <span class="msg"><b>편집 모드</b> · 칸에 파일을 끌어다 놓거나 [올리기], 이름은 ✎ 칸에서 고쳐요. 다 끝나면 <b>[저장하기]</b>를 눌러야 사이트에 올라가요.</span>
+ <span class="msg"><b>편집 모드</b> · 점선 글자는 클릭해서 고치고, 카드는 ‹ ⠿ › 로 순서를 바꿔요. 파일은 칸에 끌어다 놓기. 끝나면 <b>[저장하기]</b>!</span>
  <span id="conn"></span>
  <button class="btn sm" id="bulkBtn">여러 파일 한 번에 올리기</button>
  <button class="btn sm dark" id="saveBtn" disabled>저장하기</button>
@@ -361,17 +373,12 @@ body.editing .addcard{display:flex}
  </div>
 </header>
 
-<div class="lace on-light down"></div>
-<section class="band" id="projects"><div class="in"><span class="no">01</span><h2>Game Projects</h2><svg class="bow" viewBox="0 0 120 70" style="color:#fff"><use href="#bow"/></svg><span class="ko">참여 게임 프로젝트</span></div></section>
-<div class="lace on-dark"></div>
+<section class="band" id="projects"><div class="in"><span class="no">01</span><h2 class="ed" data-sec="projects.en"></h2><span class="ko ed" data-sec="projects.ko"></span></div></section>
 <main class="wrap" id="projects-body"></main>
 
-<div class="lace on-light down"></div>
-<section class="band" id="animation"><div class="in"><span class="no">02</span><h2>Animation Works</h2><svg class="bow" viewBox="0 0 120 70" style="color:#fff"><use href="#bow"/></svg><span class="ko">애니메이션 작업물</span></div></section>
-<div class="lace on-dark"></div>
+<section class="band" id="animation"><div class="in"><span class="no">02</span><h2 class="ed" data-sec="animation.en"></h2><span class="ko ed" data-sec="animation.ko"></span></div></section>
 <section class="wrap"><div class="works" id="works-body"></div></section>
 
-<div class="lace on-light down"></div>
 <section class="contact" id="contact">
  <div class="damask"></div>
  <svg class="ribbon" viewBox="0 0 520 90" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
@@ -429,7 +436,7 @@ const PH = `<div class="ph"><svg viewBox="0 0 200 200"><use href="#bun"/></svg><
 const phEl = () => { const d=document.createElement("div"); d.innerHTML=PH; return d.firstChild; };
 const TYPES = {gif:1,png:1,jpg:1,jpeg:1,webp:1,mp4:1,webm:1};
 
-let DATA = null;                 // content.json
+let DATA = null; let DRAG = null;                 // content.json
 const PENDING = new Map();       // repo path -> {blob, url}
 let dirty = false, editing = false, TOKEN = null;
 let CARDS = [];
@@ -462,6 +469,21 @@ function ytEl(id, autoplay){
   f.title="YouTube video"; f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen=true; f.loading="lazy"; return f;
 }
 
+/* ---------- editable text ---------- */
+let B=[];
+const E=(obj,prop,tag="span",cls="")=>{ B.push([obj,prop]); return `<${tag} class="ed ${cls}" data-b="${B.length-1}"></${tag}>`; };
+function hydrate(root){
+  root.querySelectorAll("[data-b]").forEach(el=>{ const [o,k]=B[+el.dataset.b]; el.removeAttribute("data-b"); bindText(el,o,k); });
+}
+function bindText(el,o,k){
+  el.textContent=o[k]??"";
+  if(editing) el.contentEditable="plaintext-only";
+  el.addEventListener("keydown",ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); el.blur(); } if(ev.key==="Escape"){ el.textContent=o[k]??""; el.blur(); } });
+  el.addEventListener("paste",ev=>{ ev.preventDefault(); document.execCommand("insertText",false,(ev.clipboardData||window.clipboardData).getData("text").replace(/\s+/g," ")); });
+  el.addEventListener("blur",()=>{ if(!editing) return; const v=el.textContent.replace(/\s+/g," ").trim(); if(v!==(o[k]??"")){ o[k]=v; markDirty(); } });
+}
+function setEditable(on){ document.querySelectorAll(".ed").forEach(el=>{ el.contentEditable=on?"plaintext-only":"false"; }); }
+
 /* ---------- editable slot ---------- */
 function makeSlot(dir, get, set, reel){
   // get(): current file name ; set(name): store new file name ("" clears)
@@ -474,15 +496,16 @@ function makeSlot(dir, get, set, reel){
     PENDING.set(p,{blob,url:URL.createObjectURL(blob)}); set(name); markDirty(); paint(); toast(`"${name}" 넣었어요 · 저장하기를 눌러야 올라가요`); };
   el.querySelector(".up").onclick=async e=>{ e.stopPropagation(); const f=await chooseFile(); if(f) put(f); };
   el.querySelector(".clr").onclick=e=>{ e.stopPropagation(); set(""); markDirty(); paint(); };
-  el.addEventListener("dragover",e=>{ if(!editing) return; e.preventDefault(); el.classList.add("drag"); });
+  el.addEventListener("dragover",e=>{ if(!editing||!isFileDrag(e)) return; e.preventDefault(); el.classList.add("drag"); });
   el.addEventListener("dragleave",()=>el.classList.remove("drag"));
-  el.addEventListener("drop",e=>{ if(!editing) return; e.preventDefault(); e.stopPropagation(); el.classList.remove("drag"); const f=e.dataTransfer.files[0]; if(f) put(f); });
+  el.addEventListener("drop",e=>{ if(!editing||!isFileDrag(e)) return; e.preventDefault(); e.stopPropagation(); el.classList.remove("drag"); const f=e.dataTransfer.files[0]; if(f) put(f); });
   paint(); return el;
 }
 async function snap(f){
   try{ const buf=await f.arrayBuffer(); return new Blob([buf],{type:f.type||""}); }
   catch(e){ toast(`"${f.name}"을 읽지 못했어요. 파일이 옮겨졌거나 클라우드 전용(미다운로드) 파일일 수 있어요. 파일을 PC에 다시 저장한 뒤 넣어 주세요.`,true); return null; }
 }
+const isFileDrag=e=>[...(e.dataTransfer?.types||[])].includes("Files");
 function accept(f){
   const ext=(f.name.split(".").pop()||"").toLowerCase();
   if(!TYPES[ext]){ toast(`"${f.name}" — gif·png·jpg·webp·mp4·webm만 올릴 수 있어요 (MOV는 MP4로 바꿔 주세요)`,true); return false; }
@@ -508,6 +531,23 @@ function card(arr, idx, dir){
   inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){e.preventDefault();inp.blur();} if(e.key==="Escape"){inp.value=item[0];inp.blur();} });
   inp.addEventListener("blur",()=>{ const v=inp.value.trim(); if(!v){inp.value=item[0];return;} if(v!==item[0]){ item[0]=v; t.textContent=v; markDirty(); } });
   c.querySelector(".del").onclick=e=>{ e.stopPropagation(); arr.splice(arr.indexOf(item),1); markDirty(); render(); toast("칸을 지웠어요 · 저장하기를 눌러야 반영돼요"); };
+  if(arr.length>1){
+    c.insertAdjacentHTML("afterbegin",`<div class="mv"><button class="l" title="앞으로">‹</button><button class="grip" title="끌어서 순서 바꾸기">⠿</button><button class="r" title="뒤로">›</button></div>`);
+    const move=d=>{ const i=arr.indexOf(item), j=i+d; if(j<0||j>=arr.length) return; arr.splice(i,1); arr.splice(j,0,item); markDirty(); render(); };
+    c.querySelector(".mv .l").onclick=e=>{e.stopPropagation();move(-1);};
+    c.querySelector(".mv .r").onclick=e=>{e.stopPropagation();move(1);};
+    const grip=c.querySelector(".grip");
+    grip.addEventListener("mousedown",()=>{ c.draggable=true; }); grip.addEventListener("touchstart",()=>{ c.draggable=true; },{passive:true});
+    grip.onclick=e=>e.stopPropagation();
+    c.addEventListener("dragstart",e=>{ if(!editing||!c.draggable) return; DRAG={arr,item}; c.classList.add("dragging"); e.dataTransfer.effectAllowed="move"; e.dataTransfer.setData("text/plain","card"); });
+    c.addEventListener("dragend",()=>{ c.draggable=false; c.classList.remove("dragging"); DRAG=null; document.querySelectorAll(".drop-before,.drop-after").forEach(x=>x.classList.remove("drop-before","drop-after")); });
+  }
+  c.addEventListener("dragover",e=>{ if(!DRAG||DRAG.arr!==arr||DRAG.item===item) return; e.preventDefault();
+    const r=c.getBoundingClientRect(), after=(e.clientX-r.left)>r.width/2; c.classList.toggle("drop-after",after); c.classList.toggle("drop-before",!after); });
+  c.addEventListener("dragleave",()=>c.classList.remove("drop-before","drop-after"));
+  c.addEventListener("drop",e=>{ if(!DRAG||DRAG.arr!==arr||DRAG.item===item) return; e.preventDefault(); e.stopPropagation();
+    const after=c.classList.contains("drop-after"); const src=DRAG.item; arr.splice(arr.indexOf(src),1);
+    let j=arr.indexOf(item)+(after?1:0); arr.splice(j,0,src); DRAG=null; markDirty(); render(); });
   const idxC=CARDS.push({label:()=>item[0], dir, files:()=>{const f=item[1];return Array.isArray(f)?f:[f];}})-1;
   c.addEventListener("click",()=>{ if(!editing) openLB(idxC); });
   return c;
@@ -544,7 +584,9 @@ function reel(obj, fileKey, dir, label){
 
 /* ---------- render ---------- */
 function render(){
-  CARDS=[];
+  CARDS=[]; B=[];
+  DATA.sections=DATA.sections||{projects:{en:"Game Projects",ko:"참여 게임 프로젝트"},animation:{en:"Animation Works",ko:"애니메이션 작업물"}};
+  document.querySelectorAll("[data-sec]").forEach(el=>{ const [a,b]=el.dataset.sec.split("."); const n=el.cloneNode(false); el.replaceWith(n); bindText(n,DATA.sections[a],b); });
   const P=DATA.projects, W=DATA.animations;
   const pb=document.getElementById("projects-body"); pb.innerHTML="";
   P.forEach(p=>{
@@ -552,46 +594,46 @@ function render(){
     const chips=p.parts.map(x=>`<span class="${x==="Spine"?"hl":""}">${x}</span>`).join("");
     const ytUrl=p.youtube?`https://youtu.be/${p.youtube}`:p.yt;
     s.innerHTML=`<div class="phead"><div>
-       <h3>${p.title} <span class="status ${p.status[1]}">${p.status[0]}</span></h3>
-       <div class="team">${p.team}</div>
+       <h3>${E(p,"title")} <span class="status ${p.status[1]}">${E(p.status,0)}</span></h3>
+       <div class="team">${E(p,"team")}</div>
        <div class="facts">
-        ${p.period?`<div class="row"><b>Period</b><span>${p.period}</span></div>`:""}
-        ${p.role?`<div class="row"><b>Role</b><span>${p.role}</span></div>`:""}
+        ${p.period!==undefined?`<div class="row"><b>Period</b>${E(p,"period")}</div>`:""}
+        ${p.role!==undefined?`<div class="row"><b>Role</b>${E(p,"role")}</div>`:""}
         <div class="row"><b>Part</b><span class="chips">${chips}</span></div>
-        ${p.events?`<div class="row"><b>Event</b><ul class="events">${p.events.map(e=>`<li>${e}</li>`).join("")}</ul></div>`:""}
+        ${p.events?`<div class="row"><b>Event</b><ul class="events">${p.events.map((_,i)=>E(p.events,i,"li")).join("")}</ul></div>`:""}
        </div>
        ${ytUrl?`<div class="yt"><a class="btn" href="${ytUrl}" target="_blank" rel="noopener">▶ 유튜브에서 보기 ↗</a></div>`:""}
       </div><div class="right"></div></div>`;
     const right=s.querySelector(".right"); let preDone=false;
     if(p.youtube||p.reel!==undefined) right.appendChild(reel(p,"reel",p.dir,`${p.title} · 플레이 영상`));
-    else if(p.pre){ right.insertAdjacentHTML("beforeend",`<div class="sub" style="margin-top:0">${p.pre.title}</div>`); right.appendChild(strip(p.pre.items,p.dir)); preDone=true; }
+    else if(p.pre){ right.insertAdjacentHTML("beforeend",`<div class="sub" style="margin-top:0">${E(p.pre,"title")}</div>`); right.appendChild(strip(p.pre.items,p.dir)); preDone=true; }
     if(p.pre&&!preDone){ const g=document.createElement("div"); g.className="group";
-      g.innerHTML=`<div class="ghead"><h4>${p.pre.title}</h4><span class="rule"></span></div>`; g.appendChild(strip(p.pre.items,p.dir)); s.appendChild(g); }
+      g.innerHTML=`<div class="ghead"><h4>${E(p.pre,"title")}</h4><span class="rule"></span></div>`; g.appendChild(strip(p.pre.items,p.dir)); s.appendChild(g); }
     p.groups.forEach(gr=>{
       const g=document.createElement("div"); g.className="group";
       const n=gr.items.length+(gr.sub?gr.sub.items.length:0);
-      g.innerHTML=`<div class="ghead"><h4>${gr.ko}</h4><span class="en">${gr.en||""}</span><span class="rule"></span><span class="ct">${n} motions</span></div>`+(gr.note?`<p class="note">${gr.note}</p>`:"");
+      g.innerHTML=`<div class="ghead"><h4>${E(gr,"ko")}</h4>${E(gr,"en","span","en")}<span class="rule"></span><span class="ct">${n} motions</span></div>`+(gr.note!==undefined?E(gr,"note","p","note"):"");
       g.appendChild(grid(gr.items,p.dir,gr.lg));
-      if(gr.sub){ g.insertAdjacentHTML("beforeend",`<div class="sub">${gr.sub.title}</div>`); g.appendChild(grid(gr.sub.items,p.dir)); }
-      if(gr.strip){ g.insertAdjacentHTML("beforeend",`<div class="sub">${gr.strip.title}</div>`); g.appendChild(strip(gr.strip.items,p.dir,gr.strip.wide)); }
+      if(gr.sub){ g.insertAdjacentHTML("beforeend",`<div class="sub">${E(gr.sub,"title")}</div>`); g.appendChild(grid(gr.sub.items,p.dir)); }
+      if(gr.strip){ g.insertAdjacentHTML("beforeend",`<div class="sub">${E(gr.strip,"title")}</div>`); g.appendChild(strip(gr.strip.items,p.dir,gr.strip.wide)); }
       s.appendChild(g);
     });
-    pb.appendChild(s);
+    hydrate(s); pb.appendChild(s);
   });
   const wb=document.getElementById("works-body"); wb.innerHTML="";
   W.forEach((w,i)=>{
     const d=document.createElement("article"); d.className="work"+(i%2?" rev":"");
     const rv=reel(w,"file","animation",w.ko); rv.classList.add("reelwrap"); d.appendChild(rv);
     const t=document.createElement("div");
-    t.innerHTML=`<div class="en">${w.en}</div><h3>${w.ko}</h3><span class="period">제작기간 ${w.period}</span>
-     <div class="facts">${w.role?`<div class="row"><b>Role</b><span>${w.role}</span></div>`:""}${w.task?`<div class="row"><b>Task</b><span>${w.task}</span></div>`:""}
-     <div class="row"><b>Tools</b><span>${w.tools}</span></div>${w.ai?`<div class="row"><b>AI</b><span>${w.ai}</span></div>`:""}</div>`;
+    t.innerHTML=`<div class="en">${E(w,"en")}</div><h3>${E(w,"ko")}</h3><span class="period">제작기간 ${E(w,"period")}</span>
+     <div class="facts">${w.role!==undefined?`<div class="row"><b>Role</b>${E(w,"role")}</div>`:""}${w.task!==undefined?`<div class="row"><b>Task</b>${E(w,"task")}</div>`:""}
+     <div class="row"><b>Tools</b>${E(w,"tools")}</div>${w.ai!==undefined?`<div class="row"><b>AI</b>${E(w,"ai")}</div>`:""}</div>`;
     if(w.extra){ const e=document.createElement("div"); e.className="extra";
-      e.innerHTML=`<div class="sub" style="margin:0 0 8px">${w.extra.label} · ${w.extra.period}</div>`;
+      e.innerHTML=`<div class="sub" style="margin:0 0 8px">${E(w.extra,"label")} · ${E(w.extra,"period")}</div>`;
       const it={get 0(){return w.extra.label}, set 0(v){w.extra.label=v}, get 1(){return w.extra.file}, set 1(v){w.extra.file=v}, *[Symbol.iterator](){ yield w.extra.label; yield w.extra.file; }};
       const c=card([it],0,"animation"); c.querySelector(".del").style.display="none";
       e.appendChild(c); t.appendChild(e); }
-    d.appendChild(t); wb.appendChild(d);
+    d.appendChild(t); hydrate(d); wb.appendChild(d);
   });
   observeNav();
 }
@@ -633,8 +675,8 @@ addEventListener("beforeunload",e=>{ if(dirty){ e.preventDefault(); e.returnValu
 const pick=document.createElement("input"); pick.type="file"; pick.accept="image/*,video/*"; pick.hidden=true; document.body.appendChild(pick);
 function chooseFile(){ return new Promise(res=>{ pick.value=""; pick.onchange=()=>res(pick.files[0]||null); pick.click(); }); }
 
-function enterEdit(){ editing=true; document.body.classList.add("editing"); }
-function exitEdit(){ if(dirty && !confirmLeave()) return; editing=false; document.body.classList.remove("editing"); say(""); }
+function enterEdit(){ editing=true; document.body.classList.add("editing"); setEditable(true); }
+function exitEdit(){ if(dirty && !confirmLeave()) return; editing=false; document.body.classList.remove("editing"); setEditable(false); say(""); }
 let leaveArmed=false;
 function confirmLeave(){ if(leaveArmed){ leaveArmed=false; return true; } leaveArmed=true; toast("저장 안 한 변경이 있어요. 그래도 끝내려면 [편집 끝내기]를 한 번 더 누르세요.",true); setTimeout(()=>leaveArmed=false,5000); return false; }
 document.getElementById("doneBtn").onclick=exitEdit;
@@ -651,7 +693,7 @@ document.getElementById("tokenOk").onclick=async()=>{
     showManage(); enterEdit(); toast("✓ 연결됐어요. 이제 편집할 수 있어요");
   }catch(e){ toast("연결 실패: "+((e&&(e.message||e.name))||e),true); }
 };
-document.getElementById("logoutBtn").onclick=()=>{ try{localStorage.removeItem("gh_token");}catch{} TOKEN=null; editing=false; document.body.classList.remove("editing"); document.getElementById("manage").style.display="none"; toast("이 브라우저에서 연결을 해제했어요"); };
+document.getElementById("logoutBtn").onclick=()=>{ try{localStorage.removeItem("gh_token");}catch{} TOKEN=null; editing=false; document.body.classList.remove("editing"); setEditable(false); document.getElementById("manage").style.display="none"; toast("이 브라우저에서 연결을 해제했어요"); };
 function showManage(){ document.getElementById("manage").style.display="inline-flex"; document.getElementById("conn").textContent="GitHub 연결됨 ✓"; }
 
 /* bulk: match by file name */
