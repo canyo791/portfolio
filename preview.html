@@ -342,8 +342,8 @@ nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--in
 .hero2 .btn.dark:hover{background:var(--pink);color:var(--ink);border-color:var(--ink)}
 
 /* ===== showcase (main video per game) ===== */
-.showcase{position:relative;background:linear-gradient(160deg,#fbeef2 0%,var(--pink) 100%);
-  border:1.5px solid var(--ink);border-radius:18px;padding:16px 16px 12px;box-shadow:6px 6px 0 var(--ink);margin-top:14px}
+.showcase{position:relative;background:var(--pink);
+  border:none;border-radius:18px;padding:14px 16px 16px;box-shadow:none;margin-top:0}
 .showcase .pin{position:absolute;top:-24px;left:50%;transform:translateX(-50%);width:64px;height:38px;color:var(--ink)}
 .showcase .sc-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .showcase .chip{background:var(--ink);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
@@ -357,7 +357,7 @@ nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--in
 .showcase .sc-bot{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12px;font-weight:500}
 .showcase .sc-bot .no{font-family:var(--serif);font-style:italic;font-size:15px}
 .showcase .sc-bot .bar{flex:1;height:6px;border:1.5px solid var(--ink);border-radius:99px;background:linear-gradient(90deg,var(--ink) 38%,#fff 38%)}
-.showcase .zoombtn{position:static}
+.showcase .zoombtn{position:static;margin-left:auto;flex:none}
 .showcase .spk1,.showcase .spk2{position:absolute;width:30px;height:30px;color:var(--ink)}
 .showcase .spk1{right:-14px;top:-14px}.showcase .spk2{left:-12px;bottom:-12px;width:22px;height:22px}
 @media (max-width:860px){.hero2 .spk{width:46px;height:46px}.hero2 .flw{display:none}}
@@ -662,11 +662,8 @@ let REELNO=0;
 function reel(obj, fileKey, dir, label){
   REELNO++;
   const sc=document.createElement("div"); sc.className="showcase";
-  sc.innerHTML=`<svg class="pin" viewBox="0 0 120 70"><use href="#bow"/></svg>
-   <svg class="spk1"><use href="#spark"/></svg>
-   <div class="sc-top"><span class="chip"><i></i>PLAY</span><span class="sc-title"></span><span class="hearts"><i></i><i></i><i></i></span></div>
-   <div class="screen"></div>
-   <div class="sc-bot"><span class="no">No.${String(REELNO).padStart(2,"0")}</span><span class="bar"></span></div>`;
+  sc.innerHTML=`<div class="sc-top"><span class="chip"><i></i>PLAY</span><span class="sc-title"></span></div>
+   <div class="screen"></div>`;
   sc.querySelector(".sc-title").textContent=label;
   const scr=sc.querySelector(".screen");
   const id=ytId(obj.youtube);
@@ -674,7 +671,7 @@ function reel(obj, fileKey, dir, label){
   const b=document.createElement("button"); b.className="btn sm dark zoombtn"; b.textContent="크게 보기 ↗";
   const idx=CARDS.push({label:()=>label, dir, youtube:()=>ytId(obj.youtube), files:()=>[obj[fileKey]], reel:true})-1;
   b.onclick=()=>{ const v=scr.querySelector("video"); if(v) v.pause(); openLB(idx); };
-  sc.querySelector(".sc-bot").appendChild(b);
+  sc.querySelector(".sc-top").appendChild(b);
   const wrap=document.createElement("div"); wrap.appendChild(sc);
   wrap.insertAdjacentHTML("beforeend",`<label class="ytin"><span style="font-size:12.5px;white-space:nowrap">유튜브</span><input placeholder="유튜브 주소나 영상 ID (비우면 영상 파일 재생)"></label>`);
   const yi=wrap.querySelector(".ytin input"); yi.value=obj.youtube||"";
