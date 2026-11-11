@@ -468,7 +468,37 @@ html,body{overflow-x:clip}
 .theme-project-vs .showcase .sc-title{font-family:'Gaegu',cursive;font-style:normal;font-size:20px;background:#ffeef1;border-color:#213a72;color:#213a72}
 .theme-project-vs .showcase .screen{border:2px dashed #213a72;background:#fffaf2}
 .theme-project-vs .addcard{border-color:#213a72}
+.theme-project-vs .showcase .zoombtn{background:#213a72;color:#fff;border-color:#213a72}
+.theme-project-vs .showcase .zoombtn:hover{background:#f2667a;border-color:#f2667a}
 @media (max-width:860px){.theme-project-vs .tbg .edge,.theme-project-vs .tbg .holes{display:none}}
+
+/* ===== paged layout ===== */
+.page{display:none}
+.page.on{display:block;animation:pgin .45s cubic-bezier(.2,.7,.2,1)}
+.page.on.from-left{animation-name:pginL}
+@keyframes pgin{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:none}}
+@keyframes pginL{from{opacity:0;transform:translateX(-48px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.page.on{animation:none}}
+.page[data-page="home"] .hero{min-height:calc(100vh - 57px);display:flex;align-items:center}
+.page[data-page="home"] .hero .in{width:100%}
+.projpage .project{min-height:calc(100vh - 57px)}
+.projpage .project:not(.themed){padding-top:70px}
+.pnext{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:70px;padding-top:24px;border-top:1px solid rgba(127,127,127,.25)}
+.pgarrow{position:fixed;top:50%;z-index:35;width:58px;height:68px;border:none;background:none;cursor:pointer;transform:translateY(-50%);padding:0;transition:transform .2s}
+.pgarrow svg{width:100%;height:100%;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+.pgarrow path{fill:#111;stroke:#fff;stroke-width:3.5;stroke-linejoin:round;transition:fill .2s}
+.pgarrow:hover path{fill:#f2a9bd}
+.pgarrow.prev{left:16px}.pgarrow.next{right:16px}
+.pgarrow.next:hover{transform:translateY(-50%) translateX(3px)}.pgarrow.prev:hover{transform:translateY(-50%) translateX(-3px)}
+.pgarrow span{position:absolute;top:100%;margin-top:6px;white-space:nowrap;font-size:12px;font-weight:500;background:#111;color:#fff;padding:3px 10px;border-radius:999px;opacity:0;transition:.2s;pointer-events:none}
+.pgarrow.next span{right:0}.pgarrow.prev span{left:0}
+.pgarrow:hover span{opacity:1}
+.pgarrow[hidden]{display:none}
+.pgdots{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:35;display:flex;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(17,17,17,.75);backdrop-filter:blur(4px)}
+.pgdots button{width:9px;height:9px;border-radius:50%;border:none;background:rgba(255,255,255,.4);cursor:pointer;padding:0;transition:.2s}
+.pgdots button.on{background:#f6d9e1;width:24px;border-radius:99px}
+.showcase .screen .slot img{width:100%;height:100%;object-fit:contain;background:#fff}
+@media (max-width:860px){.pgarrow{width:40px;height:48px;top:auto;bottom:70px;transform:none}.pgarrow:hover{transform:none}.pgarrow span{display:none}}
 </style>
 </head>
 <body>
@@ -515,9 +545,9 @@ html,body{overflow-x:clip}
 
 <nav class="top">
  <div class="in">
-  <a class="logo" href="#top"><svg viewBox="0 0 200 200"><use href="#bun"/></svg>Yoon Hyemin</a>
+  <a class="logo" href="#home"><svg viewBox="0 0 200 200"><use href="#bun"/></svg>Yoon Hyemin</a>
   <div class="links">
-   <a href="#hallow-stone">Hallow Stone</a><a href="#devi-rush">Devi Rush</a><a href="#project-vs">ProjectVS</a><a href="#animation">Animation</a><a href="#contact">Contact</a>
+   <a href="#home">Home</a><a href="#hallow-stone">Hallow Stone</a><a href="#devi-rush">Devi Rush</a><a href="#project-vs">ProjectVS</a><a href="#animation">Animation</a><a href="#contact">Contact</a>
   </div>
  </div>
 </nav>
@@ -531,6 +561,7 @@ html,body{overflow-x:clip}
  <div id="status"></div>
 </div></div>
 
+<div class="page" data-page="home">
 <header class="hero" id="top">
  <div class="damask"></div>
  <svg class="cross" style="top:34px;left:3%"><use href="#cross"/></svg>
@@ -545,8 +576,8 @@ html,body{overflow-x:clip}
     <div><dt>Contact</dt><dd>hnnin791@gmail.com</dd></div>
    </dl>
    <div class="cta">
-    <a class="btn dark" href="#projects">게임 프로젝트 보기 ↓</a>
-    <a class="btn" href="#animation">애니메이션 작업물 ↓</a>
+    <a class="btn dark" href="#hallow-stone">게임 프로젝트 보기 →</a>
+    <a class="btn" href="#animation">애니메이션 작업물 →</a>
    </div>
   </div>
   <div class="oval" aria-hidden="true">
@@ -572,11 +603,13 @@ html,body{overflow-x:clip}
  </div>
 </header>
 
-<section class="band" id="projects"><div class="damask"></div><div class="in"><span class="no">01</span><h2 class="ed" data-sec="projects.en"></h2><span class="ko ed" data-sec="projects.ko"></span></div></section>
-<main class="wrap" id="projects-body"></main>
+</div>
+<div id="proj-pages"></div>
 
+<div class="page" data-page="animation">
 <section class="band" id="animation"><div class="damask"></div><div class="in"><span class="no">02</span><h2 class="ed" data-sec="animation.en"></h2><span class="ko ed" data-sec="animation.ko"></span></div></section>
 <section class="wrap"><div class="works" id="works-body"></div></section>
+</div>
 
 <section class="contact" id="contact">
  <div class="damask"></div>
@@ -601,6 +634,9 @@ html,body{overflow-x:clip}
 <input type="file" id="pick" accept="image/*,video/*" hidden>
 <input type="file" id="bulk" accept="image/*,video/*" multiple hidden>
 
+<button class="pgarrow prev" id="pgPrev" aria-label="이전 페이지"><svg viewBox="0 0 60 70"><path d="M44 8 L12 30 Q4 35 12 40 L44 62 Q52 67 52 58 V12 Q52 3 44 8Z"/></svg><span></span></button>
+<button class="pgarrow next" id="pgNext" aria-label="다음 페이지"><svg viewBox="0 0 60 70"><path d="M16 8 L48 30 Q56 35 48 40 L16 62 Q8 67 8 58 V12 Q8 3 16 8Z"/></svg><span></span></button>
+<div class="pgdots" id="pgDots"></div>
 <div id="toast" role="status"></div>
 <div class="modal" id="tokenModal" role="dialog" aria-modal="true"><div class="panel">
  <h3>편집 모드 연결 (처음 한 번만)</h3>
@@ -811,7 +847,7 @@ function render(){
   DATA.sections=DATA.sections||{projects:{en:"Game Projects",ko:"참여 게임 프로젝트"},animation:{en:"Animation Works",ko:"애니메이션 작업물"}};
   document.querySelectorAll("[data-sec]").forEach(el=>{ const [a,b]=el.dataset.sec.split("."); const n=el.cloneNode(false); el.replaceWith(n); bindText(n,DATA.sections[a],b); });
   const P=DATA.projects, W=DATA.animations;
-  const pb=document.getElementById("projects-body"); pb.innerHTML="";
+  const pb=document.getElementById("proj-pages"); pb.innerHTML="";
   P.forEach(p=>{
     const s=document.createElement("section"); s.className="project"+(THEMES[p.id]?" themed theme-"+p.id:""); s.id=p.id;
     const chips=p.parts.map(x=>`<span class="${x==="Spine"?"hl":""}">${x}</span>`).join("");
@@ -828,6 +864,7 @@ function render(){
        ${ytUrl?`<div class="yt"><a class="btn" href="${ytUrl}" target="_blank" rel="noopener">▶ 유튜브에서 보기 ↗</a></div>`:""}
       </div><div class="right"></div></div>`;
     const right=s.querySelector(".right"); let preDone=false;
+    if(p.reel===undefined&&!p.youtube) p.reel="";
     if(p.youtube||p.reel!==undefined) right.appendChild(reel(p,"reel",p.dir,`${p.title} · 플레이 영상`));
     else if(p.pre){ right.insertAdjacentHTML("beforeend",`<div class="sub" style="margin-top:0">${E(p.pre,"title")}</div>`); right.appendChild(strip(p.pre.items,p.dir)); preDone=true; }
     if(p.pre&&!preDone){ const g=document.createElement("div"); g.className="group";
@@ -843,7 +880,10 @@ function render(){
     });
     if(THEMES[p.id]){ s.insertAdjacentHTML("afterbegin",`<div class="tbg" aria-hidden="true">${THEMES[p.id].bg}</div>`);
       if(THEMES[p.id].title){ const h=s.querySelector("h3"); h&&h.insertAdjacentHTML("afterbegin",THEMES[p.id].title); } }
-    hydrate(s); pb.appendChild(s);
+    { const order=pageOrder(), i=order.indexOf(p.id), pv=order[i-1], nx=order[i+1];
+      s.insertAdjacentHTML("beforeend",`<div class="pnext">${pv?`<a class="btn" href="#${pv}">← ${pageName(pv)}</a>`:"<span></span>"}${nx?`<a class="btn" href="#${nx}">${pageName(nx)} →</a>`:""}</div>`); }
+    hydrate(s); const pg=document.createElement("div"); pg.className="page projpage"; pg.dataset.page=p.id;
+    const w=document.createElement("div"); w.className="wrap"; w.appendChild(s); pg.appendChild(w); pb.appendChild(pg);
   });
   const wb=document.getElementById("works-body"); wb.innerHTML="";
   W.forEach((w,i)=>{
@@ -860,7 +900,7 @@ function render(){
       e.appendChild(c); t.appendChild(e); }
     d.appendChild(t); hydrate(d); wb.appendChild(d);
   });
-  observeNav();
+  setupPages();
 }
 
 /* ---------- lightbox ---------- */
@@ -881,11 +921,53 @@ lb.querySelector(".x").onclick=closeLB; lb.querySelector(".prev").onclick=()=>op
 lb.addEventListener("click",e=>{ if(e.target===lb) closeLB(); });
 addEventListener("keydown",e=>{ if(!lb.classList.contains("on")) return; if(e.key==="Escape") closeLB(); if(e.key==="ArrowLeft") openLB(cur-1); if(e.key==="ArrowRight") openLB(cur+1); });
 
-/* ---------- nav ---------- */
-const links=[...document.querySelectorAll("nav.top .links a")]; let so=null;
-function observeNav(){ if(so) so.disconnect();
-  so=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id)); }),{rootMargin:"-45% 0px -50% 0px"});
-  ["hallow-stone","devi-rush","project-vs","animation","contact"].forEach(id=>{ const el=document.getElementById(id); if(el) so.observe(el); }); }
+/* ---------- pages ---------- */
+const links=[...document.querySelectorAll("nav.top .links a")];
+function pageOrder(){ return ["home",...DATA.projects.map(p=>p.id),"animation"]; }
+function pageName(id){ if(id==="home") return "Home"; if(id==="animation") return (DATA.sections&&DATA.sections.animation&&DATA.sections.animation.en)||"Animation"; const p=DATA.projects.find(x=>x.id===id); return p?p.title:id; }
+let CUR="home";
+function showPage(id,opt={}){
+  const order=pageOrder(); if(!order.includes(id)) id="home";
+  const dirLeft=order.indexOf(id)<order.indexOf(CUR);
+  document.querySelectorAll(".page").forEach(pg=>{ const on=pg.dataset.page===id; pg.classList.toggle("on",on); if(on){ pg.classList.toggle("from-left",dirLeft); if(!opt.keepAnim){ pg.style.animation="none"; pg.offsetHeight; pg.style.animation=""; } } });
+  CUR=id;
+  links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+id));
+  const i=order.indexOf(id), pv=order[i-1], nx=order[i+1];
+  const P=document.getElementById("pgPrev"), N=document.getElementById("pgNext");
+  P.hidden=!pv; N.hidden=!nx; P.dataset.go=pv||""; N.dataset.go=nx||"";
+  P.querySelector("span").textContent=pv?"← "+pageName(pv):""; N.querySelector("span").textContent=nx?pageName(nx)+" →":"";
+  document.querySelectorAll("#pgDots button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));
+  if(!opt.noScroll) window.scrollTo({top:0,behavior:"instant"});
+  document.querySelectorAll(".page:not(.on) video").forEach(v=>v.pause());
+}
+function go(id){ if(location.hash!=="#"+id) location.hash=id; else showPage(id); }
+function setupPages(){
+  const dots=document.getElementById("pgDots");
+  dots.innerHTML=pageOrder().map(id=>`<button data-go="${id}" title="${pageName(id).replace(/"/g,"")}"></button>`).join("");
+  dots.querySelectorAll("button").forEach(b=>b.onclick=()=>go(b.dataset.go));
+  showPage(CUR,{noScroll:true,keepAnim:true});
+}
+function route(){
+  const h=decodeURIComponent(location.hash.slice(1));
+  if(h==="contact"){ document.getElementById("contact").scrollIntoView({behavior:"smooth"}); return; }
+  if(h==="projects"){ showPage(DATA.projects[0].id); return; }
+  if(!h||h==="top"){ showPage("home"); return; }
+  showPage(h);
+}
+addEventListener("hashchange",()=>{ if(DATA) route(); });
+document.getElementById("pgPrev").onclick=e=>go(e.currentTarget.dataset.go);
+document.getElementById("pgNext").onclick=e=>go(e.currentTarget.dataset.go);
+addEventListener("keydown",e=>{
+  if(lb.classList.contains("on")||!DATA) return;
+  const t=e.target; if(t.closest&&t.closest("input,textarea,[contenteditable='true'],[contenteditable='plaintext-only']")) return;
+  const order=pageOrder(), i=order.indexOf(CUR);
+  if(e.key==="ArrowRight"&&order[i+1]) go(order[i+1]);
+  if(e.key==="ArrowLeft"&&order[i-1]) go(order[i-1]);
+});
+let tx=null,ty=null;
+addEventListener("touchstart",e=>{ if(e.touches.length!==1||editing) return; tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
+addEventListener("touchend",e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty; tx=null;
+  if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy)*1.8&&!lb.classList.contains("on")){ const order=pageOrder(), i=order.indexOf(CUR); const t=order[i+(dx<0?1:-1)]; if(t) go(t); } },{passive:true});
 document.getElementById("copyMail").onclick=async e=>{ try{ await navigator.clipboard.writeText("hnnin791@gmail.com"); e.target.textContent="복사했어요 ✓"; }catch{ e.target.textContent="hnnin791@gmail.com"; } };
 
 /* ---------- toast ---------- */
@@ -984,7 +1066,7 @@ addEventListener("dragover",e=>{ if(editing) e.preventDefault(); });
 addEventListener("drop",e=>{ if(editing&&!e.target.closest(".slot,.addcard")){ e.preventDefault(); toast("파일을 원하는 칸 위에 놓아 주세요."); } });
 try{ TOKEN=localStorage.getItem("gh_token"); }catch{}
 if(TOKEN) showManage();
-fetch("content.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.json()).then(d=>{ DATA=d; render(); if(location.hash){ const el=document.getElementById(location.hash.slice(1)); el&&el.scrollIntoView(); } })
+fetch("content.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.json()).then(d=>{ DATA=d; render(); route(); })
   .catch(()=>{ document.getElementById("projects-body").innerHTML='<p style="padding:40px 0">내용을 불러오지 못했어요. 새로고침해 주세요.</p>'; });
 </script>
 </body>
