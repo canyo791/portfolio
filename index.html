@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+KR:wght@500&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  --pink:#f6d9e1; --pink-2:#efbccb; --pink-ink:#b4566f; --paper2:#fbf9f9;
   --ink:#111; --paper:#f7f6f4; --white:#fff; --mid:#6b6866; --line:#dedad6; --soft:#ecebe8;
   --serif:'Cormorant Garamond','Noto Serif KR',serif;
   --kserif:'Noto Serif KR',serif;
@@ -53,7 +54,7 @@ nav.top .links a.on:hover{border-color:var(--ink)}
 .hero .in{position:relative;max-width:1180px;margin:0 auto;padding:64px 24px 70px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
 .cross{position:absolute;width:24px;height:36px;color:var(--ink)}
 .hero .eyebrow{font-family:var(--serif);font-style:italic;font-size:21px;color:var(--mid)}
-.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(56px,8vw,100px);line-height:1;letter-spacing:-.01em;margin:4px 0 20px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(46px,6.4vw,80px);line-height:1;letter-spacing:-.01em;margin:4px 0 20px}
 .hero h1 span{display:block}
 .hero .kname{font-family:var(--kserif);font-size:21px;display:flex;align-items:center;gap:12px}
 .pill{font-family:var(--sans);font-size:11.5px;font-weight:700;background:var(--ink);color:var(--white);padding:4px 12px;border-radius:999px;letter-spacing:.08em}
@@ -66,10 +67,13 @@ nav.top .links a.on:hover{border-color:var(--ink)}
 .hero .cta{margin-top:32px;display:flex;gap:10px;flex-wrap:wrap}
 .oval{position:relative;width:min(370px,80vw);aspect-ratio:380/500;justify-self:center}
 .oval svg.frame{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.oval .inner{position:absolute;inset:18% 14% 16%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.oval .mirror{font-family:var(--serif);font-weight:600;font-size:14px;letter-spacing:.32em;text-transform:uppercase;transform:rotate(180deg)}
-.oval .bunny{width:64%;margin:8px 0 4px}
-.oval .sig{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(28px,4vw,36px);line-height:1;white-space:nowrap}
+.oval .inner{position:absolute;inset:20% 14% 18%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.oval .mirror{font-family:var(--serif);font-weight:600;font-size:13px;letter-spacing:.32em;text-transform:uppercase}
+.oval .bunny{width:40%;margin:12px 0 10px}
+.oval .oglow{position:absolute;inset:14%;border-radius:50%;background:radial-gradient(circle,rgba(246,217,225,.9),rgba(246,217,225,0) 70%)}
+.oval .tags{position:absolute;left:-6%;top:8%;display:grid;gap:3px;justify-items:start;z-index:3}
+.oval .tags span{background:var(--ink);color:#fff;font-size:11px;font-weight:500;padding:2px 9px;letter-spacing:.04em}
+.oval .sig{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(26px,3.4vw,32px);line-height:1;white-space:nowrap}
 .bunny .ear{transform-box:fill-box;transform-origin:50% 100%;animation:ear 4s ease-in-out infinite}
 .bunny .ear.b{animation-delay:.12s}
 .bunny .body{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 3.2s ease-in-out infinite}
@@ -282,6 +286,81 @@ body.editing .addcard{display:flex}
   .band .ko{margin-left:0;width:100%}
   .lb{padding:60px 12px}
 }
+
+/* ===== v6: pink · grid paper · sparkles ===== */
+body{background:var(--paper2)}
+nav.top{background:rgba(251,249,249,.94)}
+nav.top .links a.on{background:var(--pink);border-color:var(--pink)}
+nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tools span.k,.chips span.hl{background:var(--pink);color:var(--ink);border-color:var(--ink)}
+.status.live{background:var(--pink);color:var(--ink);border-color:var(--ink)}
+.sub::before,.events li::before{color:var(--pink-ink)}
+.ghead .rule{background:radial-gradient(circle,var(--pink-2) 1.6px,transparent 2px) 0 50%/10px 10px repeat-x;opacity:1}
+.card:hover .cap{background:var(--pink);color:var(--ink)}
+.card .zoom{background:var(--pink);color:var(--ink);border:1.5px solid var(--ink)}
+.band{background:var(--ink);position:relative;overflow:hidden}
+.band .no{color:var(--pink);opacity:1}
+.band .ko{color:var(--pink);opacity:1}
+.band::after{content:"";position:absolute;right:6%;top:50%;width:46px;height:46px;transform:translateY(-50%);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3E%3Cpath d='M0-10C1-2 2-1 10 0 2 1 1 2 0 10-1 2-2 1-10 0-2-1-1-2 0-10z' fill='%23f6d9e1'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.9}
+.project{border-bottom:1px dashed var(--pink-2)}
+.contact{background:radial-gradient(ellipse 50% 60% at 50% 40%,rgba(246,217,225,.18),transparent 70%),var(--ink)}
+.contact h2{color:var(--pink)}
+
+/* ===== hero ===== */
+.hero2{position:relative;overflow:hidden;padding:46px 24px 64px;text-align:center;
+  background:
+   radial-gradient(ellipse 48% 42% at 50% 40%,rgba(246,205,216,.85),rgba(246,205,216,0) 72%),
+   radial-gradient(circle,#f2cbd6 2px,transparent 2.6px) 15px 15px/60px 60px,
+   linear-gradient(#ebe6e8 1px,transparent 1px) 0 0/30px 30px,
+   linear-gradient(90deg,#ebe6e8 1px,transparent 1px) 0 0/30px 30px,#fcfbfb}
+.hero2 .deco{position:absolute;pointer-events:none}
+.hero2 .spk{width:84px;height:84px;color:var(--ink)}
+.hero2 .spk.s{width:34px;height:34px}
+.hero2 .pearl{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 25%,#e9e4e6 55%,#bdb6b9 100%);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.hero2 .flw{width:46px;height:46px}
+.hero2 .flw.s{width:30px;height:30px}
+.stage{position:relative;width:min(520px,92vw);margin:0 auto;aspect-ratio:440/380}
+.stage svg.heart{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transform:rotate(-4deg)}
+.stage .tags{position:absolute;left:6%;top:16%;display:grid;gap:4px;justify-items:start;z-index:3;transform:rotate(-4deg)}
+.stage .tags span{background:var(--ink);color:#fff;font-size:11.5px;font-weight:500;padding:2px 9px;letter-spacing:.03em}
+.stage .nm{position:absolute;left:0;right:0;top:30%;z-index:2;line-height:.95;transform:rotate(-4deg)}
+.stage .nm small{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(18px,3vw,24px)}
+.stage .nm b{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(44px,8.5vw,76px);letter-spacing:-.01em;
+  -webkit-text-stroke:0; text-shadow:0 0 0 #fff, 3px 3px 0 #fff, -3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff}
+.stage .bun{position:absolute;left:50%;bottom:-4%;width:48%;transform:translateX(-50%);z-index:3}
+.stage .atl{position:absolute;right:10%;bottom:38%;z-index:3;font-size:10.5px;font-weight:700;letter-spacing:.14em;transform:rotate(-4deg)}
+.bun .ear{transform-box:fill-box;transform-origin:50% 100%;animation:ear 4s ease-in-out infinite}
+.bun .ear.r{animation-delay:.15s}
+.bun .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.hero2 .ttl{margin-top:26px;font-family:var(--serif);font-weight:600;font-size:clamp(20px,3vw,28px);letter-spacing:.22em}
+.hero2 .ttl2{font-size:12px;letter-spacing:.24em;color:var(--mid);margin-top:2px}
+.hero2 .tools{justify-content:center;margin-top:18px}
+.hero2 .mail{margin-top:10px;font-size:14px}
+.hero2 .cta{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero2 .btn.dark:hover{background:var(--pink);color:var(--ink);border-color:var(--ink)}
+
+/* ===== showcase (main video per game) ===== */
+.showcase{position:relative;background:linear-gradient(160deg,#fbeef2 0%,var(--pink) 100%);
+  border:1.5px solid var(--ink);border-radius:18px;padding:16px 16px 12px;box-shadow:6px 6px 0 var(--ink);margin-top:14px}
+.showcase .pin{position:absolute;top:-24px;left:50%;transform:translateX(-50%);width:64px;height:38px;color:var(--ink)}
+.showcase .sc-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.showcase .chip{background:var(--ink);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+.showcase .chip i{width:7px;height:7px;border-radius:50%;background:#ff5d7e;animation:rec 1.4s infinite}
+@keyframes rec{50%{opacity:.25}}
+.showcase .sc-title{font-family:var(--serif);font-style:italic;font-weight:600;font-size:18px;background:#fff;border:1.5px solid var(--ink);padding:1px 12px;border-radius:999px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.showcase .hearts{margin-left:auto;display:flex;gap:5px}.showcase .hearts i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink)}.showcase .hearts i:first-child{background:var(--ink)}
+.showcase .screen{position:relative;border:1.5px solid var(--ink);border-radius:12px;overflow:hidden;background:#000}
+.showcase .screen iframe,.showcase .screen video{display:block;width:100%;aspect-ratio:16/9;border:0}
+.showcase .screen .slot{aspect-ratio:16/9;background:#fff}
+.showcase .sc-bot{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12px;font-weight:500}
+.showcase .sc-bot .no{font-family:var(--serif);font-style:italic;font-size:15px}
+.showcase .sc-bot .bar{flex:1;height:6px;border:1.5px solid var(--ink);border-radius:99px;background:linear-gradient(90deg,var(--ink) 38%,#fff 38%)}
+.showcase .zoombtn{position:static}
+.showcase .spk1,.showcase .spk2{position:absolute;width:30px;height:30px;color:var(--ink)}
+.showcase .spk1{right:-14px;top:-14px}.showcase .spk2{left:-12px;bottom:-12px;width:22px;height:22px}
+@media (max-width:860px){.hero2 .spk{width:46px;height:46px}.hero2 .flw{display:none}}
 </style>
 </head>
 <body>
@@ -295,6 +374,17 @@ body.editing .addcard{display:flex}
     <ellipse class="ear" cx="78" cy="42" rx="11.5" ry="37" transform="rotate(6 78 42)"/>
    </g>
    <circle cx="64" cy="94" r="3.4" fill="#fff"/>
+   <g transform="translate(96 74) rotate(16)" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+    <path d="M0 0c-6-9-18-11-18-3s12 9 18 3z"/><path d="M0 0c6-9 18-11 18-3s-12 9-18 3z"/><path d="M-2 2l-6 13 5-2 3 4 1-14M2 2l6 13-5-2-3 4-1-14"/><circle r="3.2"/>
+   </g>
+  </symbol>
+  <symbol id="bunh" viewBox="30 0 96 140">
+   <g fill="currentColor">
+    <ellipse class="ear b" cx="94" cy="44" rx="11" ry="36" transform="rotate(18 94 44)"/>
+    <ellipse class="ear" cx="78" cy="42" rx="11.5" ry="37" transform="rotate(6 78 42)"/>
+    <circle cx="76" cy="100" r="34"/>
+   </g>
+   <circle cx="64" cy="98" r="3.6" fill="#fff"/>
    <g transform="translate(96 74) rotate(16)" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
     <path d="M0 0c-6-9-18-11-18-3s12 9 18 3z"/><path d="M0 0c6-9 18-11 18-3s-12 9-18 3z"/><path d="M-2 2l-6 13 5-2 3 4 1-14M2 2l6 13-5-2-3 4-1-14"/><circle r="3.2"/>
    </g>
@@ -352,6 +442,7 @@ body.editing .addcard{display:flex}
    </div>
   </div>
   <div class="oval" aria-hidden="true">
+   <div class="oglow"></div>
    <svg class="frame" viewBox="0 0 380 500" fill="none" stroke="#111">
     <ellipse cx="190" cy="262" rx="176" ry="228" stroke-width="1.6"/>
     <ellipse cx="190" cy="262" rx="166" ry="218" stroke-width="5" stroke-dasharray="0 10" stroke-linecap="round"/>
@@ -366,7 +457,7 @@ body.editing .addcard{display:flex}
    </svg>
    <div class="inner">
     <div class="mirror">2D Animator</div>
-    <svg class="bunny" viewBox="0 0 200 200" style="color:#111"><use href="#bun"/></svg>
+    <svg class="bunny" viewBox="0 0 96 140" style="color:#111"><use href="#bunh" width="96" height="140"/></svg>
     <div class="sig">Yoon Hyemin</div>
    </div>
   </div>
@@ -567,15 +658,24 @@ function addCard(arr, dir){
 function grid(arr,dir,lg){ const g=document.createElement("div"); g.className="grid"+(lg?" lg":""); arr.forEach((_,i)=>g.appendChild(card(arr,i,dir))); g.appendChild(addCard(arr,dir)); return g; }
 function strip(arr,dir,wide){ const s=document.createElement("div"); s.className="strip"+(wide?" wide":""); arr.forEach((_,i)=>s.appendChild(card(arr,i,dir))); const a=addCard(arr,dir); a.style.flex="0 0 200px"; s.appendChild(a); return s; }
 
+let REELNO=0;
 function reel(obj, fileKey, dir, label){
-  const r=document.createElement("div"); r.className="fr reel";
+  REELNO++;
+  const sc=document.createElement("div"); sc.className="showcase";
+  sc.innerHTML=`<svg class="pin" viewBox="0 0 120 70"><use href="#bow"/></svg>
+   <svg class="spk1"><use href="#spark"/></svg>
+   <div class="sc-top"><span class="chip"><i></i>PLAY</span><span class="sc-title"></span><span class="hearts"><i></i><i></i><i></i></span></div>
+   <div class="screen"></div>
+   <div class="sc-bot"><span class="no">No.${String(REELNO).padStart(2,"0")}</span><span class="bar"></span></div>`;
+  sc.querySelector(".sc-title").textContent=label;
+  const scr=sc.querySelector(".screen");
   const id=ytId(obj.youtube);
-  if(id) r.appendChild(ytEl(id)); else r.appendChild(makeSlot(dir,()=>obj[fileKey],v=>{obj[fileKey]=v;},true));
+  if(id) scr.appendChild(ytEl(id)); else scr.appendChild(makeSlot(dir,()=>obj[fileKey],v=>{obj[fileKey]=v;},true));
   const b=document.createElement("button"); b.className="btn sm dark zoombtn"; b.textContent="크게 보기 ↗";
   const idx=CARDS.push({label:()=>label, dir, youtube:()=>ytId(obj.youtube), files:()=>[obj[fileKey]], reel:true})-1;
-  b.onclick=()=>{ const v=r.querySelector("video"); if(v) v.pause(); openLB(idx); };
-  r.appendChild(b);
-  const wrap=document.createElement("div"); wrap.appendChild(r);
+  b.onclick=()=>{ const v=scr.querySelector("video"); if(v) v.pause(); openLB(idx); };
+  sc.querySelector(".sc-bot").appendChild(b);
+  const wrap=document.createElement("div"); wrap.appendChild(sc);
   wrap.insertAdjacentHTML("beforeend",`<label class="ytin"><span style="font-size:12.5px;white-space:nowrap">유튜브</span><input placeholder="유튜브 주소나 영상 ID (비우면 영상 파일 재생)"></label>`);
   const yi=wrap.querySelector(".ytin input"); yi.value=obj.youtube||"";
   yi.addEventListener("change",()=>{ const v=yi.value.trim(); const id2=v?ytId(v):""; if(v&&!id2){ toast("유튜브 주소를 확인해 주세요",true); return; } obj.youtube=id2; markDirty(); render(); });
@@ -584,7 +684,7 @@ function reel(obj, fileKey, dir, label){
 
 /* ---------- render ---------- */
 function render(){
-  CARDS=[]; B=[];
+  CARDS=[]; B=[]; REELNO=0;
   DATA.sections=DATA.sections||{projects:{en:"Game Projects",ko:"참여 게임 프로젝트"},animation:{en:"Animation Works",ko:"애니메이션 작업물"}};
   document.querySelectorAll("[data-sec]").forEach(el=>{ const [a,b]=el.dataset.sec.split("."); const n=el.cloneNode(false); el.replaceWith(n); bindText(n,DATA.sections[a],b); });
   const P=DATA.projects, W=DATA.animations;
