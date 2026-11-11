@@ -50,7 +50,7 @@ nav.top .links a.on{border-color:var(--ink)}
 nav.top .links a.on:hover{border-color:var(--ink)}
 
 /* ---------- hero (v2 design) ---------- */
-.hero{position:relative;overflow:hidden}
+.hero{position:relative;overflow:hidden;background:radial-gradient(ellipse 34% 46% at 74% 50%,rgba(246,217,225,.55),transparent 70%)}
 .hero .in{position:relative;max-width:1180px;margin:0 auto;padding:64px 24px 70px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
 .cross{position:absolute;width:24px;height:36px;color:var(--ink)}
 .hero .eyebrow{font-family:var(--serif);font-style:italic;font-size:21px;color:var(--mid)}
@@ -65,12 +65,14 @@ nav.top .links a.on:hover{border-color:var(--ink)}
 .tools span{font-size:12.5px;padding:3px 12px;border:1px solid var(--ink);border-radius:999px;background:var(--white)}
 .tools span.k{background:var(--ink);color:var(--white)}
 .hero .cta{margin-top:32px;display:flex;gap:10px;flex-wrap:wrap}
-.oval{position:relative;width:min(370px,80vw);aspect-ratio:380/500;justify-self:center}
+.oval{position:relative;width:min(380px,80vw);aspect-ratio:380/440;justify-self:center}
 .oval svg.frame{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.oval .inner{position:absolute;inset:18% 14% 16%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.oval .inner{position:absolute;inset:28% 18% 32%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
 .oval .mirror{font-family:var(--serif);font-weight:600;font-size:14px;letter-spacing:.32em;text-transform:uppercase;transform:rotate(180deg)}
-.oval .bunny{width:64%;margin:8px 0 4px}
-.oval .sig{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(28px,4vw,36px);line-height:1;white-space:nowrap}
+.oval .bunny{width:30%;margin:4px 0 4px}
+.oval .tags{position:absolute;left:-6%;top:8%;display:grid;gap:3px;justify-items:start;z-index:3}
+.oval .tags span{background:var(--ink);color:#fff;font-size:11px;font-weight:500;padding:2px 9px;letter-spacing:.04em}
+.oval .sig{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(22px,2.9vw,27px);line-height:1;white-space:nowrap}
 .bunny .ear{transform-box:fill-box;transform-origin:50% 100%;animation:ear 4s ease-in-out infinite}
 .bunny .ear.b{animation-delay:.12s}
 .bunny .body{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 3.2s ease-in-out infinite}
@@ -340,9 +342,7 @@ nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--in
 .hero2 .btn.dark:hover{background:var(--pink);color:var(--ink);border-color:var(--ink)}
 
 /* ===== showcase (main video per game) ===== */
-.showcase{position:relative;background:
-   radial-gradient(circle,#fff 2px,transparent 2.6px) 0 0/16px 16px,
-   radial-gradient(circle,#fff 2px,transparent 2.6px) 8px 8px/16px 16px,var(--pink);
+.showcase{position:relative;background:linear-gradient(160deg,#fbeef2 0%,var(--pink) 100%);
   border:1.5px solid var(--ink);border-radius:18px;padding:16px 16px 12px;box-shadow:6px 6px 0 var(--ink);margin-top:14px}
 .showcase .pin{position:absolute;top:-24px;left:50%;transform:translateX(-50%);width:64px;height:38px;color:var(--ink)}
 .showcase .sc-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
@@ -350,7 +350,7 @@ nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--in
 .showcase .chip i{width:7px;height:7px;border-radius:50%;background:#ff5d7e;animation:rec 1.4s infinite}
 @keyframes rec{50%{opacity:.25}}
 .showcase .sc-title{font-family:var(--serif);font-style:italic;font-weight:600;font-size:18px;background:#fff;border:1.5px solid var(--ink);padding:1px 12px;border-radius:999px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.showcase .hearts{margin-left:auto;font-size:13px;letter-spacing:2px}
+.showcase .hearts{margin-left:auto;display:flex;gap:5px}.showcase .hearts i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink)}.showcase .hearts i:first-child{background:var(--ink)}
 .showcase .screen{position:relative;border:1.5px solid var(--ink);border-radius:12px;overflow:hidden;background:#000}
 .showcase .screen iframe,.showcase .screen video{display:block;width:100%;aspect-ratio:16/9;border:0}
 .showcase .screen .slot{aspect-ratio:16/9;background:#fff}
@@ -374,6 +374,17 @@ nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--in
     <ellipse class="ear" cx="78" cy="42" rx="11.5" ry="37" transform="rotate(6 78 42)"/>
    </g>
    <circle cx="64" cy="94" r="3.4" fill="#fff"/>
+   <g transform="translate(96 74) rotate(16)" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+    <path d="M0 0c-6-9-18-11-18-3s12 9 18 3z"/><path d="M0 0c6-9 18-11 18-3s-12 9-18 3z"/><path d="M-2 2l-6 13 5-2 3 4 1-14M2 2l6 13-5-2-3 4-1-14"/><circle r="3.2"/>
+   </g>
+  </symbol>
+  <symbol id="bunh" viewBox="30 0 96 140">
+   <g fill="currentColor">
+    <ellipse class="ear b" cx="94" cy="44" rx="11" ry="36" transform="rotate(18 94 44)"/>
+    <ellipse class="ear" cx="78" cy="42" rx="11.5" ry="37" transform="rotate(6 78 42)"/>
+    <circle cx="76" cy="100" r="34"/>
+   </g>
+   <circle cx="64" cy="98" r="3.6" fill="#fff"/>
    <g transform="translate(96 74) rotate(16)" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
     <path d="M0 0c-6-9-18-11-18-3s12 9 18 3z"/><path d="M0 0c6-9 18-11 18-3s-12 9-18 3z"/><path d="M-2 2l-6 13 5-2 3 4 1-14M2 2l6 13-5-2-3 4-1-14"/><circle r="3.2"/>
    </g>
@@ -412,57 +423,45 @@ nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--in
  <div id="status"></div>
 </div></div>
 
-<header class="hero2" id="top">
- <svg width="0" height="0" style="position:absolute"><defs>
-  <pattern id="pdots" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="18" height="18" fill="#f6d3dc"/><circle cx="4.5" cy="4.5" r="2.4" fill="#fff"/><circle cx="13.5" cy="13.5" r="2.4" fill="#fff"/></pattern>
-  <radialGradient id="pg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#f6d3dc" stop-opacity="0"/></radialGradient>
-  <symbol id="flw" viewBox="-20 -20 40 40"><g fill="#111"><circle cx="0" cy="-10" r="9"/><circle cx="9.5" cy="-3" r="9"/><circle cx="6" cy="8.5" r="9"/><circle cx="-6" cy="8.5" r="9"/><circle cx="-9.5" cy="-3" r="9"/></g><g fill="#555"><circle cx="-3" cy="-8" r="1"/><circle cx="5" cy="-4" r="1"/><circle cx="-6" cy="3" r="1"/><circle cx="3" cy="6" r="1"/><circle cx="8" cy="2" r="1"/><circle cx="-2" cy="-1" r="1"/></g><circle r="3" fill="#f6d3dc"/></symbol>
- </defs></svg>
- <svg class="deco spk" style="left:7%;top:14%"><use href="#spark"/></svg>
- <svg class="deco spk" style="right:7%;top:14%"><use href="#spark"/></svg>
- <svg class="deco spk" style="left:9%;bottom:12%"><use href="#spark"/></svg>
- <svg class="deco spk" style="right:9%;bottom:12%"><use href="#spark"/></svg>
- <svg class="deco spk s" style="left:22%;top:8%"><use href="#spark"/></svg>
- <svg class="deco spk s" style="right:21%;bottom:30%"><use href="#spark"/></svg>
- <span class="deco pearl" style="left:16%;top:40%"></span><span class="deco pearl" style="right:16%;top:28%"></span><span class="deco pearl" style="left:30%;bottom:20%;width:11px;height:11px"></span>
- <svg class="deco flw" style="left:24%;top:24%"><use href="#flw"/></svg>
- <svg class="deco flw s" style="right:25%;bottom:36%"><use href="#flw"/></svg>
-
- <div class="stage">
-  <svg class="heart" viewBox="0 0 440 380">
-   <path d="M220 362 L44 190 Q8 150 26 96 Q48 34 118 30 Q178 28 220 86 Q262 28 322 30 Q392 34 414 96 Q432 150 396 190 Z" fill="url(#pdots)" stroke="#111" stroke-width="3.5" stroke-linejoin="round"/>
-   <path d="M220 362 L44 190 Q8 150 26 96 Q48 34 118 30 Q178 28 220 86 Q262 28 322 30 Q392 34 414 96 Q432 150 396 190 Z" fill="url(#pg)" opacity=".55"/>
-   
-  </svg>
-  <div class="tags"><span>2D animator</span><span>portfolio archive</span></div>
-  <div class="nm"><small>portfolio of</small><b>Yoon Hyemin</b></div>
-  <svg class="bun" viewBox="0 0 220 190" aria-hidden="true">
-   <g stroke="#111" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
-    <g class="ear"><path d="M72 92C58 52 56 12 74 8s30 40 28 84" fill="#fff"/><path d="M76 84C68 56 68 30 76 22" stroke="#f2b7c6" stroke-width="8" fill="none"/></g>
-    <g class="ear r"><path d="M148 92c14-40 16-80-2-84s-30 40-28 84" fill="#fff"/><path d="M144 84c8-28 8-54 0-62" stroke="#f2b7c6" stroke-width="8" fill="none"/></g>
-    <path d="M110 176c-52 0-82-24-82-58 0-34 34-56 82-56s82 22 82 56c0 34-30 58-82 58z" fill="#fff"/>
-    <g transform="translate(150 70) rotate(18)" fill="#f6c3d1">
-     <path d="M0 0C-8-16-34-22-34-6S-14 12 0 0z"/><path d="M0 0C8-16 34-22 34-6S14 12 0 0z"/>
-     <path d="M-4 4l-10 20 9-3 4 6 3-21M4 4l10 20-9-3-4 6-3-21"/><circle r="6.5" fill="#f6c3d1"/>
+<header class="hero" id="top">
+ <div class="damask"></div>
+ <svg class="cross" style="top:34px;left:3%"><use href="#cross"/></svg>
+ <svg class="cross" style="top:34px;right:3%"><use href="#cross"/></svg>
+ <div class="in">
+  <div>
+   <div class="eyebrow">Portfolio — 2D Animator</div>
+   <h1><span>Yoon</span><span>Hyemin</span></h1>
+   <div class="kname">윤혜민 <span class="pill">2D ANIMATOR</span></div>
+   <dl>
+    <div><dt>Tools</dt><dd class="tools"><span class="k">Spine 2D</span><span>Clip Studio</span><span>Photoshop</span><span>3ds Max</span><span>ZBrush</span><span>Unity</span></dd></div>
+    <div><dt>Contact</dt><dd>hnnin791@gmail.com</dd></div>
+   </dl>
+   <div class="cta">
+    <a class="btn dark" href="#projects">게임 프로젝트 보기 ↓</a>
+    <a class="btn" href="#animation">애니메이션 작업물 ↓</a>
+   </div>
+  </div>
+  <div class="oval" aria-hidden="true">
+   <svg class="frame" viewBox="0 0 380 440" fill="none" stroke="#111">
+    <defs><radialGradient id="hglow" cx="50%" cy="42%" r="55%"><stop offset="0" stop-color="#f6d9e1" stop-opacity=".95"/><stop offset="1" stop-color="#f6d9e1" stop-opacity="0"/></radialGradient></defs>
+    <path d="M190 120 L234 60 L304 48 L354 100 L358 182 L190 414 L22 186 L28 102 L80 52 L148 58 Z" fill="url(#hglow)" stroke="none"/>
+    <path d="M190 120 L234 60 L304 48 L354 100 L358 182 L190 414 L22 186 L28 102 L80 52 L148 58 Z" stroke-width="2.2" stroke-linejoin="miter"/>
+    <path d="M190 120 L234 60 L304 48 L354 100 L358 182 L190 414 L22 186 L28 102 L80 52 L148 58 Z" stroke-width=".8" transform="rotate(-3 190 230) translate(6 4)" opacity=".55"/>
+    <path d="M190 138 L230 82 L292 72 L334 114 L336 182 L190 386 L44 188 L48 116 L92 74 L152 80 Z" stroke-width="4" stroke-dasharray="0 10" stroke-linecap="round"/>
+    
+    <g fill="#111" stroke="none" style="color:#111">
+     <use href="#spark" x="2" y="40" width="22" height="22"/><use href="#spark" x="352" y="250" width="16" height="16"/>
+     <use href="#spark" x="330" y="16" width="10" height="10"/>
     </g>
-    <ellipse cx="62" cy="178" rx="20" ry="12" fill="#fff"/><ellipse cx="158" cy="178" rx="20" ry="12" fill="#fff"/>
-   </g>
-   <g class="eye"><ellipse cx="82" cy="118" rx="10" ry="12.5" fill="#111"/><circle cx="85.5" cy="113" r="4" fill="#fff"/><circle cx="79" cy="123" r="1.8" fill="#fff"/></g>
-   <g class="eye"><ellipse cx="138" cy="118" rx="10" ry="12.5" fill="#111"/><circle cx="141.5" cy="113" r="4" fill="#fff"/><circle cx="135" cy="123" r="1.8" fill="#fff"/></g>
-   <ellipse cx="62" cy="138" rx="12" ry="6.5" fill="#f6c3d1"/><ellipse cx="158" cy="138" rx="12" ry="6.5" fill="#f6c3d1"/>
-   <path d="M102 136q4 5 8 0q4 5 8 0" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-   <path d="M54 172v8M62 171v9M70 172v8M150 172v8M158 171v9M166 172v8" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-  </svg>
-  <span class="atl">YOON'S ATELIER</span>
- </div>
-
- <div class="ttl">YOON HYEMIN · 윤혜민</div>
- <div class="ttl2">2D ANIMATOR — SPINE · SPRITE · CHARACTER MOTION</div>
- <div class="tools"><span class="k">Spine 2D</span><span>Clip Studio</span><span>Photoshop</span><span>3ds Max</span><span>ZBrush</span><span>Unity</span></div>
- <div class="mail">hnnin791@gmail.com</div>
- <div class="cta">
-  <a class="btn dark" href="#projects">게임 프로젝트 보기 ↓</a>
-  <a class="btn" href="#animation">애니메이션 작업물 ↓</a>
+    <g transform="translate(176 400)" style="color:#111"><use href="#cross" width="28" height="42"/></g>
+   </svg>
+   <div class="tags"><span>2D animator</span><span>portfolio archive</span></div>
+   <div class="inner">
+    <div class="mirror">2D Animator</div>
+    <svg class="bunny" viewBox="0 0 96 140" style="color:#111"><use href="#bunh" width="96" height="140"/></svg>
+    <div class="sig">Yoon Hyemin</div>
+   </div>
+  </div>
  </div>
 </header>
 
@@ -665,8 +664,8 @@ function reel(obj, fileKey, dir, label){
   REELNO++;
   const sc=document.createElement("div"); sc.className="showcase";
   sc.innerHTML=`<svg class="pin" viewBox="0 0 120 70"><use href="#bow"/></svg>
-   <svg class="spk1"><use href="#spark"/></svg><svg class="spk2"><use href="#spark"/></svg>
-   <div class="sc-top"><span class="chip"><i></i>PLAY</span><span class="sc-title"></span><span class="hearts">♥♥♥</span></div>
+   <svg class="spk1"><use href="#spark"/></svg>
+   <div class="sc-top"><span class="chip"><i></i>PLAY</span><span class="sc-title"></span><span class="hearts"><i></i><i></i><i></i></span></div>
    <div class="screen"></div>
    <div class="sc-bot"><span class="no">No.${String(REELNO).padStart(2,"0")}</span><span class="bar"></span></div>`;
   sc.querySelector(".sc-title").textContent=label;
