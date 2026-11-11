@@ -401,9 +401,9 @@ body.editing .addcard{display:flex}
  <p style="font-size:14px">홈페이지에서 바로 작업물을 올리려면, 이 사이트가 내 GitHub 저장소를 수정할 수 있는 <b>열쇠(토큰)</b>가 필요해요. 토큰은 <b>지금 쓰는 이 브라우저에만</b> 저장되고 다른 사람에게는 보이지 않아요.</p>
  <ol>
   <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub 토큰 만들기 페이지 ↗</a>를 열어요.</li>
-  <li><b>Token name</b>: 아무 이름(예: portfolio-edit), <b>Expiration</b>: 원하는 기간</li>
+  <li><b>Token name</b>: 아무 이름(예: portfolio-edit), <b>Expiration</b>: 90일 또는 1년 추천 (만료돼도 올린 파일은 그대로예요)</li>
   <li><b>Repository access</b> → <b>Only select repositories</b> → <code>canyo791/portfolio</code></li>
-  <li><b>Permissions → Repository permissions → Contents</b>를 <b>Read and write</b>로 바꿔요.</li>
+  <li><b>Permissions</b>에서 <b>+ Add permissions</b> → <b>Contents</b>를 체크하고, 오른쪽 Access를 <b>Read and write</b>로 바꿔요.</li>
   <li>맨 아래 <b>Generate token</b>을 누르고 나온 값(<code>github_pat_…</code>)을 복사해 아래에 붙여 넣어요.</li>
  </ol>
  <input id="tokenInput" type="password" placeholder="github_pat_… 붙여 넣기" autocomplete="off">
