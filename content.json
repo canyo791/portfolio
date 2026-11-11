@@ -272,15 +272,15 @@
       ],
       [
        "Store_idle",
-       "1001_NPC_Store_idle1.gif"
+       "Store_idle.gif"
       ],
       [
        "Recorder_idle",
-       "1006_NPC_Recorder_idle2.gif"
+       "Recorder_idle.gif"
       ],
       [
-       "Cat_Sleep_Idle",
-       "1005_NPC_Cat_Sleep_Idle.gif"
+       "Shadow_Sleep_ㅑdle",
+       "Shadow_Sleep_idle.gif"
       ],
       [
        "Shadow_idle (콧방울 시작)",
@@ -288,7 +288,7 @@
       ],
       [
        "Shadow_idle (콧방울)",
-       "1006_NPC_Shadow_idle_콧방울2.gif"
+       "Shadow_idle (콧방울).gif"
       ]
      ]
     },
