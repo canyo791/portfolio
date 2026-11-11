@@ -36,24 +36,24 @@ const PROJECTS = [
       ["attack_red_skill1","attack_red_skill1.gif"],["attack_red_skill2","attack_red_skill2.gif"],["blue_attack_air","blue_attack_air.gif"],
       ["attack_blue_skill1","attack_blue_skill1.gif"],["attack_blue_fall","attack_blue_fall.gif"],["R2B_ground2","R2B_ground2.gif"],["R2B_air1","Jack_R2B_air1.gif"]]}},
     {ko:"마녀", en:"Pero", items:[
-      ["Pero_run","0505_마녀_run.gif"],["Pero_idle","0505_마녀_idle.gif"],["Pero_stop","0505_마녀_run_stop.gif"],["Pero_run_stop","0505_마녀_run_stop_all.gif"],
-      ["Broom_idle","0514_빗자루_idle.gif"],["Pero_Broom_fly","0514_Witch_Broom_fly.gif"],["Pero_Broom_recall_ride","Witch_Broom_recall_ride.gif"],
-      ["Pero_candy_idle","0517_사탕착용_idle.gif"],["Pero_candy_wear","0517_사탕착용모션.gif"],["Pero_Magic","1027_Pero_Magic_최종본1.gif"]]},
+      ["Pero_run","Pero_run.gif"],["Pero_idle","Pero_idle.gif"],["Pero_stop","Pero_stop.gif"],["Pero_run_stop","Pero_run_stop.gif"],
+      ["Broom_idle","Broom_idle.gif"],["Pero_Broom_fly","Pero_Broom_fly.gif"],["Pero_Broom_recall_ride","Pero_Broom_recall_ride.gif"],
+      ["Pero_candy_idle","Pero_candy_idle.gif"],["Pero_candy_wear","Pero_candy_wear.gif"],["Pero_Magic","Pero_Magic.gif"]]},
     {ko:"보스 컷씬", en:"Arachne Cutscene", items:[
       ["Arachne_talk","Arachne_talk.gif"],["Arachne_Notice","Arachne_Notice.gif"],["Arachne_look_idle","Arachne_look_idle.gif"],
       ["Arachne_Block","Arachne_Block.gif"],["Arachne_Block_idle","Arachne_Block_idle.gif"],["Arachne_Standoff","Arachne_Standoff.gif"],
       ["Arachne_Standoff_idle","Arachne_Standoff_idle.gif"],["Arachne_Laugh","Arachne_Laugh.gif"],["Arachne_Battle_Start","Arachne_Battle_Start.gif"],
-      ["Arachne_Battle_Start2","Arachne_Battle_Start2.gif"],["Tea Table_idle","Tea_Table_idle.gif"],
+      ["Arachne_Battle_Start2","Arachne_Battle_Start2.gif"],["Tea Table_idle","Tea Table_idle.gif"],
       ["Pero_chair_idle","Pero_chair_idle.gif"],["Pero_chair_Down","Pero_chair_Down.gif"],["Pero_Arachne_Run","Pero_Arachne_run.gif"],
       ["Pero_Pout","Pero_Pout.gif"],["Pero_Smirk","Pero_Smirk.gif"],["Pero_run_candy","Pero_run_candy.gif"]],
      strip:{title:"스토리보드", wide:true, items:[
-      ["컷씬 01","아라크네_컷씬01.png"],["컷씬 01 카메라 경로","아라크네_컷씬01_카메라경로.png"],["컷씬 02 대사 및 리소스 사용처","아라크네_컷씬02_대사_및_리소스_사용처_정리.png"]]}},
+      ["컷씬 01","아라크네 컷씬01.png"],["컷씬 01 카메라 경로","아라크네 컷씬01_카메라경로.png"],["컷씬 02 대사 및 리소스 사용처","아라크네 컷씬02_대사 및 리소스 사용처 정리.png"]]}},
     {ko:"새끼거미", en:"Spiderling", items:[
-      ["Move","0916_Spiderling_move.gif"],["Boom_ver1","0916_Spiderling_boom.gif"],["Boom_ver2","0920_Spiderling_jump_boom.gif"],
+      ["Move","move.gif"],["Boom_ver1","Boom_ver1.gif"],["Boom_ver2","Boom_ver2.gif"],
       ["Spawn_idle","1017_Spiderling_Spawn_idle.gif"],["Spawn","1017_Spiderling_Spawn.gif"],
       ["Arachne_Groggy","Arachne_Groggy.gif"],["Arachne_Groggy_Start","Arachne_Groggy_Start.gif"],["Arachne_Groggy_Loop","Arachne_Groggy_Loop.gif"],["Arachne_Groggy_End","Arachne_Groggy_End.gif"]]},
     {ko:"NPC", en:"Non-player characters", items:[
-      ["NPC 플레이 영상","20261006-1605-56.4655844.mp4"],["Store_idle","1001_NPC_Store_idle1.gif"],["Recorder_idle","1006_NPC_Recorder_idle2.gif"],
+      ["NPC 플레이 영상","NPC 플레이 영상.mp4"],["Store_idle","1001_NPC_Store_idle1.gif"],["Recorder_idle","1006_NPC_Recorder_idle2.gif"],
       ["Cat_Sleep_Idle","1005_NPC_Cat_Sleep_Idle.gif"],["Shadow_idle (콧방울 시작)","1006_NPC_Shadow_idle_콧방울_시작.gif"],["Shadow_idle (콧방울)","1006_NPC_Shadow_idle_콧방울2.gif"]]},
     {ko:"화면 전환 · 로딩화면", en:"Transition / Loading", lg:true, items:[
       ["Loading 1","loading_1.gif"],["Loading 2","loading_2.gif"],["Transition1","Transition1.gif"]],
