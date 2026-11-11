@@ -873,16 +873,22 @@ function renderHome(){
   hydrate(box);
   document.querySelectorAll("[data-home]").forEach(el=>{ const n=el.cloneNode(false); el.replaceWith(n); bindText(n,H,el.dataset.home); });
   const g=document.getElementById("homeWork"); g.innerHTML="";
-  DATA.projects.forEach(p=>{
-    const a=document.createElement("a"); a.className="pw"; a.href="#"+p.id; a.style.setProperty("--pwc",PWC[p.id]||"#111");
+  const picks=H.picks||["hallow-stone","devi-rush","anim:0"];
+  picks.forEach(key=>{
+    let title,sub,href,yt,file,dir,color;
+    if(key.startsWith("anim:")){ const w=DATA.animations[+key.slice(5)]; if(!w) return;
+      title=w.en||w.ko; sub=w.ko; href="#animation"; yt=w.youtube; file=w.file; dir="animation"; color="#f2a9bd"; }
+    else { const p=DATA.projects.find(x=>x.id===key); if(!p) return;
+      title=p.title; sub=p.team||""; href="#"+p.id; yt=p.youtube; file=p.reel; dir=p.dir; color=PWC[p.id]||"#111"; }
+    const a=document.createElement("a"); a.className="pw"; a.href=href; a.style.setProperty("--pwc",color);
     const m=document.createElement("div"); m.className="pw-media";
-    const yid=ytId(p.youtube);
-    if(yid){ const f=document.createElement("iframe"); f.src=`https://www.youtube-nocookie.com/embed/${yid}?autoplay=1&mute=1&loop=1&playlist=${yid}&controls=0&modestbranding=1&rel=0&playsinline=1`; f.allow="autoplay; encrypted-media"; f.loading="lazy"; f.tabIndex=-1; f.title=p.title; m.appendChild(f); }
-    else if(p.reel){ m.appendChild(mediaFor(p.dir,p.reel,false)); }
+    const yid=ytId(yt);
+    if(yid){ const f=document.createElement("iframe"); f.src=`https://www.youtube-nocookie.com/embed/${yid}?autoplay=1&mute=1&loop=1&playlist=${yid}&controls=0&modestbranding=1&rel=0&playsinline=1`; f.allow="autoplay; encrypted-media"; f.loading="lazy"; f.tabIndex=-1; f.title=title; m.appendChild(f); }
+    else if(file){ m.appendChild(mediaFor(dir,file,false)); }
     else m.appendChild(phEl());
     a.appendChild(m);
     a.insertAdjacentHTML("beforeend",`<div class="pw-cap"><b></b><span></span><i>보러 가기 →</i></div><div class="bar"></div>`);
-    a.querySelector(".pw-cap b").textContent=p.title; a.querySelector(".pw-cap span").textContent=p.team||"";
+    a.querySelector(".pw-cap b").textContent=title; a.querySelector(".pw-cap span").textContent=sub;
     g.appendChild(a);
   });
 }
@@ -913,8 +919,6 @@ function render(){
     if(p.reel===undefined&&!p.youtube) p.reel="";
     if(p.youtube||p.reel!==undefined) right.appendChild(reel(p,"reel",p.dir,`${p.title} · 플레이 영상`));
     else if(p.pre){ right.insertAdjacentHTML("beforeend",`<div class="sub" style="margin-top:0">${E(p.pre,"title")}</div>`); right.appendChild(strip(p.pre.items,p.dir)); preDone=true; }
-    if(p.pre&&!preDone){ const g=document.createElement("div"); g.className="group";
-      g.innerHTML=`<div class="ghead"><h4>${E(p.pre,"title")}</h4><span class="rule"></span></div>`; g.appendChild(strip(p.pre.items,p.dir)); s.appendChild(g); }
     p.groups.forEach(gr=>{
       const g=document.createElement("div"); g.className="group";
       const n=gr.items.length+(gr.sub?gr.sub.items.length:0);
@@ -924,6 +928,8 @@ function render(){
       if(gr.strip){ g.insertAdjacentHTML("beforeend",`<div class="sub">${E(gr.strip,"title")}</div>`); g.appendChild(strip(gr.strip.items,p.dir,gr.strip.wide)); }
       s.appendChild(g);
     });
+    if(p.pre&&!preDone){ const g=document.createElement("div"); g.className="group pre-group";
+      g.innerHTML=`<div class="ghead"><h4>${E(p.pre,"title")}</h4><span class="rule"></span></div>`; g.appendChild(strip(p.pre.items,p.dir)); s.appendChild(g); }
     if(THEMES[p.id]){ s.insertAdjacentHTML("afterbegin",`<div class="tbg" aria-hidden="true">${THEMES[p.id].bg}</div>`);
       if(THEMES[p.id].title){ const h=s.querySelector("h3"); h&&h.insertAdjacentHTML("afterbegin",THEMES[p.id].title); } }
     { const order=pageOrder(), i=order.indexOf(p.id), pv=order[i-1], nx=order[i+1];

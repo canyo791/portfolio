@@ -708,6 +708,11 @@
   "file": "",
   "caption": "Animation Showreel",
   "title": "Selected Work",
-  "sub": "참여 게임 프로젝트"
+  "sub": "대표 작업물",
+  "picks": [
+   "hallow-stone",
+   "devi-rush",
+   "anim:0"
+  ]
  }
 }
