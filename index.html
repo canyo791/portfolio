@@ -115,7 +115,29 @@ nav.top .links a.on:hover{border-color:var(--ink)}
 .reel .slot{aspect-ratio:16/9}
 .reel iframe,.lb iframe{display:block;width:100%;aspect-ratio:16/9;border:0;background:#000}
 .lb .row iframe{width:min(1200px,90vw);height:auto}
-.reel{cursor:default}
+.reel .zoombtn{position:absolute;top:14px;right:14px;z-index:5}
+.lb .row video.big{max-height:82vh;width:min(1200px,90vw);background:#000}
+.lb .ph{width:min(800px,80vw);aspect-ratio:16/9;background-color:#fff;border:1px solid var(--line)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);z-index:90;background:var(--ink);color:var(--white);padding:12px 20px;border-radius:12px;font-size:14px;max-width:min(640px,92vw);opacity:0;pointer-events:none;transition:.25s;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
+#toast.on{opacity:1;transform:translateX(-50%)}
+#toast.err{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+#conn{font-size:12px;opacity:.85}
+#saveBtn[disabled]{opacity:.4;cursor:default}
+.ytin{display:none;margin-top:10px;gap:8px;align-items:center}
+body.editing .ytin{display:flex}
+.ytin input{flex:1;min-width:0;border:1.5px solid var(--ink);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;background:#fff}
+.mgr{background:none;border:none;color:#8a8784;font-size:12px;cursor:pointer;text-decoration:underline;margin-left:8px}
+.mgr:hover{color:#fff}
+.modal{position:fixed;inset:0;z-index:80;background:rgba(17,17,17,.55);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.on{display:flex}
+.modal .panel{background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;max-width:560px;width:100%;padding:26px 28px;max-height:90vh;overflow:auto}
+.modal h3{font-family:var(--kserif);font-size:20px;margin-bottom:10px}
+.modal ol{padding-left:20px;font-size:14px;display:grid;gap:6px;margin:10px 0 16px}
+.modal input{width:100%;border:1.5px solid var(--ink);border-radius:8px;padding:9px 12px;font:inherit;background:#fff}
+.modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.modal .hint{font-size:12.5px;color:var(--mid);margin-top:8px}
+.modal a{font-weight:500}
+
 .reel .zoombtn{position:absolute;top:14px;right:14px;z-index:5}
 .lb .row video.big{max-height:82vh;width:min(1200px,90vw);background:#000}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);z-index:70;background:var(--ink);color:var(--white);
@@ -289,6 +311,15 @@ body.editing .addcard{display:flex}
   </div>
  </div>
 </nav>
+<div id="editbar"><div class="in">
+ <span class="msg"><b>편집 모드</b> · 칸에 파일을 끌어다 놓거나 [올리기], 이름은 ✎ 칸에서 고쳐요. 다 끝나면 <b>[저장하기]</b>를 눌러야 사이트에 올라가요.</span>
+ <span id="conn"></span>
+ <button class="btn sm" id="bulkBtn">여러 파일 한 번에 올리기</button>
+ <button class="btn sm dark" id="saveBtn" disabled>저장하기</button>
+ <button class="btn sm" id="doneBtn">편집 끝내기</button>
+ <button class="btn sm" id="logoutBtn" title="이 브라우저에서 토큰 지우기">연결 해제</button>
+ <div id="status"></div>
+</div></div>
 
 <header class="hero" id="top">
  <div class="damask"></div>
@@ -358,128 +389,216 @@ body.editing .addcard{display:flex}
  </div>
  <div class="mailtxt">hnnin791@gmail.com</div>
 </section>
-<footer>© Yoon Hyemin · 2D Animator</footer>
+<footer>© Yoon Hyemin · 2D Animator <button class="mgr" id="mgrLink">관리</button></footer>
 
+<button class="btn dark" id="manage">✎ 작업물 관리</button>
+<input type="file" id="pick" accept="image/*,video/*" hidden>
+<input type="file" id="bulk" accept="image/*,video/*" multiple hidden>
 
+<div id="toast" role="status"></div>
+<div class="modal" id="tokenModal" role="dialog" aria-modal="true"><div class="panel">
+ <h3>편집 모드 연결 (처음 한 번만)</h3>
+ <p style="font-size:14px">홈페이지에서 바로 작업물을 올리려면, 이 사이트가 내 GitHub 저장소를 수정할 수 있는 <b>열쇠(토큰)</b>가 필요해요. 토큰은 <b>지금 쓰는 이 브라우저에만</b> 저장되고 다른 사람에게는 보이지 않아요.</p>
+ <ol>
+  <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub 토큰 만들기 페이지 ↗</a>를 열어요.</li>
+  <li><b>Token name</b>: 아무 이름(예: portfolio-edit), <b>Expiration</b>: 원하는 기간</li>
+  <li><b>Repository access</b> → <b>Only select repositories</b> → <code>canyo791/portfolio</code></li>
+  <li><b>Permissions → Repository permissions → Contents</b>를 <b>Read and write</b>로 바꿔요.</li>
+  <li>맨 아래 <b>Generate token</b>을 누르고 나온 값(<code>github_pat_…</code>)을 복사해 아래에 붙여 넣어요.</li>
+ </ol>
+ <input id="tokenInput" type="password" placeholder="github_pat_… 붙여 넣기" autocomplete="off">
+ <div class="hint">공용 PC에서는 다 쓴 뒤 편집 바의 [연결 해제]를 눌러 주세요.</div>
+ <div class="acts"><button class="btn sm" id="tokenCancel">닫기</button><button class="btn sm dark" id="tokenOk">연결하기</button></div>
+</div></div>
 <div class="lb" id="lb" role="dialog" aria-modal="true">
  <button class="ctl x" aria-label="닫기">✕</button><button class="ctl prev" aria-label="이전">‹</button>
  <div class="box"></div>
  <button class="ctl next" aria-label="다음">›</button>
 </div>
 
-<script src="content.js"></script>
 <script>
-const P = window.SITE.projects, W = window.SITE.animations;
+/* =========================================================
+   Portfolio renderer + in-page editor (GitHub API)
+   Content lives in content.json; media in media/<folder>/
+   ========================================================= */
+const REPO = "canyo791/portfolio", BRANCH = "main";
 const enc = s => s.split("/").map(encodeURIComponent).join("/");
-const isVid = f => /\.(mp4|webm|mov|m4v)$/i.test(f);
+const isVid = f => /\.(mp4|webm|mov|m4v)$/i.test(f||"");
+const nfc = s => (s||"").normalize("NFC");
 const PH = `<div class="ph"><svg viewBox="0 0 200 200"><use href="#bun"/></svg><small>coming soon</small></div>`;
 const phEl = () => { const d=document.createElement("div"); d.innerHTML=PH; return d.firstChild; };
-const CARDS = [];
-let io = null;
+const TYPES = {gif:1,png:1,jpg:1,jpeg:1,webp:1,mp4:1,webm:1};
+
+let DATA = null;                 // content.json
+const PENDING = new Map();       // repo path -> {blob, url}
+let dirty = false, editing = false, TOKEN = null;
+let CARDS = [];
+let io = new IntersectionObserver(es=>es.forEach(e=>{const v=e.target; e.isIntersecting?v.play().catch(()=>{}):v.pause();}),{rootMargin:"120px"});
+
+const srcOf = (dir,file) => { const p=`media/${dir}/${file}`; return PENDING.has(p) ? PENDING.get(p).url : enc(p); };
 
 function mediaEl(src, reel){
-  if(isVid(src)){
+  if(!src) return phEl();
+  if(isVid(decodeURIComponent(src))){
     const v=document.createElement("video"); v.src=src; v.playsInline=true; v.preload="metadata";
-    if(reel) v.controls=true; else { v.muted=true; v.loop=true; v.dataset.auto="1"; io && io.observe(v); }
+    if(reel) v.controls=true; else { v.muted=true; v.loop=true; io.observe(v); }
     v.addEventListener("error",()=>v.replaceWith(phEl()),{once:true}); return v;
   }
   const i=new Image(); i.loading="lazy"; i.decoding="async"; i.src=src;
   i.addEventListener("error",()=>i.replaceWith(phEl()),{once:true}); return i;
 }
+function mediaFor(dir,file,reel){
+  if(!file) return phEl();
+  const p=`media/${dir}/${file}`;
+  if(PENDING.has(p)){ const u=PENDING.get(p).url;
+    if(isVid(file)){ const v=document.createElement("video"); v.src=u; v.playsInline=true; if(reel) v.controls=true; else {v.muted=true;v.loop=true;io.observe(v);} return v; }
+    const i=new Image(); i.src=u; return i; }
+  return mediaEl(enc(p), reel);
+}
+function ytId(s){ s=(s||"").trim(); const m=s.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/); return m?m[1]:(/^[\w-]{11}$/.test(s)?s:""); }
 function ytEl(id, autoplay){
   const f=document.createElement("iframe");
   f.src=`https://www.youtube-nocookie.com/embed/${id}?rel=0${autoplay?"&autoplay=1":""}`;
-  f.title="YouTube video"; f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen=true; f.loading="lazy";
-  return f;
+  f.title="YouTube video"; f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen=true; f.loading="lazy"; return f;
 }
-function slot(src, reel){ const el=document.createElement("div"); el.className="slot"; el.appendChild(mediaEl(src, reel)); return el; }
 
-function card(label, files, dir){
+/* ---------- editable slot ---------- */
+function makeSlot(dir, get, set, reel){
+  // get(): current file name ; set(name): store new file name ("" clears)
+  const el=document.createElement("div"); el.className="slot";
+  const paint=()=>{ [...el.childNodes].forEach(n=>{ if(!n.classList||!n.classList.contains("eo")) n.remove(); });
+    const m=mediaFor(dir,get(),reel); el.prepend(m); el.classList.toggle("empty",!get()); };
+  el.innerHTML=`<div class="eo"><button class="btn sm up">올리기</button><button class="btn sm clr">비우기</button></div>`;
+  const put=f=>{ if(!accept(f)) return; const name=nfc(f.name); const p=`media/${dir}/${name}`;
+    PENDING.set(p,{blob:f,url:URL.createObjectURL(f)}); set(name); markDirty(); paint(); toast(`"${name}" 넣었어요 · 저장하기를 눌러야 올라가요`); };
+  el.querySelector(".up").onclick=async e=>{ e.stopPropagation(); const f=await chooseFile(); if(f) put(f); };
+  el.querySelector(".clr").onclick=e=>{ e.stopPropagation(); set(""); markDirty(); paint(); };
+  el.addEventListener("dragover",e=>{ if(!editing) return; e.preventDefault(); el.classList.add("drag"); });
+  el.addEventListener("dragleave",()=>el.classList.remove("drag"));
+  el.addEventListener("drop",e=>{ if(!editing) return; e.preventDefault(); e.stopPropagation(); el.classList.remove("drag"); const f=e.dataTransfer.files[0]; if(f) put(f); });
+  paint(); return el;
+}
+function accept(f){
+  const ext=(f.name.split(".").pop()||"").toLowerCase();
+  if(!TYPES[ext]){ toast(`"${f.name}" — gif·png·jpg·webp·mp4·webm만 올릴 수 있어요 (MOV는 MP4로 바꿔 주세요)`,true); return false; }
+  if(f.size>95*1024*1024){ toast(`"${f.name}" — 파일 하나는 95MB 이하여야 해요`,true); return false; }
+  return true;
+}
+
+/* ---------- cards ---------- */
+function card(arr, idx, dir){
+  const item=arr[idx]; let [label, files]=item;
   const list=Array.isArray(files)?files:[files];
-  const srcs=list.map(f=>`media/${dir}/${enc(f)}`);
   const c=document.createElement("div"); c.className="card"+(list.length>1?" pair":"");
   const m=document.createElement("div"); m.className="m";
-  srcs.forEach(s=>m.appendChild(slot(s)));
+  list.forEach((_,j)=>m.appendChild(makeSlot(dir,
+    ()=>Array.isArray(item[1])?item[1][j]:item[1],
+    v=>{ if(Array.isArray(item[1])) item[1][j]=v; else item[1]=v; })));
   c.appendChild(m);
-  const kind=list.some(isVid)?"VIDEO":/\.(png|jpe?g|webp)$/i.test(list[0])?"ART":"GIF";
-  c.insertAdjacentHTML("beforeend",`<span class="zoom">크게 보기 ↗</span><div class="cap"><span class="t"></span><span class="tag">${kind}</span></div>`);
-  c.querySelector(".t").textContent=label;
-  const idx=CARDS.push({srcs,label})-1;
-  c.addEventListener("click",()=>openLB(idx));
+  const f0=list.find(Boolean)||"";
+  const kind=list.some(isVid)?"VIDEO":/\.(png|jpe?g|webp)$/i.test(f0)?"ART":"GIF";
+  c.insertAdjacentHTML("beforeend",`<span class="zoom">크게 보기 ↗</span><div class="cap"><span class="t"></span><label class="ti"><span>✎</span><input type="text" maxlength="60" aria-label="작업물 이름"></label><span class="tag">${kind}</span><button class="del" title="이 칸 삭제">✕</button></div>`);
+  const t=c.querySelector(".t"), inp=c.querySelector(".ti input"); t.textContent=label; inp.value=label;
+  c.querySelector(".ti").addEventListener("click",e=>e.stopPropagation());
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){e.preventDefault();inp.blur();} if(e.key==="Escape"){inp.value=item[0];inp.blur();} });
+  inp.addEventListener("blur",()=>{ const v=inp.value.trim(); if(!v){inp.value=item[0];return;} if(v!==item[0]){ item[0]=v; t.textContent=v; markDirty(); } });
+  c.querySelector(".del").onclick=e=>{ e.stopPropagation(); arr.splice(arr.indexOf(item),1); markDirty(); render(); toast("칸을 지웠어요 · 저장하기를 눌러야 반영돼요"); };
+  const idxC=CARDS.push({label:()=>item[0], dir, files:()=>{const f=item[1];return Array.isArray(f)?f:[f];}})-1;
+  c.addEventListener("click",()=>{ if(!editing) openLB(idxC); });
   return c;
 }
-function grid(items,dir,lg){ const g=document.createElement("div"); g.className="grid"+(lg?" lg":""); items.forEach(([l,f])=>g.appendChild(card(l,f,dir))); return g; }
-function strip(items,dir,wide){ const s=document.createElement("div"); s.className="strip"+(wide?" wide":""); items.forEach(([l,f])=>s.appendChild(card(l,f,dir))); return s; }
-function reel(youtube, src, label){
+function addCard(arr, dir){
+  const b=document.createElement("button"); b.className="addcard"; b.innerHTML="<b style='font-size:22px'>＋</b>작업물 추가";
+  b.onclick=async()=>{ const f=await chooseFile(); if(!f||!accept(f)) return; const name=nfc(f.name);
+    PENDING.set(`media/${dir}/${name}`,{blob:f,url:URL.createObjectURL(f)}); arr.push([name.replace(/\.[^.]+$/,""),name]); markDirty(); render(); };
+  b.addEventListener("dragover",e=>{ if(editing) e.preventDefault(); });
+  b.addEventListener("drop",e=>{ if(!editing) return; e.preventDefault(); e.stopPropagation(); [...e.dataTransfer.files].forEach(f=>{ if(!accept(f)) return; const name=nfc(f.name);
+    PENDING.set(`media/${dir}/${name}`,{blob:f,url:URL.createObjectURL(f)}); arr.push([name.replace(/\.[^.]+$/,""),name]); }); markDirty(); render(); });
+  return b;
+}
+function grid(arr,dir,lg){ const g=document.createElement("div"); g.className="grid"+(lg?" lg":""); arr.forEach((_,i)=>g.appendChild(card(arr,i,dir))); g.appendChild(addCard(arr,dir)); return g; }
+function strip(arr,dir,wide){ const s=document.createElement("div"); s.className="strip"+(wide?" wide":""); arr.forEach((_,i)=>s.appendChild(card(arr,i,dir))); const a=addCard(arr,dir); a.style.flex="0 0 200px"; s.appendChild(a); return s; }
+
+function reel(obj, fileKey, dir, label){
   const r=document.createElement("div"); r.className="fr reel";
-  if(youtube) r.appendChild(ytEl(youtube)); else r.appendChild(slot(src,true));
+  const id=ytId(obj.youtube);
+  if(id) r.appendChild(ytEl(id)); else r.appendChild(makeSlot(dir,()=>obj[fileKey],v=>{obj[fileKey]=v;},true));
   const b=document.createElement("button"); b.className="btn sm dark zoombtn"; b.textContent="크게 보기 ↗";
-  const idx=CARDS.push({youtube, srcs:youtube?[]:[src], label, reel:true})-1;
+  const idx=CARDS.push({label:()=>label, dir, youtube:()=>ytId(obj.youtube), files:()=>[obj[fileKey]], reel:true})-1;
   b.onclick=()=>{ const v=r.querySelector("video"); if(v) v.pause(); openLB(idx); };
-  r.appendChild(b); return r;
+  r.appendChild(b);
+  const wrap=document.createElement("div"); wrap.appendChild(r);
+  wrap.insertAdjacentHTML("beforeend",`<label class="ytin"><span style="font-size:12.5px;white-space:nowrap">유튜브</span><input placeholder="유튜브 주소나 영상 ID (비우면 영상 파일 재생)"></label>`);
+  const yi=wrap.querySelector(".ytin input"); yi.value=obj.youtube||"";
+  yi.addEventListener("change",()=>{ const v=yi.value.trim(); const id2=v?ytId(v):""; if(v&&!id2){ toast("유튜브 주소를 확인해 주세요",true); return; } obj.youtube=id2; markDirty(); render(); });
+  return wrap;
 }
 
-/* ---------- projects ---------- */
-const pb=document.getElementById("projects-body");
-P.forEach(p=>{
-  const s=document.createElement("section"); s.className="project"; s.id=p.id;
-  const chips=p.parts.map(x=>`<span class="${x==="Spine"?"hl":""}">${x}</span>`).join("");
-  s.innerHTML=`<div class="phead"><div>
-     <h3>${p.title} <span class="status ${p.status[1]}">${p.status[0]}</span></h3>
-     <div class="team">${p.team}</div>
-     <div class="facts">
-      ${p.period?`<div class="row"><b>Period</b><span>${p.period}</span></div>`:""}
-      ${p.role?`<div class="row"><b>Role</b><span>${p.role}</span></div>`:""}
-      <div class="row"><b>Part</b><span class="chips">${chips}</span></div>
-      ${p.events?`<div class="row"><b>Event</b><ul class="events">${p.events.map(e=>`<li>${e}</li>`).join("")}</ul></div>`:""}
-     </div>
-     ${p.yt?`<div class="yt"><a class="btn" href="${p.yt}" target="_blank" rel="noopener">▶ 유튜브에서 보기 ↗</a></div>`:""}
-    </div><div class="right"></div></div>`;
-  const right=s.querySelector(".right");
-  if(p.youtube||p.reel) right.appendChild(reel(p.youtube, p.reel?`media/${p.dir}/${enc(p.reel)}`:"", `${p.title} · 플레이 영상`));
-  else if(p.pre){ right.insertAdjacentHTML("beforeend",`<div class="sub" style="margin-top:0">${p.pre.title}</div>`); right.appendChild(strip(p.pre.items,p.dir)); p._pre=1; }
-  if(p.pre&&!p._pre){ const g=document.createElement("div"); g.className="group";
-    g.innerHTML=`<div class="ghead"><h4>${p.pre.title}</h4><span class="rule"></span></div>`; g.appendChild(strip(p.pre.items,p.dir)); s.appendChild(g); }
-  p.groups.forEach(gr=>{
-    const g=document.createElement("div"); g.className="group";
-    const n=gr.items.length+(gr.sub?gr.sub.items.length:0);
-    g.innerHTML=`<div class="ghead"><h4>${gr.ko}</h4><span class="en">${gr.en||""}</span><span class="rule"></span><span class="ct">${n} motions</span></div>`+(gr.note?`<p class="note">${gr.note}</p>`:"");
-    g.appendChild(grid(gr.items,p.dir,gr.lg));
-    if(gr.sub){ g.insertAdjacentHTML("beforeend",`<div class="sub">${gr.sub.title}</div>`); g.appendChild(grid(gr.sub.items,p.dir)); }
-    if(gr.strip){ g.insertAdjacentHTML("beforeend",`<div class="sub">${gr.strip.title}</div>`); g.appendChild(strip(gr.strip.items,p.dir,gr.strip.wide)); }
-    s.appendChild(g);
+/* ---------- render ---------- */
+function render(){
+  CARDS=[];
+  const P=DATA.projects, W=DATA.animations;
+  const pb=document.getElementById("projects-body"); pb.innerHTML="";
+  P.forEach(p=>{
+    const s=document.createElement("section"); s.className="project"; s.id=p.id;
+    const chips=p.parts.map(x=>`<span class="${x==="Spine"?"hl":""}">${x}</span>`).join("");
+    const ytUrl=p.youtube?`https://youtu.be/${p.youtube}`:p.yt;
+    s.innerHTML=`<div class="phead"><div>
+       <h3>${p.title} <span class="status ${p.status[1]}">${p.status[0]}</span></h3>
+       <div class="team">${p.team}</div>
+       <div class="facts">
+        ${p.period?`<div class="row"><b>Period</b><span>${p.period}</span></div>`:""}
+        ${p.role?`<div class="row"><b>Role</b><span>${p.role}</span></div>`:""}
+        <div class="row"><b>Part</b><span class="chips">${chips}</span></div>
+        ${p.events?`<div class="row"><b>Event</b><ul class="events">${p.events.map(e=>`<li>${e}</li>`).join("")}</ul></div>`:""}
+       </div>
+       ${ytUrl?`<div class="yt"><a class="btn" href="${ytUrl}" target="_blank" rel="noopener">▶ 유튜브에서 보기 ↗</a></div>`:""}
+      </div><div class="right"></div></div>`;
+    const right=s.querySelector(".right"); let preDone=false;
+    if(p.youtube||p.reel!==undefined) right.appendChild(reel(p,"reel",p.dir,`${p.title} · 플레이 영상`));
+    else if(p.pre){ right.insertAdjacentHTML("beforeend",`<div class="sub" style="margin-top:0">${p.pre.title}</div>`); right.appendChild(strip(p.pre.items,p.dir)); preDone=true; }
+    if(p.pre&&!preDone){ const g=document.createElement("div"); g.className="group";
+      g.innerHTML=`<div class="ghead"><h4>${p.pre.title}</h4><span class="rule"></span></div>`; g.appendChild(strip(p.pre.items,p.dir)); s.appendChild(g); }
+    p.groups.forEach(gr=>{
+      const g=document.createElement("div"); g.className="group";
+      const n=gr.items.length+(gr.sub?gr.sub.items.length:0);
+      g.innerHTML=`<div class="ghead"><h4>${gr.ko}</h4><span class="en">${gr.en||""}</span><span class="rule"></span><span class="ct">${n} motions</span></div>`+(gr.note?`<p class="note">${gr.note}</p>`:"");
+      g.appendChild(grid(gr.items,p.dir,gr.lg));
+      if(gr.sub){ g.insertAdjacentHTML("beforeend",`<div class="sub">${gr.sub.title}</div>`); g.appendChild(grid(gr.sub.items,p.dir)); }
+      if(gr.strip){ g.insertAdjacentHTML("beforeend",`<div class="sub">${gr.strip.title}</div>`); g.appendChild(strip(gr.strip.items,p.dir,gr.strip.wide)); }
+      s.appendChild(g);
+    });
+    pb.appendChild(s);
   });
-  pb.appendChild(s);
-});
-
-/* ---------- animation works ---------- */
-const wb=document.getElementById("works-body");
-W.forEach((w,i)=>{
-  const d=document.createElement("article"); d.className="work"+(i%2?" rev":"");
-  d.appendChild(reel(w.youtube, `media/animation/${enc(w.file)}`, w.ko));
-  const t=document.createElement("div");
-  t.innerHTML=`<div class="en">${w.en}</div><h3>${w.ko}</h3><span class="period">제작기간 ${w.period}</span>
-   <div class="facts">${w.role?`<div class="row"><b>Role</b><span>${w.role}</span></div>`:""}${w.task?`<div class="row"><b>Task</b><span>${w.task}</span></div>`:""}
-   <div class="row"><b>Tools</b><span>${w.tools}</span></div>${w.ai?`<div class="row"><b>AI</b><span>${w.ai}</span></div>`:""}</div>`;
-  if(w.extra){ const e=document.createElement("div"); e.className="extra";
-    e.innerHTML=`<div class="sub" style="margin:0 0 8px">${w.extra.label} · ${w.extra.period}</div>`;
-    e.appendChild(card(w.extra.label,w.extra.file,"animation")); t.appendChild(e); }
-  d.appendChild(t); wb.appendChild(d);
-});
-
-io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target; e.isIntersecting?v.play().catch(()=>{}):v.pause();}),{rootMargin:"120px"});
-document.querySelectorAll("video[data-auto]").forEach(v=>io.observe(v));
+  const wb=document.getElementById("works-body"); wb.innerHTML="";
+  W.forEach((w,i)=>{
+    const d=document.createElement("article"); d.className="work"+(i%2?" rev":"");
+    const rv=reel(w,"file","animation",w.ko); rv.classList.add("reelwrap"); d.appendChild(rv);
+    const t=document.createElement("div");
+    t.innerHTML=`<div class="en">${w.en}</div><h3>${w.ko}</h3><span class="period">제작기간 ${w.period}</span>
+     <div class="facts">${w.role?`<div class="row"><b>Role</b><span>${w.role}</span></div>`:""}${w.task?`<div class="row"><b>Task</b><span>${w.task}</span></div>`:""}
+     <div class="row"><b>Tools</b><span>${w.tools}</span></div>${w.ai?`<div class="row"><b>AI</b><span>${w.ai}</span></div>`:""}</div>`;
+    if(w.extra){ const e=document.createElement("div"); e.className="extra";
+      e.innerHTML=`<div class="sub" style="margin:0 0 8px">${w.extra.label} · ${w.extra.period}</div>`;
+      const it={get 0(){return w.extra.label}, set 0(v){w.extra.label=v}, get 1(){return w.extra.file}, set 1(v){w.extra.file=v}, *[Symbol.iterator](){ yield w.extra.label; yield w.extra.file; }};
+      const c=card([it],0,"animation"); c.querySelector(".del").style.display="none";
+      e.appendChild(c); t.appendChild(e); }
+    d.appendChild(t); wb.appendChild(d);
+  });
+  observeNav();
+}
 
 /* ---------- lightbox ---------- */
 const lb=document.getElementById("lb"), box=lb.querySelector(".box"); let cur=0;
 function openLB(i){
   cur=(i+CARDS.length)%CARDS.length; const it=CARDS[cur];
   box.innerHTML=""; const row=document.createElement("div"); row.className="row";
-  if(it.youtube) row.appendChild(ytEl(it.youtube,true));
-  else it.srcs.forEach(src=>{ const el=mediaEl(src,true);
+  const yid=it.youtube&&it.youtube();
+  if(yid) row.appendChild(ytEl(yid,true));
+  else it.files().forEach(f=>{ const el=mediaFor(it.dir,f,true);
     if(el.tagName==="VIDEO"){ el.controls=true; el.loop=!it.reel; if(it.reel) el.classList.add("big"); else el.muted=true; el.play().catch(()=>{}); }
     row.appendChild(el); });
-  box.appendChild(row); const t=document.createElement("div"); t.className="t"; t.textContent=it.label; box.appendChild(t);
+  box.appendChild(row); const t=document.createElement("div"); t.className="t"; t.textContent=it.label(); box.appendChild(t);
   lb.classList.add("on");
 }
 const closeLB=()=>{ lb.classList.remove("on"); box.innerHTML=""; };
@@ -488,10 +607,101 @@ lb.addEventListener("click",e=>{ if(e.target===lb) closeLB(); });
 addEventListener("keydown",e=>{ if(!lb.classList.contains("on")) return; if(e.key==="Escape") closeLB(); if(e.key==="ArrowLeft") openLB(cur-1); if(e.key==="ArrowRight") openLB(cur+1); });
 
 /* ---------- nav ---------- */
-const links=[...document.querySelectorAll("nav.top .links a")];
-const so=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id)); }),{rootMargin:"-45% 0px -50% 0px"});
-["hallow-stone","devi-rush","project-vs","animation","contact"].forEach(id=>{ const el=document.getElementById(id); if(el) so.observe(el); });
+const links=[...document.querySelectorAll("nav.top .links a")]; let so=null;
+function observeNav(){ if(so) so.disconnect();
+  so=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id)); }),{rootMargin:"-45% 0px -50% 0px"});
+  ["hallow-stone","devi-rush","project-vs","animation","contact"].forEach(id=>{ const el=document.getElementById(id); if(el) so.observe(el); }); }
 document.getElementById("copyMail").onclick=async e=>{ try{ await navigator.clipboard.writeText("hnnin791@gmail.com"); e.target.textContent="복사했어요 ✓"; }catch{ e.target.textContent="hnnin791@gmail.com"; } };
+
+/* ---------- toast ---------- */
+let tt; function toast(msg,err){ const t=document.getElementById("toast"); t.textContent=msg; t.className=(err?"err ":"")+"on"; clearTimeout(tt); tt=setTimeout(()=>t.className=err?"err":"",err?8000:2600); }
+const statusEl=document.getElementById("status");
+function say(msg){ statusEl.style.display=msg?"block":"none"; statusEl.textContent=msg||""; }
+
+/* ---------- edit mode ---------- */
+const saveBtn=document.getElementById("saveBtn");
+function markDirty(){ dirty=true; const n=PENDING.size; saveBtn.disabled=false; saveBtn.textContent=`저장하기${n?` (파일 ${n}개)`:""}`; }
+addEventListener("beforeunload",e=>{ if(dirty){ e.preventDefault(); e.returnValue=""; } });
+const pick=document.createElement("input"); pick.type="file"; pick.accept="image/*,video/*"; pick.hidden=true; document.body.appendChild(pick);
+function chooseFile(){ return new Promise(res=>{ pick.value=""; pick.onchange=()=>res(pick.files[0]||null); pick.click(); }); }
+
+function enterEdit(){ editing=true; document.body.classList.add("editing"); }
+function exitEdit(){ if(dirty && !confirmLeave()) return; editing=false; document.body.classList.remove("editing"); say(""); }
+let leaveArmed=false;
+function confirmLeave(){ if(leaveArmed){ leaveArmed=false; return true; } leaveArmed=true; toast("저장 안 한 변경이 있어요. 그래도 끝내려면 [편집 끝내기]를 한 번 더 누르세요.",true); setTimeout(()=>leaveArmed=false,5000); return false; }
+document.getElementById("doneBtn").onclick=exitEdit;
+document.getElementById("manage").onclick=enterEdit;
+
+const modal=document.getElementById("tokenModal");
+function openToken(){ modal.classList.add("on"); document.getElementById("tokenInput").focus(); }
+document.getElementById("mgrLink").onclick=()=>{ TOKEN?(enterEdit(),scrollTo({top:0})):openToken(); };
+document.getElementById("tokenCancel").onclick=()=>modal.classList.remove("on");
+document.getElementById("tokenOk").onclick=async()=>{
+  const v=document.getElementById("tokenInput").value.trim(); if(!v) return;
+  try{ const r=await gh(`/repos/${REPO}`,{},v); if(!r.permissions||!r.permissions.push) throw new Error("이 토큰에는 쓰기 권한이 없어요. Contents를 Read and write로 해 주세요.");
+    TOKEN=v; try{localStorage.setItem("gh_token",v);}catch{} modal.classList.remove("on"); document.getElementById("tokenInput").value="";
+    showManage(); enterEdit(); toast("✓ 연결됐어요. 이제 편집할 수 있어요");
+  }catch(e){ toast("연결 실패: "+(e.message||e),true); }
+};
+document.getElementById("logoutBtn").onclick=()=>{ try{localStorage.removeItem("gh_token");}catch{} TOKEN=null; editing=false; document.body.classList.remove("editing"); document.getElementById("manage").style.display="none"; toast("이 브라우저에서 연결을 해제했어요"); };
+function showManage(){ document.getElementById("manage").style.display="inline-flex"; document.getElementById("conn").textContent="GitHub 연결됨 ✓"; }
+
+/* bulk: match by file name */
+const bulk=document.createElement("input"); bulk.type="file"; bulk.multiple=true; bulk.accept="image/*,video/*"; bulk.hidden=true; document.body.appendChild(bulk);
+document.getElementById("bulkBtn").onclick=()=>bulk.click();
+bulk.onchange=()=>{
+  const files=[...bulk.files]; bulk.value=""; if(!files.length) return;
+  const index=new Map(); // name(lower) -> [dir]
+  const reg=(dir,f)=>{ if(!f) return; const k=nfc(f).toLowerCase(); (index.get(k)||index.set(k,[]).get(k)).push(dir); };
+  const walk=(arr,dir)=>arr.forEach(([,f])=>(Array.isArray(f)?f:[f]).forEach(x=>reg(dir,x)));
+  DATA.projects.forEach(p=>{ if(p.reel) reg(p.dir,p.reel); if(p.pre) walk(p.pre.items,p.dir); p.groups.forEach(g=>{ walk(g.items,p.dir); if(g.sub) walk(g.sub.items,p.dir); if(g.strip) walk(g.strip.items,p.dir); }); });
+  DATA.animations.forEach(w=>{ reg("animation",w.file); if(w.extra) reg("animation",w.extra.file); });
+  let ok=0; const miss=[];
+  files.forEach(f=>{ if(!accept(f)) return; const dirs=index.get(nfc(f.name).toLowerCase()); if(!dirs){ miss.push(f.name); return; }
+    const url=URL.createObjectURL(f); [...new Set(dirs)].forEach(d=>PENDING.set(`media/${d}/${nfc(f.name)}`,{blob:f,url})); ok++; });
+  if(ok){ markDirty(); render(); }
+  toast(`${ok}개를 제자리에 넣었어요 · 저장하기를 눌러야 올라가요`);
+  say(miss.length?`이름이 맞는 칸이 없어 건너뛴 파일 ${miss.length}개: ${miss.slice(0,10).join(", ")}${miss.length>10?" …":""} — 칸에 직접 끌어다 놓거나 [＋ 작업물 추가]로 넣어 주세요.`:"");
+};
+
+/* ---------- GitHub save: one commit for everything ---------- */
+async function gh(path, opt={}, token=TOKEN){
+  const r=await fetch("https://api.github.com"+path,{...opt,headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer "+token,...(opt.body?{"Content-Type":"application/json"}:{})}});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){ const m=r.status===401?"토큰이 만료됐거나 잘못됐어요. [연결 해제] 후 다시 연결해 주세요.":r.status===403?"권한이 없어요(Contents: Read and write 확인).":(j.message||("오류 "+r.status)); throw new Error(m); }
+  return j;
+}
+const b64=blob=>new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(String(fr.result).split(",")[1]); fr.onerror=rej; fr.readAsDataURL(blob); });
+const b64text=s=>b64(new Blob([s],{type:"text/plain"}));
+saveBtn.onclick=async()=>{
+  if(!TOKEN){ openToken(); return; }
+  saveBtn.disabled=true; const total=PENDING.size;
+  try{
+    say("저장 준비 중…");
+    const ref=await gh(`/repos/${REPO}/git/ref/heads/${BRANCH}`);
+    const base=await gh(`/repos/${REPO}/git/commits/${ref.object.sha}`);
+    const tree=[]; let i=0;
+    for(const [path,{blob}] of PENDING){ i++; say(`파일 올리는 중 ${i}/${total} · ${path.split("/").pop()}`);
+      const bl=await gh(`/repos/${REPO}/git/blobs`,{method:"POST",body:JSON.stringify({content:await b64(blob),encoding:"base64"})});
+      tree.push({path,mode:"100644",type:"blob",sha:bl.sha}); }
+    say("내용 저장 중…");
+    const cj=await gh(`/repos/${REPO}/git/blobs`,{method:"POST",body:JSON.stringify({content:await b64text(JSON.stringify(DATA,null,1)),encoding:"base64"})});
+    tree.push({path:"content.json",mode:"100644",type:"blob",sha:cj.sha});
+    const nt=await gh(`/repos/${REPO}/git/trees`,{method:"POST",body:JSON.stringify({base_tree:base.tree.sha,tree})});
+    const nc=await gh(`/repos/${REPO}/git/commits`,{method:"POST",body:JSON.stringify({message:`홈페이지에서 편집: 파일 ${total}개`,tree:nt.sha,parents:[ref.object.sha]})});
+    await gh(`/repos/${REPO}/git/refs/heads/${BRANCH}`,{method:"PATCH",body:JSON.stringify({sha:nc.sha})});
+    PENDING.clear(); dirty=false; saveBtn.textContent="저장하기"; saveBtn.disabled=true;
+    say(""); toast("✓ 저장했어요! 1~2분 뒤 모든 사람에게 보여요");
+  }catch(e){ saveBtn.disabled=false; say(""); toast("저장 실패: "+(e.message||e),true); }
+};
+
+/* ---------- boot ---------- */
+addEventListener("dragover",e=>{ if(editing) e.preventDefault(); });
+addEventListener("drop",e=>{ if(editing&&!e.target.closest(".slot,.addcard")){ e.preventDefault(); toast("파일을 원하는 칸 위에 놓아 주세요."); } });
+try{ TOKEN=localStorage.getItem("gh_token"); }catch{}
+if(TOKEN) showManage();
+fetch("content.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.json()).then(d=>{ DATA=d; render(); if(location.hash){ const el=document.getElementById(location.hash.slice(1)); el&&el.scrollIntoView(); } })
+  .catch(()=>{ document.getElementById("projects-body").innerHTML='<p style="padding:40px 0">내용을 불러오지 못했어요. 새로고침해 주세요.</p>'; });
 </script>
 </body>
 </html>
