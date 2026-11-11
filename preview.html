@@ -499,6 +499,37 @@ html,body{overflow-x:clip}
 .pgdots button.on{background:#f6d9e1;width:24px;border-radius:99px}
 .showcase .screen .slot img{width:100%;height:100%;object-fit:contain;background:#fff}
 @media (max-width:860px){.pgarrow{width:40px;height:48px;top:auto;bottom:70px;transform:none}.pgarrow:hover{transform:none}.pgarrow span{display:none}}
+
+/* ===== home: showreel + selected work ===== */
+.page[data-page="home"] .hero{min-height:0;display:block}
+.page[data-page="home"] .hero .in{grid-template-columns:.82fr 1.18fr;gap:48px;padding:64px 24px 56px;max-width:1280px}
+.hreel{position:relative;z-index:1}
+.hr-frame{position:relative;border-radius:14px;overflow:hidden;background:#111;aspect-ratio:16/9;box-shadow:0 26px 50px -28px rgba(0,0,0,.55)}
+.hr-frame iframe,.hr-frame video{display:block;width:100%;height:100%;border:0}
+.hr-frame .slot{position:absolute;inset:0;background:#fff}
+.hr-frame .slot img{width:100%;height:100%;object-fit:contain}
+.hr-frame .zoombtn{position:absolute;top:12px;right:12px;z-index:5}
+.hr-cap{font-family:var(--serif);font-style:italic;font-size:18px;margin-top:10px;color:#333}
+.hwork{max-width:1280px;padding:0 24px 90px}
+.hw-head{display:flex;align-items:baseline;gap:16px;border-top:1px solid #cfc9cb;padding-top:36px;margin-bottom:22px}
+.hw-head h2{font-family:var(--serif);font-weight:600;font-size:clamp(32px,3.6vw,44px);line-height:1}
+.hw-head .hw-sub{font-family:var(--kserif);font-size:14px;color:var(--mid)}
+.hw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pw{display:block;text-decoration:none;color:inherit;cursor:pointer}
+.pw-media{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#111;transition:transform .25s,box-shadow .25s}
+.pw-media iframe{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);border:0;pointer-events:none}
+.pw-media video,.pw-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pw-media .ph{position:absolute;inset:0;background-color:#fff}
+.pw-media::after{content:"";position:absolute;inset:0;border-radius:10px;box-shadow:inset 0 0 0 3px var(--pwc,transparent);opacity:0;transition:.25s}
+.pw:hover .pw-media{transform:translateY(-4px);box-shadow:0 18px 30px -18px rgba(0,0,0,.55)}
+.pw:hover .pw-media::after{opacity:1}
+.pw-cap{display:flex;align-items:baseline;gap:10px;margin-top:10px}
+.pw-cap b{font-family:var(--serif);font-style:italic;font-weight:600;font-size:22px}
+.pw-cap span{font-size:12px;color:var(--mid)}
+.pw-cap i{margin-left:auto;font-style:normal;font-size:13px;font-weight:500;opacity:0;transform:translateX(-4px);transition:.2s}
+.pw:hover .pw-cap i{opacity:1;transform:none}
+.pw .bar{height:3px;width:34px;border-radius:2px;background:var(--pwc,#111);margin-top:6px}
+@media (max-width:860px){.page[data-page="home"] .hero .in{grid-template-columns:1fr}.hreel{order:-1}.hw-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -580,28 +611,10 @@ html,body{overflow-x:clip}
     <a class="btn" href="#animation">애니메이션 작업물 →</a>
    </div>
   </div>
-  <div class="oval" aria-hidden="true">
-   <div class="oglow"></div>
-   <svg class="frame" viewBox="0 0 380 500" fill="none" stroke="#111">
-    <ellipse cx="190" cy="262" rx="176" ry="228" stroke-width="1.6"/>
-    <ellipse cx="190" cy="262" rx="166" ry="218" stroke-width="5" stroke-dasharray="0 10" stroke-linecap="round"/>
-    <ellipse cx="190" cy="262" rx="156" ry="208" stroke-width="1"/>
-    <ellipse cx="190" cy="262" rx="150" ry="202" stroke-width=".6"/>
-    <g transform="translate(130 0)" style="color:#111"><use href="#bow" width="120" height="70"/></g>
-    <g fill="#111" stroke="none" style="color:#111">
-     <use href="#spark" x="-2" y="80" width="18" height="18"/><use href="#spark" x="362" y="420" width="16" height="16"/>
-     <use href="#spark" x="352" y="100" width="10" height="10"/><use href="#spark" x="12" y="440" width="10" height="10"/>
-    </g>
-    <g transform="translate(176 474)" style="color:#111"><use href="#cross" width="28" height="42"/></g>
-   </svg>
-   <div class="inner">
-    <div class="mirror">2D Animator</div>
-    <svg class="bunny" viewBox="0 0 96 140" style="color:#111"><use href="#bunh" width="96" height="140"/></svg>
-    <div class="sig">Yoon Hyemin</div>
-   </div>
-  </div>
+  <div class="hreel" id="homeReel"></div>
  </div>
 </header>
+<section class="wrap hwork"><div class="hw-head"><h2 class="ed" data-home="title"></h2><span class="hw-sub ed" data-home="sub"></span></div><div class="hw-grid" id="homeWork"></div></section>
 
 </div>
 <div id="proj-pages"></div>
@@ -841,6 +854,39 @@ const THEMES={
    <svg class="d" style="right:12%;top:150px;width:26px;height:26px;color:#ffd23f" viewBox="-10 -10 20 20"><path d="M0-10C1-2 2-1 10 0 2 1 1 2 0 10-1 2-2 1-10 0-2-1-1-2 0-10z" fill="currentColor"/></svg>`}
 };
 
+
+/* ---------- home: showreel + selected work ---------- */
+const PWC={"hallow-stone":"#f5a25a","devi-rush":"#ff3d79","project-vs":"#35b7e5"};
+function renderHome(){
+  const H=DATA.home=Object.assign({youtube:"",file:"",caption:"Animation Showreel",title:"Selected Work",sub:"참여 게임 프로젝트"},DATA.home||{});
+  const box=document.getElementById("homeReel"); box.innerHTML="";
+  const fr=document.createElement("div"); fr.className="hr-frame";
+  const id=ytId(H.youtube);
+  if(id) fr.appendChild(ytEl(id)); else fr.appendChild(makeSlot("home",()=>H.file,v=>{H.file=v;},true));
+  const zb=document.createElement("button"); zb.className="btn sm dark zoombtn"; zb.textContent="크게 보기 ↗";
+  const idx=CARDS.push({label:()=>H.caption||"Showreel", dir:"home", youtube:()=>ytId(H.youtube), files:()=>[H.file], reel:true})-1;
+  zb.onclick=()=>{ const v=fr.querySelector("video"); if(v) v.pause(); openLB(idx); };
+  fr.appendChild(zb); box.appendChild(fr);
+  box.insertAdjacentHTML("beforeend",`<div class="hr-cap">${E(H,"caption")}</div><label class="ytin"><span style="font-size:12.5px;white-space:nowrap">유튜브</span><input placeholder="쇼릴 유튜브 주소 (비우면 영상 파일 재생)"></label>`);
+  const yi=box.querySelector(".ytin input"); yi.value=H.youtube||"";
+  yi.addEventListener("change",()=>{ const v=yi.value.trim(); const id2=v?ytId(v):""; if(v&&!id2){ toast("유튜브 주소를 확인해 주세요",true); return; } H.youtube=id2; markDirty(); render(); });
+  hydrate(box);
+  document.querySelectorAll("[data-home]").forEach(el=>{ const n=el.cloneNode(false); el.replaceWith(n); bindText(n,H,el.dataset.home); });
+  const g=document.getElementById("homeWork"); g.innerHTML="";
+  DATA.projects.forEach(p=>{
+    const a=document.createElement("a"); a.className="pw"; a.href="#"+p.id; a.style.setProperty("--pwc",PWC[p.id]||"#111");
+    const m=document.createElement("div"); m.className="pw-media";
+    const yid=ytId(p.youtube);
+    if(yid){ const f=document.createElement("iframe"); f.src=`https://www.youtube-nocookie.com/embed/${yid}?autoplay=1&mute=1&loop=1&playlist=${yid}&controls=0&modestbranding=1&rel=0&playsinline=1`; f.allow="autoplay; encrypted-media"; f.loading="lazy"; f.tabIndex=-1; f.title=p.title; m.appendChild(f); }
+    else if(p.reel){ m.appendChild(mediaFor(p.dir,p.reel,false)); }
+    else m.appendChild(phEl());
+    a.appendChild(m);
+    a.insertAdjacentHTML("beforeend",`<div class="pw-cap"><b></b><span></span><i>보러 가기 →</i></div><div class="bar"></div>`);
+    a.querySelector(".pw-cap b").textContent=p.title; a.querySelector(".pw-cap span").textContent=p.team||"";
+    g.appendChild(a);
+  });
+}
+
 /* ---------- render ---------- */
 function render(){
   CARDS=[]; B=[]; REELNO=0;
@@ -900,6 +946,7 @@ function render(){
       e.appendChild(c); t.appendChild(e); }
     d.appendChild(t); hydrate(d); wb.appendChild(d);
   });
+  renderHome();
   setupPages();
 }
 
