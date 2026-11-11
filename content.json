@@ -548,12 +548,16 @@
     "title": "원화 작업물",
     "items": [
      [
+      "화가 리소스",
+      "1105_화가 리소스.png"
+     ],
+     [
       "PC6 Draft",
-      "PC6_Draft.png"
+      "PC6_Draft_Develop4.png"
      ],
      [
       "PC6 Develop 2",
-      "PC6_Draft_Develop2.png"
+      "PC6_Draft_Develop5.png"
      ],
      [
       "PC6 Develop 3",
@@ -561,11 +565,11 @@
      ],
      [
       "PC6 Develop 4",
-      "PC6_Draft_Develop4.png"
+      "PC6_Draft.png"
      ],
      [
       "PC6 Develop 5",
-      "PC6_Draft_Develop5.png"
+      "PC6_Draft_Develop2.png"
      ],
      [
       "화가 표정 바리에이션",
@@ -586,10 +590,6 @@
      [
       "PC3 Develop 3",
       "PC3_Draft_Develop3.png"
-     ],
-     [
-      "화가 리소스",
-      "1105_화가_리소스.png"
      ]
     ]
    },
