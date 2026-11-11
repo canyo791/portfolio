@@ -462,7 +462,7 @@
       ],
       [
        "idle_skill",
-       "1204_손키스.gif"
+       "1204_손키스_단일.gif"
       ],
       [
        "attack",
@@ -480,51 +480,51 @@
      "items": [
       [
        "A · idle",
-       "m1_아이들.gif"
+       "아이들.gif"
       ],
       [
        "A · attack",
-       "m1_1205_공격.gif"
+       "박쥐_공격.gif"
       ],
       [
        "A · hit1",
-       "m1_1205_스턴.gif"
+       "박쥐_스턴.gif"
       ],
       [
        "A · hit2",
-       "m1_1205_피격2.gif"
+       "박쥐_사망2.gif"
       ],
       [
        "B · idle",
-       "m2_아이들.gif"
+       "박쥐_아이들.gif"
       ],
       [
        "B · attack",
-       "m2_1205_공격.gif"
+       "1205_공격.gif"
       ],
       [
        "B · hit1",
-       "m2_1205_스턴.gif"
+       "1205_스턴.gif"
       ],
       [
        "B · hit2",
-       "m2_1205_사망2.gif"
+       "1205_피격2.gif"
       ],
       [
        "C · idle",
-       "1202_idle.gif"
+       "쥐_idle.gif"
       ],
       [
        "C · attack",
-       "attack.gif"
+       "쥐_attack.gif"
       ],
       [
        "C · hit1",
-       "attacked_stun_ef.gif"
+       "쥐_attacked_stun_ef.gif"
       ],
       [
        "C · hit2",
-       "attacked_stun_die.gif"
+       "쥐_attacked_stun_die.gif"
       ]
      ]
     }
