@@ -295,15 +295,20 @@ nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--in
 .tools span.k,.chips span.hl{background:var(--pink);color:var(--ink);border-color:var(--ink)}
 .status.live{background:var(--pink);color:var(--ink);border-color:var(--ink)}
 .sub::before,.events li::before{color:var(--pink-ink)}
-.ghead .rule{background:radial-gradient(circle,var(--pink-2) 1.6px,transparent 2px) 0 50%/10px 10px repeat-x;opacity:1}
+.ghead .rule{height:1px;background:linear-gradient(90deg,var(--ink),rgba(17,17,17,.15));opacity:.55;position:relative}
+.ghead .rule::after{content:"";position:absolute;right:-2px;top:50%;width:7px;height:7px;background:var(--pink-ink);transform:translateY(-50%) rotate(45deg)}
 .card:hover .cap{background:var(--pink);color:var(--ink)}
 .card .zoom{background:var(--pink);color:var(--ink);border:1.5px solid var(--ink)}
-.band{background:var(--ink);position:relative;overflow:hidden}
+.band{background:radial-gradient(ellipse 45% 120% at 50% 50%,rgba(255,255,255,.07),transparent 70%),var(--ink);position:relative;overflow:hidden}
+.band .damask{filter:invert(1);opacity:.06}
+.band .in{position:relative;z-index:1}
+.band .ko{display:inline-flex;align-items:center;gap:10px}
+.band .ko::before{content:"";width:16px;height:16px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3E%3Cpath d='M0-10C1-2 2-1 10 0 2 1 1 2 0 10-1 2-2 1-10 0-2-1-1-2 0-10z' fill='%23f6d9e1'/%3E%3C/svg%3E") center/contain no-repeat}
 .band .no{color:var(--pink);opacity:1}
 .band .ko{color:var(--pink);opacity:1}
-.band::after{content:"";position:absolute;right:6%;top:50%;width:46px;height:46px;transform:translateY(-50%);
+.band::after{display:none;content:"";
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3E%3Cpath d='M0-10C1-2 2-1 10 0 2 1 1 2 0 10-1 2-2 1-10 0-2-1-1-2 0-10z' fill='%23f6d9e1'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.9}
-.project{border-bottom:1px dashed var(--pink-2)}
+.project{border-bottom:1px solid var(--line)}
 .contact{background:radial-gradient(ellipse 50% 60% at 50% 40%,rgba(246,217,225,.18),transparent 70%),var(--ink)}
 .contact h2{color:var(--pink)}
 
@@ -464,10 +469,10 @@ nav.top .links a.on:hover{background:var(--ink);color:#fff;border-color:var(--in
  </div>
 </header>
 
-<section class="band" id="projects"><div class="in"><span class="no">01</span><h2 class="ed" data-sec="projects.en"></h2><span class="ko ed" data-sec="projects.ko"></span></div></section>
+<section class="band" id="projects"><div class="damask"></div><div class="in"><span class="no">01</span><h2 class="ed" data-sec="projects.en"></h2><span class="ko ed" data-sec="projects.ko"></span></div></section>
 <main class="wrap" id="projects-body"></main>
 
-<section class="band" id="animation"><div class="in"><span class="no">02</span><h2 class="ed" data-sec="animation.en"></h2><span class="ko ed" data-sec="animation.ko"></span></div></section>
+<section class="band" id="animation"><div class="damask"></div><div class="in"><span class="no">02</span><h2 class="ed" data-sec="animation.en"></h2><span class="ko ed" data-sec="animation.ko"></span></div></section>
 <section class="wrap"><div class="works" id="works-body"></div></section>
 
 <section class="contact" id="contact">
