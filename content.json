@@ -299,11 +299,11 @@
      "items": [
       [
        "Loading 1",
-       "loading_1.gif"
+       "loading1.gif"
       ],
       [
        "Loading 2",
-       "loading_2.gif"
+       "loading2.gif"
       ],
       [
        "Transition1",
@@ -316,15 +316,15 @@
       "items": [
        [
         "화면전환 1",
-        "0519_화면전환1.png"
+        "화면전환1.png"
        ],
        [
         "로딩화면 1",
-        "0521_로딩화면1.png"
+        "로딩화면1.png"
        ],
        [
         "로딩화면 2",
-        "0521_로딩화면2.png"
+        "로딩화면2.png"
        ]
       ]
      }
