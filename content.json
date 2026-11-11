@@ -654,7 +654,8 @@
       ]
      ]
     }
-   ]
+   ],
+   "reel": "캐릭터 액세서리 디자인 시트.png"
   }
  ],
  "animations": [
@@ -701,5 +702,12 @@
    "en": "Animation Works",
    "ko": "애니메이션 작업물"
   }
+ },
+ "home": {
+  "youtube": "",
+  "file": "",
+  "caption": "Animation Showreel",
+  "title": "Selected Work",
+  "sub": "참여 게임 프로젝트"
  }
 }
