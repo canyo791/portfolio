@@ -226,15 +226,15 @@
      "items": [
       [
        "Move",
-       "move.gif"
+       "spider_minion_move.webp"
       ],
       [
        "Boom_ver1",
-       "Boom_ver1.gif"
+       "spider_minion_pre_explode.webp"
       ],
       [
        "Boom_ver2",
-       "Boom_ver2.gif"
+       "spider_minion_jump.webp"
       ],
       [
        "Spawn_idle",
@@ -243,6 +243,14 @@
       [
        "Spawn",
        "1017_Spiderling_Spawn.gif"
+      ],
+      [
+       "Arachne_skill5_mouth_charge",
+       "Arachne_skill5_mouth_charge.webp"
+      ],
+      [
+       "Arachne_skill5_mouth_charge_idle",
+       "Arachne_skill5_mouth_charge_idle.webp"
       ],
       [
        "Arachne_Groggy",
