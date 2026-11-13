@@ -237,19 +237,11 @@
        "spider_minion_jump.webp"
       ],
       [
-       "Spawn_idle",
-       "1017_Spiderling_Spawn_idle.gif"
-      ],
-      [
        "Spawn",
-       "1017_Spiderling_Spawn.gif"
-      ],
-      [
-       "Arachne_skill5_mouth_charge",
        "Arachne_skill5_mouth_charge.webp"
       ],
       [
-       "Arachne_skill5_mouth_charge_idle",
+       "Spawn_idle",
        "Arachne_skill5_mouth_charge_idle.webp"
       ],
       [
@@ -763,6 +755,40 @@
    "hallow-stone",
    "devi-rush",
    "anim:0"
+  ]
+ },
+ "profile": {
+  "eyebrow": "Portfolio — 2D Animator",
+  "first": "Yoon",
+  "last": "Hyemin",
+  "kname": "윤혜민",
+  "pill": "2D ANIMATOR",
+  "email": "hnnin791@gmail.com",
+  "tools": [
+   [
+    "Spine 2D",
+    1
+   ],
+   [
+    "Clip Studio",
+    0
+   ],
+   [
+    "Photoshop",
+    0
+   ],
+   [
+    "3ds Max",
+    0
+   ],
+   [
+    "ZBrush",
+    0
+   ],
+   [
+    "Unity",
+    0
+   ]
   ]
  }
 }
