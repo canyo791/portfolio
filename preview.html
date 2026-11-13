@@ -270,7 +270,15 @@ body.editing .card .cap .t{display:none}
 body.editing .card .cap .ti{display:flex}
 body.editing .card:hover .cap{background:transparent;color:inherit}
 .del{display:none;border:none;background:none;cursor:pointer;font-size:12px;padding:2px 6px;border-radius:6px}
-body.editing .extra-card .del{display:inline-block}
+body.editing .card .del{display:inline-block;color:#c0392b;font-weight:700}
+body.editing .card:hover .cap .del{color:#ffb3b3}
+.tools .tl{border:none!important;padding:0!important;background:none!important;color:inherit!important;font-size:inherit;border-radius:3px}
+.tools .tb{display:none;border:none;background:none;cursor:pointer;font-size:11px;padding:0 0 0 4px;line-height:1;color:inherit;opacity:.6}
+.tools .tb:hover{opacity:1}
+body.editing .tools .tb{display:inline}
+.tools .tadd{display:none;font-size:12.5px;padding:3px 12px;border:1.5px dashed var(--ink);border-radius:999px;background:none;cursor:pointer}
+body.editing .tools .tadd{display:inline-block}
+body.editing .hero h1 .ed{display:block;width:fit-content}
 .del:hover{background:var(--ink);color:var(--white)}
 .addcard{display:none;border:1.5px dashed var(--ink);border-radius:12px;min-height:180px;align-items:center;justify-content:center;flex-direction:column;gap:6px;cursor:pointer;background:transparent;font-weight:500;transition:.18s}
 .addcard:hover{background:var(--ink);color:var(--white)}
@@ -650,12 +658,12 @@ html,body{overflow-x:clip}
  <svg class="cross" style="top:34px;right:3%"><use href="#cross"/></svg>
  <div class="in">
   <div>
-   <div class="eyebrow">Portfolio — 2D Animator</div>
-   <h1><span>Yoon</span><span>Hyemin</span></h1>
-   <div class="kname">윤혜민 <span class="pill">2D ANIMATOR</span></div>
+   <div class="eyebrow ed" data-prof="eyebrow"></div>
+   <h1><span class="ed" data-prof="first"></span><span class="ed" data-prof="last"></span></h1>
+   <div class="kname"><span class="ed" data-prof="kname"></span> <span class="pill ed" data-prof="pill"></span></div>
    <dl>
-    <div><dt>Tools</dt><dd class="tools"><span class="k">Spine 2D</span><span>Clip Studio</span><span>Photoshop</span><span>3ds Max</span><span>ZBrush</span><span>Unity</span></dd></div>
-    <div><dt>Contact</dt><dd>hnnin791@gmail.com</dd></div>
+    <div><dt>Tools</dt><dd class="tools" id="profTools"></dd></div>
+    <div><dt>Contact</dt><dd><span class="ed" data-prof="email"></span></dd></div>
    </dl>
    <div class="cta">
     <a class="btn dark" href="#hallow-stone">게임 프로젝트 보기 →</a>
@@ -687,10 +695,10 @@ html,body{overflow-x:clip}
  <h2>Thank you</h2>
  <p>함께 움직임을 만들 기회를 기다리고 있어요.</p>
  <div class="acts">
-  <a class="btn" href="mailto:hnnin791@gmail.com">✉ 메일 보내기</a>
+  <a class="btn" id="mailBtn" href="mailto:hnnin791@gmail.com">✉ 메일 보내기</a>
   <button class="btn" id="copyMail">이메일 주소 복사</button>
  </div>
- <div class="mailtxt">hnnin791@gmail.com</div>
+ <div class="mailtxt" id="mailTxt">hnnin791@gmail.com</div>
 </section>
 <footer>© Yoon Hyemin · 2D Animator <button class="mgr" id="mgrLink">관리</button></footer>
 
@@ -829,7 +837,7 @@ function card(arr, idx, dir){
   c.querySelector(".ti").addEventListener("click",e=>e.stopPropagation());
   inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){e.preventDefault();inp.blur();} if(e.key==="Escape"){inp.value=item[0];inp.blur();} });
   inp.addEventListener("blur",()=>{ const v=inp.value.trim(); if(!v){inp.value=item[0];return;} if(v!==item[0]){ item[0]=v; t.textContent=v; markDirty(); } });
-  c.querySelector(".del").onclick=e=>{ e.stopPropagation(); arr.splice(arr.indexOf(item),1); markDirty(); render(); toast("칸을 지웠어요 · 저장하기를 눌러야 반영돼요"); };
+  c.querySelector(".del").onclick=e=>{ e.stopPropagation(); if(!confirm(`"${item[0]}" 칸을 지울까요?\n(저장하기를 누르기 전까지는 되돌릴 수 있어요: 편집 종료 후 새로고침)`)) return; arr.splice(arr.indexOf(item),1); markDirty(); render(); toast("칸을 지웠어요 · 저장하기를 눌러야 반영돼요"); };
   if(arr.length>1){
     c.insertAdjacentHTML("afterbegin",`<div class="mv"><button class="l" title="앞으로">‹</button><button class="grip" title="끌어서 순서 바꾸기">⠿</button><button class="r" title="뒤로">›</button></div>`);
     const move=d=>{ const i=arr.indexOf(item), j=i+d; if(j<0||j>=arr.length) return; arr.splice(i,1); arr.splice(j,0,item); markDirty(); render(); };
@@ -923,7 +931,29 @@ const THEMES={
 
 /* ---------- home: showreel + selected work ---------- */
 const PWC={"hallow-stone":"#f5a25a","devi-rush":"#ff3d79","project-vs":"#35b7e5"};
+const PROF0={eyebrow:"Portfolio — 2D Animator",first:"Yoon",last:"Hyemin",kname:"윤혜민",pill:"2D ANIMATOR",email:"hnnin791@gmail.com",
+  tools:[["Spine 2D",1],["Clip Studio",0],["Photoshop",0],["3ds Max",0],["ZBrush",0],["Unity",0]]};
+function profEmail(){ return (DATA.profile&&DATA.profile.email)||PROF0.email; }
+function syncMail(){ const m=profEmail(); const a=document.getElementById("mailBtn"); if(a) a.href="mailto:"+m; const t=document.getElementById("mailTxt"); if(t) t.textContent=m; }
+function renderProfile(){
+  const P=DATA.profile=Object.assign(JSON.parse(JSON.stringify(PROF0)),DATA.profile||{});
+  document.querySelectorAll("[data-prof]").forEach(el=>{ const n=el.cloneNode(false); el.replaceWith(n); bindText(n,P,el.dataset.prof);
+    if(el.dataset.prof==="email") n.addEventListener("blur",syncMail); });
+  syncMail();
+  const box=document.getElementById("profTools"); box.innerHTML="";
+  P.tools.forEach((t,i)=>{
+    const c=document.createElement("span"); if(t[1]) c.className="k";
+    const l=document.createElement("span"); l.className="tl ed"; c.appendChild(l); bindText(l,t,0);
+    c.insertAdjacentHTML("beforeend",`<button class="tb hl" title="강조 켜기/끄기">★</button><button class="tb x" title="이 툴 삭제">✕</button>`);
+    c.querySelector(".hl").onclick=()=>{ t[1]=t[1]?0:1; markDirty(); renderProfile(); };
+    c.querySelector(".x").onclick=()=>{ P.tools.splice(i,1); markDirty(); renderProfile(); toast("툴을 지웠어요 · 저장하기를 눌러야 반영돼요"); };
+    box.appendChild(c); });
+  const add=document.createElement("button"); add.className="tadd"; add.type="button"; add.textContent="＋ 툴 추가";
+  add.onclick=()=>{ P.tools.push(["새 툴",0]); markDirty(); renderProfile(); const ls=box.querySelectorAll(".tl"); const el=ls[ls.length-1]; if(el){ el.focus(); document.getSelection().selectAllChildren(el); } };
+  box.appendChild(add);
+}
 function renderHome(){
+  renderProfile();
   const H=DATA.home=Object.assign({youtube:"",file:"",caption:"Animation Showreel",title:"Selected Work",sub:"참여 게임 프로젝트"},DATA.home||{});
   const box=document.getElementById("homeReel"); box.innerHTML="";
   const fr=document.createElement("div"); fr.className="hr-frame";
@@ -1107,7 +1137,7 @@ let tx=null,ty=null;
 addEventListener("touchstart",e=>{ if(e.touches.length!==1||editing) return; tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
 addEventListener("touchend",e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty; tx=null;
   if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy)*1.8&&!lb.classList.contains("on")){ const order=pageOrder(), i=order.indexOf(CUR); const t=order[i+(dx<0?1:-1)]; if(t) go(t); } },{passive:true});
-document.getElementById("copyMail").onclick=async e=>{ try{ await navigator.clipboard.writeText("hnnin791@gmail.com"); e.target.textContent="복사했어요 ✓"; }catch{ e.target.textContent="hnnin791@gmail.com"; } };
+document.getElementById("copyMail").onclick=async e=>{ try{ await navigator.clipboard.writeText(profEmail()); e.target.textContent="복사했어요 ✓"; }catch{ e.target.textContent=profEmail(); } };
 
 /* ---------- toast ---------- */
 let tt; function toast(msg,err){ const t=document.getElementById("toast"); t.textContent=msg; t.className=(err?"err ":"")+"on"; clearTimeout(tt); tt=setTimeout(()=>t.className=err?"err":"",err?8000:2600); }
