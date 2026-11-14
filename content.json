@@ -1,794 +1,794 @@
 {
- "projects": [
-  {
-   "id": "hallow-stone",
-   "title": "Hallow Stone",
-   "status": [
-    "개발 진행중",
-    "live"
-   ],
-   "team": "Team. D-DAY",
-   "period": "26.04.28 ~ 개발 진행중",
-   "role": "Sprite 애니메이터 / 일부 리소스 제작",
-   "parts": [
-    "2D Animation",
-    "Sprite"
-   ],
-   "events": [
-    "26.08.14 ~ 26.08.16 BIC 전시 참여",
-    "26.12.18 ~ 26.12.20 비버럭스 전시 참여 예정"
-   ],
-   "yt": "https://youtu.be/TpVuinavUxY",
-   "youtube": "TpVuinavUxY",
-   "dir": "hallow-stone",
-   "reel": "08_10_빌드_플레이.mp4",
-   "groups": [
+  "projects": [
     {
-     "ko": "플레이어",
-     "en": "Jack",
-     "items": [
-      [
-       "Jack_attack_blue_air2",
-       "Jack_attack_blue_air2.webp"
+      "id": "hallow-stone",
+      "title": "Hallow Stone",
+      "status": [
+        "개발 진행중",
+        "live"
       ],
-      [
-       "Jack_attack_blue_fall1",
-       "Jack_attack_blue_fall1.webp"
+      "team": "Team. D-DAY",
+      "period": "26.04.28 ~ 개발 진행중",
+      "role": "Sprite 애니메이터 / 일부 리소스 제작",
+      "parts": [
+        "2D Animation",
+        "Sprite"
       ],
-      [
-       "Jack_attack1_blue",
-       "Jack_attack1_blue.webp"
+      "events": [
+        "26.08.14 ~ 26.08.16 BIC 전시 참여",
+        "26.12.18 ~ 26.12.20 비버럭스 전시 참여 예정"
       ],
-      [
-       "Jack_attack2_blue",
-       "Jack_attack2_blue.webp"
-      ],
-      [
-       "Jack_attack3_blue",
-       "Jack_attack3_blue.webp"
+      "yt": "https://youtu.be/TpVuinavUxY",
+      "youtube": "TpVuinavUxY",
+      "dir": "hallow-stone",
+      "reel": "08_10_빌드_플레이.mp4",
+      "groups": [
+        {
+          "ko": "플레이어",
+          "en": "Jack",
+          "items": [
+            [
+              "Jack_attack_blue_air2",
+              "Jack_attack_blue_air2.webp"
+            ],
+            [
+              "Jack_attack_blue_fall1",
+              "Jack_attack_blue_fall1.webp"
+            ],
+            [
+              "Jack_attack1_blue",
+              "Jack_attack1_blue.webp"
+            ],
+            [
+              "Jack_attack2_blue",
+              "Jack_attack2_blue.webp"
+            ],
+            [
+              "Jack_attack3_blue",
+              "Jack_attack3_blue.webp"
+            ]
+          ],
+          "sub": {
+            "title": "캐릭터 변경 전 작업물",
+            "items": [
+              [
+                "attack_red_skill1",
+                "attack_red_skill1.gif"
+              ],
+              [
+                "attack_red_skill2",
+                "attack_red_skill2.gif"
+              ],
+              [
+                "blue_attack_air",
+                "blue_attack_air.gif"
+              ],
+              [
+                "attack_blue_skill1",
+                "attack_blue_skill1.gif"
+              ],
+              [
+                "attack_blue_fall",
+                "attack_blue_fall.gif"
+              ],
+              [
+                "R2B_ground2",
+                "R2B_ground2.gif"
+              ],
+              [
+                "R2B_air1",
+                "Jack_R2B_air1.gif"
+              ]
+            ]
+          }
+        },
+        {
+          "ko": "마녀",
+          "en": "Pero",
+          "items": [
+            [
+              "Pero_run",
+              "Pero_run.gif"
+            ],
+            [
+              "Pero_idle",
+              "Pero_idle.gif"
+            ],
+            [
+              "Pero_stop",
+              "Pero_stop.gif"
+            ],
+            [
+              "Pero_run_stop",
+              "Pero_run_stop.gif"
+            ],
+            [
+              "Broom_idle",
+              "Broom_idle.gif"
+            ],
+            [
+              "Pero_Broom_fly",
+              "Pero_Broom_fly.gif"
+            ],
+            [
+              "Pero_Broom_recall_ride",
+              "Pero_Broom_recall_ride.gif"
+            ],
+            [
+              "Pero_candy_idle",
+              "Pero_candy_idle.gif"
+            ],
+            [
+              "Pero_candy_wear",
+              "Pero_candy_wear.gif"
+            ],
+            [
+              "Pero_Magic",
+              "Pero_Magic.gif"
+            ]
+          ]
+        },
+        {
+          "ko": "보스 컷씬",
+          "en": "Arachne Cutscene",
+          "items": [
+            [
+              "Arachne_talk",
+              "Arachne_talk.gif"
+            ],
+            [
+              "Arachne_Notice",
+              "Arachne_Notice.gif"
+            ],
+            [
+              "Arachne_look_idle",
+              "Arachne_look_idle.gif"
+            ],
+            [
+              "Arachne_Block",
+              "Arachne_Block.gif"
+            ],
+            [
+              "Arachne_Block_idle",
+              "Arachne_Block_idle.gif"
+            ],
+            [
+              "Arachne_Standoff",
+              "Arachne_Standoff.gif"
+            ],
+            [
+              "Arachne_Standoff_idle",
+              "Arachne_Standoff_idle.gif"
+            ],
+            [
+              "Arachne_Laugh",
+              "Arachne_Laugh.gif"
+            ],
+            [
+              "Arachne_Battle_Start",
+              "Arachne_Battle_Start.gif"
+            ],
+            [
+              "Arachne_Battle_Start2",
+              "Arachne_Battle_Start2.gif"
+            ],
+            [
+              "Tea Table_idle",
+              "Tea Table_idle.gif"
+            ],
+            [
+              "Pero_chair_idle",
+              "Pero_chair_idle.gif"
+            ],
+            [
+              "Pero_chair_Down",
+              "Pero_chair_Down.gif"
+            ],
+            [
+              "Pero_Arachne_Run",
+              "Pero_Arachne_run.gif"
+            ],
+            [
+              "Pero_Pout",
+              "Pero_Pout.gif"
+            ],
+            [
+              "Pero_Smirk",
+              "Pero_Smirk.gif"
+            ],
+            [
+              "Pero_run_candy",
+              "Pero_run_candy.gif"
+            ]
+          ],
+          "strip": {
+            "title": "스토리보드",
+            "wide": true,
+            "items": [
+              [
+                "컷씬 01",
+                "아라크네 컷씬01.png"
+              ],
+              [
+                "컷씬 01 카메라 경로",
+                "아라크네 컷씬01_카메라경로.png"
+              ],
+              [
+                "컷씬 02 대사 및 리소스 사용처",
+                "아라크네 컷씬02_대사 및 리소스 사용처 정리.png"
+              ]
+            ]
+          }
+        },
+        {
+          "ko": "새끼거미",
+          "en": "Spiderling",
+          "items": [
+            [
+              "Move",
+              "spider_minion_move.webp"
+            ],
+            [
+              "Boom_ver1",
+              "spider_minion_pre_explode.webp"
+            ],
+            [
+              "Boom_ver2",
+              "spider_minion_jump.webp"
+            ],
+            [
+              "Spawn",
+              "Arachne_skill5_mouth_charge.webp"
+            ],
+            [
+              "Spawn_idle",
+              "Arachne_skill5_mouth_charge_idle.webp"
+            ],
+            [
+              "Arachne_Groggy",
+              "Arachne_Groggy.gif"
+            ],
+            [
+              "Arachne_Groggy_Start",
+              "Arachne_Groggy_Start.gif"
+            ],
+            [
+              "Arachne_Groggy_Loop",
+              "Arachne_Groggy_Loop.gif"
+            ],
+            [
+              "Arachne_Groggy_End",
+              "Arachne_Groggy_End.gif"
+            ]
+          ]
+        },
+        {
+          "ko": "NPC",
+          "en": "Non-player characters",
+          "items": [
+            [
+              "NPC 플레이 영상",
+              "NPC 플레이 영상.mp4"
+            ],
+            [
+              "Store_idle",
+              "Store_idle.gif"
+            ],
+            [
+              "Recorder_idle",
+              "Recorder_idle.gif"
+            ],
+            [
+              "Shadow_Sleep_idle",
+              "Shadow_idle.webp"
+            ],
+            [
+              "Shadow_idle (콧방울 시작)",
+              "Shadow_idle2_start.webp"
+            ],
+            [
+              "Shadow_idle (콧방울)",
+              "Shadow_idle2.webp"
+            ]
+          ]
+        },
+        {
+          "ko": "화면 전환 · 로딩화면",
+          "en": "Transition / Loading",
+          "lg": true,
+          "items": [
+            [
+              "Loading 1",
+              "loading1.gif"
+            ],
+            [
+              "Loading 2",
+              "loading2.gif"
+            ],
+            [
+              "Transition1",
+              "Transition1.gif"
+            ]
+          ],
+          "strip": {
+            "title": "스토리보드",
+            "wide": true,
+            "items": [
+              [
+                "화면전환 1",
+                "화면전환1.png"
+              ],
+              [
+                "로딩화면 1",
+                "로딩화면1.png"
+              ],
+              [
+                "로딩화면 2",
+                "로딩화면2.png"
+              ]
+            ]
+          }
+        }
       ]
-     ],
-     "sub": {
-      "title": "캐릭터 변경 전 작업물",
-      "items": [
-       [
-        "attack_red_skill1",
-        "attack_red_skill1.gif"
-       ],
-       [
-        "attack_red_skill2",
-        "attack_red_skill2.gif"
-       ],
-       [
-        "blue_attack_air",
-        "blue_attack_air.gif"
-       ],
-       [
-        "attack_blue_skill1",
-        "attack_blue_skill1.gif"
-       ],
-       [
-        "attack_blue_fall",
-        "attack_blue_fall.gif"
-       ],
-       [
-        "R2B_ground2",
-        "R2B_ground2.gif"
-       ],
-       [
-        "R2B_air1",
-        "Jack_R2B_air1.gif"
-       ]
-      ]
-     }
     },
     {
-     "ko": "마녀",
-     "en": "Pero",
-     "items": [
-      [
-       "Pero_run",
-       "Pero_run.gif"
+      "id": "devi-rush",
+      "title": "Devi Rush",
+      "status": [
+        "완료",
+        "stop"
       ],
-      [
-       "Pero_idle",
-       "Pero_idle.gif"
+      "team": "Team. ADHO",
+      "period": "25.09.02 ~ 25.12.09",
+      "role": "Spine 애니메이터 전담 / 일반 몬스터 원화 제작",
+      "parts": [
+        "2D Animation",
+        "Spine",
+        "Character Concept Artist"
       ],
-      [
-       "Pero_stop",
-       "Pero_stop.gif"
+      "yt": "https://youtu.be/xG0iiMiCdhk",
+      "youtube": "xG0iiMiCdhk",
+      "dir": "devi-rush",
+      "reel": "ADHO-DEVI_RUSH_플레이영상(브금x).mp4",
+      "pre": {
+        "title": "원화 / 테스트용 이펙트",
+        "items": [
+          [
+            "1Stage Elite monster",
+            "1Stage_Elite_monster01.png"
+          ],
+          [
+            "3Stage Elite monster",
+            "3Stage_Elite_monster01.png"
+          ],
+          [
+            "1스테이지 쫄몹 시안 01",
+            "1스테이지_쫄몹 시안02.png"
+          ],
+          [
+            "1스테이지 쫄몹 시안 02",
+            "1스테이지_쫄몹 시안04-1.png"
+          ],
+          [
+            "테스트 이펙트",
+            "ef.gif"
+          ]
+        ]
+      },
+      "groups": [
+        {
+          "ko": "주인공",
+          "en": "Player",
+          "note": "(사용X) 표시는 최종 빌드에 쓰이지 않은 모션 · 공격 모션의 이펙트는 예시용으로 첨부한 리소스예요.",
+          "items": [
+            [
+              "idle (사용X)",
+              "idle_Trident01_test.gif"
+            ],
+            [
+              "Weapon_Summon (사용X)",
+              "무기꺼내는모션idle.mp4"
+            ],
+            [
+              "Run1 (사용X)",
+              "1112_기본run.gif"
+            ],
+            [
+              "Run2",
+              "1022_피버모션01.gif"
+            ],
+            [
+              "Sprint",
+              "1117_창들고돌진.gif"
+            ],
+            [
+              "Hit",
+              "1118_캐릭터 피격.gif"
+            ],
+            [
+              "Attack1",
+              [
+                "가볍게공격2.gif",
+                "가볍게공격.gif"
+              ]
+            ],
+            [
+              "Attack2",
+              [
+                "점프공격2.gif",
+                "점프공격.gif"
+              ]
+            ],
+            [
+              "Attack3",
+              [
+                "뒤돌아서공격2.gif",
+                "뒤돌아서공격.gif"
+              ]
+            ],
+            [
+              "Bind",
+              "1204_발버둥.gif"
+            ],
+            [
+              "Bind (구속)",
+              "1204_구속_발버둥.mp4"
+            ]
+          ]
+        },
+        {
+          "ko": "보스",
+          "en": "Boss",
+          "items": [
+            [
+              "idle_Front",
+              "1204_앞_idle.gif"
+            ],
+            [
+              "idle_Back",
+              "1204_뒤_idle.gif"
+            ],
+            [
+              "hit1",
+              "1스테이지보스_피격_1109.gif"
+            ],
+            [
+              "hit2",
+              "1204_피격_넉백.gif"
+            ],
+            [
+              "skill",
+              "1204_손키스_단일.gif"
+            ],
+            [
+              "idle_skill",
+              "1204_손키스_단일.gif"
+            ],
+            [
+              "attack",
+              "1109_1스테이지보스_공격.gif"
+            ],
+            [
+              "die",
+              "1109_1스테이지보스_사망.gif"
+            ]
+          ]
+        },
+        {
+          "ko": "몬스터",
+          "en": "Monsters",
+          "items": [
+            [
+              "A · idle",
+              "아이들.gif"
+            ],
+            [
+              "A · attack",
+              "박쥐_공격.gif"
+            ],
+            [
+              "A · hit1",
+              "박쥐_스턴.gif"
+            ],
+            [
+              "A · hit2",
+              "박쥐_사망2.gif"
+            ],
+            [
+              "B · idle",
+              "박쥐_아이들.gif"
+            ],
+            [
+              "B · attack",
+              "1205_공격.gif"
+            ],
+            [
+              "B · hit1",
+              "1205_스턴.gif"
+            ],
+            [
+              "B · hit2",
+              "1205_피격2.gif"
+            ],
+            [
+              "C · idle",
+              "쥐_idle.gif"
+            ],
+            [
+              "C · attack",
+              "쥐_attack.gif"
+            ],
+            [
+              "C · hit1",
+              "쥐_attacked_stun_ef.gif"
+            ],
+            [
+              "C · hit2",
+              "쥐_attacked_stun_die.gif"
+            ]
+          ]
+        }
       ],
-      [
-       "Pero_run_stop",
-       "Pero_run_stop.gif"
-      ],
-      [
-       "Broom_idle",
-       "Broom_idle.gif"
-      ],
-      [
-       "Pero_Broom_fly",
-       "Pero_Broom_fly.gif"
-      ],
-      [
-       "Pero_Broom_recall_ride",
-       "Pero_Broom_recall_ride.gif"
-      ],
-      [
-       "Pero_candy_idle",
-       "Pero_candy_idle.gif"
-      ],
-      [
-       "Pero_candy_wear",
-       "Pero_candy_wear.gif"
-      ],
-      [
-       "Pero_Magic",
-       "Pero_Magic.gif"
-      ]
-     ]
+      "process": {
+        "ko": "작업 과정",
+        "en": "Spine Workflow",
+        "items": [
+          [
+            "캐릭터 원화",
+            "",
+            "최종 디자인 1장"
+          ],
+          [
+            "파츠 분리",
+            "",
+            "스파인용 레이어 정리"
+          ],
+          [
+            "리깅",
+            "",
+            "본 · 메쉬 · 웨이트 작업 화면"
+          ]
+        ]
+      }
     },
     {
-     "ko": "보스 컷씬",
-     "en": "Arachne Cutscene",
-     "items": [
-      [
-       "Arachne_talk",
-       "Arachne_talk.gif"
+      "id": "project-vs",
+      "title": "ProjectVS",
+      "status": [
+        "개발 중단",
+        "stop"
       ],
-      [
-       "Arachne_Notice",
-       "Arachne_Notice.gif"
+      "team": "Team. ANTI-LIKE",
+      "parts": [
+        "2D Animation",
+        "Spine",
+        "Character Concept Artist"
       ],
-      [
-       "Arachne_look_idle",
-       "Arachne_look_idle.gif"
+      "dir": "project-vs",
+      "pre": {
+        "title": "원화 작업물",
+        "items": [
+          [
+            "화가 리소스",
+            "1105_화가 리소스.png"
+          ],
+          [
+            "PC6 Draft",
+            "PC6_Draft_Develop4.png"
+          ],
+          [
+            "PC6 Develop 2",
+            "PC6_Draft_Develop5.png"
+          ],
+          [
+            "PC6 Develop 3",
+            "PC6_Draft_Develop3.png"
+          ],
+          [
+            "PC6 Develop 4",
+            "PC6_Draft.png"
+          ],
+          [
+            "PC6 Develop 5",
+            "PC6_Draft_Develop2.png"
+          ],
+          [
+            "화가 표정 바리에이션",
+            "화가_표정바리에이션.png"
+          ],
+          [
+            "PC3 Draft",
+            "PC3_Draft.png"
+          ],
+          [
+            "PC3 Draft ver2",
+            "PC3_Draft_ver2.png"
+          ],
+          [
+            "PC3 Develop 2",
+            "PC3_Draft_Develop2.png"
+          ],
+          [
+            "PC3 Develop 3",
+            "PC3_Draft_Develop3.png"
+          ]
+        ]
+      },
+      "groups": [
+        {
+          "ko": "캐릭터 모션",
+          "en": "Character motions",
+          "items": [
+            [
+              "idle",
+              "0426_아이들.gif"
+            ],
+            [
+              "Combat_idle",
+              "0426_전투대기.gif"
+            ],
+            [
+              "Run_low",
+              [
+                "0418_일반뛰기.mp4",
+                "0620_낮게뛰기.gif"
+              ]
+            ],
+            [
+              "Run_high",
+              [
+                "0418_통통뛰기.mp4",
+                "0620_뛰기.gif"
+              ]
+            ],
+            [
+              "Jump",
+              "0426_점프.gif"
+            ],
+            [
+              "Fall",
+              "0421_점프루프.gif"
+            ],
+            [
+              "Run_Dash",
+              "0418_런+대쉬.gif"
+            ],
+            [
+              "Dash_Loop",
+              "0418_대쉬루프.gif"
+            ],
+            [
+              "idle_Dash",
+              "0418_아이들+대쉬.gif"
+            ],
+            [
+              "Hit",
+              "0418_히트모션.gif"
+            ],
+            [
+              "Attack",
+              "0426_공격모션.gif"
+            ],
+            [
+              "Die",
+              "0418_사망모션.gif"
+            ]
+          ]
+        }
       ],
-      [
-       "Arachne_Block",
-       "Arachne_Block.gif"
-      ],
-      [
-       "Arachne_Block_idle",
-       "Arachne_Block_idle.gif"
-      ],
-      [
-       "Arachne_Standoff",
-       "Arachne_Standoff.gif"
-      ],
-      [
-       "Arachne_Standoff_idle",
-       "Arachne_Standoff_idle.gif"
-      ],
-      [
-       "Arachne_Laugh",
-       "Arachne_Laugh.gif"
-      ],
-      [
-       "Arachne_Battle_Start",
-       "Arachne_Battle_Start.gif"
-      ],
-      [
-       "Arachne_Battle_Start2",
-       "Arachne_Battle_Start2.gif"
-      ],
-      [
-       "Tea Table_idle",
-       "Tea Table_idle.gif"
-      ],
-      [
-       "Pero_chair_idle",
-       "Pero_chair_idle.gif"
-      ],
-      [
-       "Pero_chair_Down",
-       "Pero_chair_Down.gif"
-      ],
-      [
-       "Pero_Arachne_Run",
-       "Pero_Arachne_run.gif"
-      ],
-      [
-       "Pero_Pout",
-       "Pero_Pout.gif"
-      ],
-      [
-       "Pero_Smirk",
-       "Pero_Smirk.gif"
-      ],
-      [
-       "Pero_run_candy",
-       "Pero_run_candy.gif"
-      ]
-     ],
-     "strip": {
-      "title": "스토리보드",
-      "wide": true,
-      "items": [
-       [
-        "컷씬 01",
-        "아라크네 컷씬01.png"
-       ],
-       [
-        "컷씬 01 카메라 경로",
-        "아라크네 컷씬01_카메라경로.png"
-       ],
-       [
-        "컷씬 02 대사 및 리소스 사용처",
-        "아라크네 컷씬02_대사 및 리소스 사용처 정리.png"
-       ]
-      ]
-     }
-    },
-    {
-     "ko": "새끼거미",
-     "en": "Spiderling",
-     "items": [
-      [
-       "Move",
-       "spider_minion_move.webp"
-      ],
-      [
-       "Boom_ver1",
-       "spider_minion_pre_explode.webp"
-      ],
-      [
-       "Boom_ver2",
-       "spider_minion_jump.webp"
-      ],
-      [
-       "Spawn",
-       "Arachne_skill5_mouth_charge.webp"
-      ],
-      [
-       "Spawn_idle",
-       "Arachne_skill5_mouth_charge_idle.webp"
-      ],
-      [
-       "Arachne_Groggy",
-       "Arachne_Groggy.gif"
-      ],
-      [
-       "Arachne_Groggy_Start",
-       "Arachne_Groggy_Start.gif"
-      ],
-      [
-       "Arachne_Groggy_Loop",
-       "Arachne_Groggy_Loop.gif"
-      ],
-      [
-       "Arachne_Groggy_End",
-       "Arachne_Groggy_End.gif"
-      ]
-     ]
-    },
-    {
-     "ko": "NPC",
-     "en": "Non-player characters",
-     "items": [
-      [
-       "NPC 플레이 영상",
-       "NPC 플레이 영상.mp4"
-      ],
-      [
-       "Store_idle",
-       "Store_idle.gif"
-      ],
-      [
-       "Recorder_idle",
-       "Recorder_idle.gif"
-      ],
-      [
-       "Shadow_Sleep_idle",
-       "Shadow_Sleep_idle.gif"
-      ],
-      [
-       "Shadow_idle (콧방울 시작)",
-       "1006_NPC_Shadow_idle_콧방울_시작.gif"
-      ],
-      [
-       "Shadow_idle (콧방울)",
-       "Shadow_idle (콧방울).gif"
-      ]
-     ]
-    },
-    {
-     "ko": "화면 전환 · 로딩화면",
-     "en": "Transition / Loading",
-     "lg": true,
-     "items": [
-      [
-       "Loading 1",
-       "loading1.gif"
-      ],
-      [
-       "Loading 2",
-       "loading2.gif"
-      ],
-      [
-       "Transition1",
-       "Transition1.gif"
-      ]
-     ],
-     "strip": {
-      "title": "스토리보드",
-      "wide": true,
-      "items": [
-       [
-        "화면전환 1",
-        "화면전환1.png"
-       ],
-       [
-        "로딩화면 1",
-        "로딩화면1.png"
-       ],
-       [
-        "로딩화면 2",
-        "로딩화면2.png"
-       ]
-      ]
-     }
+      "reel": "캐릭터 액세서리 디자인 시트.png",
+      "process": {
+        "ko": "작업 과정",
+        "en": "Spine Workflow",
+        "items": [
+          [
+            "캐릭터 원화",
+            "",
+            "최종 디자인 1장"
+          ],
+          [
+            "파츠 분리",
+            "",
+            "스파인용 레이어 정리"
+          ],
+          [
+            "리깅",
+            "",
+            "본 · 메쉬 · 웨이트 작업 화면"
+          ]
+        ]
+      }
     }
-   ]
-  },
-  {
-   "id": "devi-rush",
-   "title": "Devi Rush",
-   "status": [
-    "완료",
-    "stop"
-   ],
-   "team": "Team. ADHO",
-   "period": "25.09.02 ~ 25.12.09",
-   "role": "Spine 애니메이터 전담 / 일반 몬스터 원화 제작",
-   "parts": [
-    "2D Animation",
-    "Spine",
-    "Character Concept Artist"
-   ],
-   "yt": "https://youtu.be/xG0iiMiCdhk",
-   "youtube": "xG0iiMiCdhk",
-   "dir": "devi-rush",
-   "reel": "ADHO-DEVI_RUSH_플레이영상(브금x).mp4",
-   "pre": {
-    "title": "원화 / 테스트용 이펙트",
-    "items": [
-     [
-      "1Stage Elite monster",
-      "1Stage_Elite_monster01.png"
-     ],
-     [
-      "3Stage Elite monster",
-      "3Stage_Elite_monster01.png"
-     ],
-     [
-      "1스테이지 쫄몹 시안 01",
-      "1스테이지_쫄몹 시안02.png"
-     ],
-     [
-      "1스테이지 쫄몹 시안 02",
-      "1스테이지_쫄몹 시안04-1.png"
-     ],
-     [
-      "테스트 이펙트",
-      "ef.gif"
-     ]
-    ]
-   },
-   "groups": [
+  ],
+  "animations": [
     {
-     "ko": "주인공",
-     "en": "Player",
-     "note": "(사용X) 표시는 최종 빌드에 쓰이지 않은 모션 · 공격 모션의 이펙트는 예시용으로 첨부한 리소스예요.",
-     "items": [
-      [
-       "idle (사용X)",
-       "idle_Trident01_test.gif"
-      ],
-      [
-       "Weapon_Summon (사용X)",
-       "무기꺼내는모션idle.mp4"
-      ],
-      [
-       "Run1 (사용X)",
-       "1112_기본run.gif"
-      ],
-      [
-       "Run2",
-       "1022_피버모션01.gif"
-      ],
-      [
-       "Sprint",
-       "1117_창들고돌진.gif"
-      ],
-      [
-       "Hit",
-       "1118_캐릭터 피격.gif"
-      ],
-      [
-       "Attack1",
-       [
-        "가볍게공격2.gif",
-        "가볍게공격.gif"
-       ]
-      ],
-      [
-       "Attack2",
-       [
-        "점프공격2.gif",
-        "점프공격.gif"
-       ]
-      ],
-      [
-       "Attack3",
-       [
-        "뒤돌아서공격2.gif",
-        "뒤돌아서공격.gif"
-       ]
-      ],
-      [
-       "Bind",
-       "1204_발버둥.gif"
-      ],
-      [
-       "Bind (구속)",
-       "1204_구속_발버둥.mp4"
-      ]
-     ]
+      "ko": "포트레이트 애니메이션",
+      "en": "Portrait Animation",
+      "file": "portrait.mp4",
+      "youtube": "f1vfe9qGjPY",
+      "period": "2026.04.29 – 2025.06.17",
+      "tools": "Spine · Clip Studio Paint · Adobe Photoshop · Adobe Premiere Pro",
+      "ai": "Suno AI (BGM)",
+      "extra": {
+        "label": "원화 제작",
+        "file": "겜그래픽연출_중간제출_202313235윤혜민_이후.png",
+        "period": "2026.03.18 – 2025.04.22"
+      }
     },
     {
-     "ko": "보스",
-     "en": "Boss",
-     "items": [
-      [
-       "idle_Front",
-       "1204_앞_idle.gif"
-      ],
-      [
-       "idle_Back",
-       "1204_뒤_idle.gif"
-      ],
-      [
-       "hit1",
-       "1스테이지보스_피격_1109.gif"
-      ],
-      [
-       "hit2",
-       "1204_피격_넉백.gif"
-      ],
-      [
-       "skill",
-       "1204_손키스_단일.gif"
-      ],
-      [
-       "idle_skill",
-       "1204_손키스_단일.gif"
-      ],
-      [
-       "attack",
-       "1109_1스테이지보스_공격.gif"
-      ],
-      [
-       "die",
-       "1109_1스테이지보스_사망.gif"
-      ]
-     ]
+      "ko": "애니메이션 팀 작업물",
+      "en": "Team Animation",
+      "file": "2팀_닥트리오_팀애니메이션.mp4",
+      "youtube": "",
+      "period": "2025.11.14 – 2025.12.18",
+      "role": "팀장 · 2D Animator",
+      "tools": "Spine · Clip Studio Paint · Adobe Photoshop · Adobe Premiere Pro",
+      "task": "Spine 애니메이션 전담 · 스프라이트 시퀀스 세팅 및 타이밍 조정 · 영상 편집 · BGM 및 일부 효과음 제작",
+      "ai": "Suno AI (BGM) · Adobe Firefly (효과음)"
     },
     {
-     "ko": "몬스터",
-     "en": "Monsters",
-     "items": [
-      [
-       "A · idle",
-       "아이들.gif"
-      ],
-      [
-       "A · attack",
-       "박쥐_공격.gif"
-      ],
-      [
-       "A · hit1",
-       "박쥐_스턴.gif"
-      ],
-      [
-       "A · hit2",
-       "박쥐_사망2.gif"
-      ],
-      [
-       "B · idle",
-       "박쥐_아이들.gif"
-      ],
-      [
-       "B · attack",
-       "1205_공격.gif"
-      ],
-      [
-       "B · hit1",
-       "1205_스턴.gif"
-      ],
-      [
-       "B · hit2",
-       "1205_피격2.gif"
-      ],
-      [
-       "C · idle",
-       "쥐_idle.gif"
-      ],
-      [
-       "C · attack",
-       "쥐_attack.gif"
-      ],
-      [
-       "C · hit1",
-       "쥐_attacked_stun_ef.gif"
-      ],
-      [
-       "C · hit2",
-       "쥐_attacked_stun_die.gif"
-      ]
-     ]
+      "ko": "애니메이션 개인 작업물",
+      "en": "Personal Animation",
+      "file": "personal.mp4",
+      "youtube": "XV4B_Ad5BYk",
+      "period": "2025.03.23 – 2025.04.22",
+      "tools": "Spine · Clip Studio Paint · Adobe Photoshop · Adobe Premiere Pro"
     }
-   ],
-   "process": {
-    "ko": "작업 과정",
-    "en": "Spine Workflow",
-    "items": [
-     [
-      "캐릭터 원화",
-      "",
-      "최종 디자인 1장"
-     ],
-     [
-      "파츠 분리",
-      "",
-      "스파인용 레이어 정리"
-     ],
-     [
-      "리깅",
-      "",
-      "본 · 메쉬 · 웨이트 작업 화면"
-     ]
-    ]
-   }
-  },
-  {
-   "id": "project-vs",
-   "title": "ProjectVS",
-   "status": [
-    "개발 중단",
-    "stop"
-   ],
-   "team": "Team. ANTI-LIKE",
-   "parts": [
-    "2D Animation",
-    "Spine",
-    "Character Concept Artist"
-   ],
-   "dir": "project-vs",
-   "pre": {
-    "title": "원화 작업물",
-    "items": [
-     [
-      "화가 리소스",
-      "1105_화가 리소스.png"
-     ],
-     [
-      "PC6 Draft",
-      "PC6_Draft_Develop4.png"
-     ],
-     [
-      "PC6 Develop 2",
-      "PC6_Draft_Develop5.png"
-     ],
-     [
-      "PC6 Develop 3",
-      "PC6_Draft_Develop3.png"
-     ],
-     [
-      "PC6 Develop 4",
-      "PC6_Draft.png"
-     ],
-     [
-      "PC6 Develop 5",
-      "PC6_Draft_Develop2.png"
-     ],
-     [
-      "화가 표정 바리에이션",
-      "화가_표정바리에이션.png"
-     ],
-     [
-      "PC3 Draft",
-      "PC3_Draft.png"
-     ],
-     [
-      "PC3 Draft ver2",
-      "PC3_Draft_ver2.png"
-     ],
-     [
-      "PC3 Develop 2",
-      "PC3_Draft_Develop2.png"
-     ],
-     [
-      "PC3 Develop 3",
-      "PC3_Draft_Develop3.png"
-     ]
-    ]
-   },
-   "groups": [
-    {
-     "ko": "캐릭터 모션",
-     "en": "Character motions",
-     "items": [
-      [
-       "idle",
-       "0426_아이들.gif"
-      ],
-      [
-       "Combat_idle",
-       "0426_전투대기.gif"
-      ],
-      [
-       "Run_low",
-       [
-        "0418_일반뛰기.mp4",
-        "0620_낮게뛰기.gif"
-       ]
-      ],
-      [
-       "Run_high",
-       [
-        "0418_통통뛰기.mp4",
-        "0620_뛰기.gif"
-       ]
-      ],
-      [
-       "Jump",
-       "0426_점프.gif"
-      ],
-      [
-       "Fall",
-       "0421_점프루프.gif"
-      ],
-      [
-       "Run_Dash",
-       "0418_런+대쉬.gif"
-      ],
-      [
-       "Dash_Loop",
-       "0418_대쉬루프.gif"
-      ],
-      [
-       "idle_Dash",
-       "0418_아이들+대쉬.gif"
-      ],
-      [
-       "Hit",
-       "0418_히트모션.gif"
-      ],
-      [
-       "Attack",
-       "0426_공격모션.gif"
-      ],
-      [
-       "Die",
-       "0418_사망모션.gif"
-      ]
-     ]
+  ],
+  "sections": {
+    "projects": {
+      "en": "Game Projects",
+      "ko": "참여 게임 프로젝트"
+    },
+    "animation": {
+      "en": "Animation Works",
+      "ko": "애니메이션 작업물"
     }
-   ],
-   "reel": "캐릭터 액세서리 디자인 시트.png",
-   "process": {
-    "ko": "작업 과정",
-    "en": "Spine Workflow",
-    "items": [
-     [
-      "캐릭터 원화",
-      "",
-      "최종 디자인 1장"
-     ],
-     [
-      "파츠 분리",
-      "",
-      "스파인용 레이어 정리"
-     ],
-     [
-      "리깅",
-      "",
-      "본 · 메쉬 · 웨이트 작업 화면"
-     ]
+  },
+  "home": {
+    "youtube": "",
+    "file": "",
+    "caption": "Animation Showreel",
+    "title": "Selected Work",
+    "sub": "대표 작업물",
+    "picks": [
+      "hallow-stone",
+      "devi-rush",
+      "anim:0"
     ]
-   }
-  }
- ],
- "animations": [
-  {
-   "ko": "포트레이트 애니메이션",
-   "en": "Portrait Animation",
-   "file": "portrait.mp4",
-   "youtube": "f1vfe9qGjPY",
-   "period": "2026.04.29 – 2025.06.17",
-   "tools": "Spine · Clip Studio Paint · Adobe Photoshop · Adobe Premiere Pro",
-   "ai": "Suno AI (BGM)",
-   "extra": {
-    "label": "원화 제작",
-    "file": "겜그래픽연출_중간제출_202313235윤혜민_이후.png",
-    "period": "2026.03.18 – 2025.04.22"
-   }
   },
-  {
-   "ko": "애니메이션 팀 작업물",
-   "en": "Team Animation",
-   "file": "2팀_닥트리오_팀애니메이션.mp4",
-   "youtube": "",
-   "period": "2025.11.14 – 2025.12.18",
-   "role": "팀장 · 2D Animator",
-   "tools": "Spine · Clip Studio Paint · Adobe Photoshop · Adobe Premiere Pro",
-   "task": "Spine 애니메이션 전담 · 스프라이트 시퀀스 세팅 및 타이밍 조정 · 영상 편집 · BGM 및 일부 효과음 제작",
-   "ai": "Suno AI (BGM) · Adobe Firefly (효과음)"
-  },
-  {
-   "ko": "애니메이션 개인 작업물",
-   "en": "Personal Animation",
-   "file": "personal.mp4",
-   "youtube": "XV4B_Ad5BYk",
-   "period": "2025.03.23 – 2025.04.22",
-   "tools": "Spine · Clip Studio Paint · Adobe Photoshop · Adobe Premiere Pro"
+  "profile": {
+    "eyebrow": "Portfolio — 2D Animator",
+    "first": "Yoon",
+    "last": "Hyemin",
+    "kname": "윤혜민",
+    "pill": "2D ANIMATOR",
+    "email": "hnnin791@gmail.com",
+    "tools": [
+      [
+        "Spine 2D",
+        1
+      ],
+      [
+        "Clip Studio",
+        0
+      ],
+      [
+        "Photoshop",
+        0
+      ],
+      [
+        "3ds Max",
+        0
+      ],
+      [
+        "ZBrush",
+        0
+      ],
+      [
+        "Unity",
+        0
+      ]
+    ]
   }
- ],
- "sections": {
-  "projects": {
-   "en": "Game Projects",
-   "ko": "참여 게임 프로젝트"
-  },
-  "animation": {
-   "en": "Animation Works",
-   "ko": "애니메이션 작업물"
-  }
- },
- "home": {
-  "youtube": "",
-  "file": "",
-  "caption": "Animation Showreel",
-  "title": "Selected Work",
-  "sub": "대표 작업물",
-  "picks": [
-   "hallow-stone",
-   "devi-rush",
-   "anim:0"
-  ]
- },
- "profile": {
-  "eyebrow": "Portfolio — 2D Animator",
-  "first": "Yoon",
-  "last": "Hyemin",
-  "kname": "윤혜민",
-  "pill": "2D ANIMATOR",
-  "email": "hnnin791@gmail.com",
-  "tools": [
-   [
-    "Spine 2D",
-    1
-   ],
-   [
-    "Clip Studio",
-    0
-   ],
-   [
-    "Photoshop",
-    0
-   ],
-   [
-    "3ds Max",
-    0
-   ],
-   [
-    "ZBrush",
-    0
-   ],
-   [
-    "Unity",
-    0
-   ]
-  ]
- }
 }
