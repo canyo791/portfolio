@@ -153,6 +153,20 @@ body.editing .ytin{display:flex}
 .modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 .modal .hint{font-size:12.5px;color:var(--mid);margin-top:8px}
 .modal a{font-weight:500}
+#seqModal .panel{max-width:760px}
+.seq-body{display:grid;grid-template-columns:1fr 250px;gap:18px;align-items:start}
+.seq-prev{position:relative;border:1.5px solid var(--ink);border-radius:12px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;
+ background:#fff repeating-conic-gradient(#ececec 0 25%,#fff 0 50%) 0 0/18px 18px}
+.seq-prev img{max-width:100%;max-height:100%;object-fit:contain}
+.seq-prev .busy{position:absolute;inset:auto 10px 10px 10px;background:rgba(17,17,17,.82);color:#fff;font-size:12.5px;border-radius:8px;padding:6px 10px;text-align:center}
+.seq-opts{display:grid;gap:12px;font-size:13.5px}
+.seq-opts label{display:grid;gap:5px;font-weight:500}
+.seq-opts select{width:100%;border:1.5px solid var(--ink);border-radius:8px;padding:8px 10px;font:inherit;background:#fff}
+.seq-opts .row2{display:flex;gap:8px;align-items:center;font-weight:400}
+.seq-opts .row2 input{width:auto}
+.seq-info{font-size:12.5px;color:var(--mid);line-height:1.55}
+.seq-res{font-size:13px;font-weight:500}
+@media(max-width:720px){.seq-body{grid-template-columns:1fr}}
 
 .reel .zoombtn{position:absolute;top:14px;right:14px;z-index:5}
 .lb .row video.big{max-height:82vh;width:min(1200px,90vw);background:#000}
@@ -724,6 +738,23 @@ html,body{overflow-x:clip}
  <div class="hint">공용 PC에서는 다 쓴 뒤 편집 바의 [연결 해제]를 눌러 주세요.</div>
  <div class="acts"><button class="btn sm" id="tokenCancel">닫기</button><button class="btn sm dark" id="tokenOk">연결하기</button></div>
 </div></div>
+<div class="modal" id="seqModal" role="dialog" aria-modal="true"><div class="panel">
+ <h3>PNG 시퀀스 → 움직이는 WebP</h3>
+ <div class="seq-body">
+  <div class="seq-prev"><img alt="미리보기"><div class="busy" hidden></div></div>
+  <div class="seq-opts">
+   <div class="seq-info"></div>
+   <label>이름<input id="seqName" type="text" maxlength="60"></label>
+   <label>속도 (fps)<select id="seqFps"><option>8</option><option>10</option><option selected>12</option><option>15</option><option>24</option><option>30</option></select></label>
+   <label>크기 (가로)<select id="seqW"><option value="800">800px · 가볍게</option><option value="1200" selected>1200px · 기본</option><option value="1600">1600px · 크게</option><option value="0">원본 크기</option></select></label>
+   <label>화질<select id="seqQ"><option value="0.8">보통 · 용량 작게</option><option value="0.9" selected>좋음 · 기본</option><option value="1">최고 · 무손실 (용량 큼)</option></select></label>
+   <label class="row2"><input id="seqOnce" type="checkbox"> 한 번만 재생 (반복 안 함)</label>
+   <div class="seq-res"></div>
+   <div class="seq-info">여백은 자르지 않고 원본 비율 그대로 유지해요. 프레임은 파일 이름 순서(_0001, _0002…)대로 이어져요.</div>
+  </div>
+ </div>
+ <div class="acts"><button class="btn sm" id="seqCancel">취소</button><button class="btn sm" id="seqSplit" hidden>합치지 않고 따로 추가</button><button class="btn sm dark" id="seqOk" disabled>넣기</button></div>
+</div></div>
 <div class="lb" id="lb" role="dialog" aria-modal="true">
  <button class="ctl x" aria-label="닫기">✕</button><button class="ctl prev" aria-label="이전">‹</button>
  <div class="box"></div>
@@ -801,11 +832,11 @@ function makeSlot(dir, get, set, reel){
   const put=async f=>{ if(!accept(f)) return; const name=nfc(f.name); const p=`media/${dir}/${name}`;
     const blob=await snap(f); if(!blob) return;
     PENDING.set(p,{blob,url:URL.createObjectURL(blob)}); set(name); markDirty(); paint(); toast(`"${name}" 넣었어요 · 저장하기를 눌러야 올라가요`); };
-  el.querySelector(".up").onclick=async e=>{ e.stopPropagation(); const f=await chooseFile(); if(f) put(f); };
+  el.querySelector(".up").onclick=async e=>{ e.stopPropagation(); const f=await gatherForSlot(await chooseFiles()); if(f) put(f); };
   el.querySelector(".clr").onclick=e=>{ e.stopPropagation(); set(""); markDirty(); paint(); };
   el.addEventListener("dragover",e=>{ if(!editing||!isFileDrag(e)) return; e.preventDefault(); el.classList.add("drag"); });
   el.addEventListener("dragleave",()=>el.classList.remove("drag"));
-  el.addEventListener("drop",e=>{ if(!editing||!isFileDrag(e)) return; e.preventDefault(); e.stopPropagation(); el.classList.remove("drag"); const f=e.dataTransfer.files[0]; if(f) put(f); });
+  el.addEventListener("drop",async e=>{ if(!editing||!isFileDrag(e)) return; e.preventDefault(); e.stopPropagation(); el.classList.remove("drag"); const f=await gatherForSlot(await filesFromDrop(e)); if(f) put(f); });
   paint(); return el;
 }
 async function snap(f){
@@ -818,6 +849,90 @@ function accept(f){
   if(!TYPES[ext]){ toast(`"${f.name}" — gif·png·jpg·webp·mp4·webm만 올릴 수 있어요 (MOV는 MP4로 바꿔 주세요)`,true); return false; }
   if(f.size>95*1024*1024){ toast(`"${f.name}" — 파일 하나는 95MB 이하여야 해요`,true); return false; }
   return true;
+}
+
+/* ---------- PNG sequence -> animated WebP ---------- */
+const isPng=f=>/\.png$/i.test(f.name);
+const natSort=fs=>[...fs].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:"base"}));
+function seqBase(name){ return nfc(name).replace(/\.png$/i,"").replace(/[_\-\s.]*\(?\d+\)?$/,"")||"motion"; }
+const multiPick=document.createElement("input"); multiPick.type="file"; multiPick.multiple=true; multiPick.accept="image/*,video/*"; multiPick.hidden=true; document.body.appendChild(multiPick);
+function chooseFiles(){ return new Promise(res=>{ multiPick.value=""; multiPick.onchange=()=>res([...multiPick.files]); multiPick.click(); }); }
+async function filesFromDrop(e){
+  const items=[...(e.dataTransfer.items||[])].map(i=>i.webkitGetAsEntry&&i.webkitGetAsEntry()).filter(Boolean);
+  if(!items.some(en=>en.isDirectory)) return [...e.dataTransfer.files];
+  const out=[];
+  const walk=async(en,depth)=>{ if(en.isFile){ out.push(await new Promise((r,j)=>en.file(r,j))); return; }
+    if(!en.isDirectory||depth>2) return; const rd=en.createReader(); let batch;
+    do{ batch=await new Promise((r,j)=>rd.readEntries(r,j)); for(const c of batch) await walk(c,depth+1); }while(batch.length); };
+  for(const en of items) await walk(en,0);
+  return out;
+}
+function webpOK(){ try{ const c=document.createElement("canvas"); c.width=c.height=1; return c.toDataURL("image/webp").startsWith("data:image/webp"); }catch{ return false; } }
+function riffChunks(buf){ const v=new DataView(buf), out=[]; let o=12;
+  while(o+8<=buf.byteLength){ const id=String.fromCharCode(v.getUint8(o),v.getUint8(o+1),v.getUint8(o+2),v.getUint8(o+3)); const n=v.getUint32(o+4,true);
+    out.push({id,data:new Uint8Array(buf,o+8,n)}); o+=8+n+(n&1); } return out; }
+function chunk(id,data){ const n=data.length, b=new Uint8Array(8+n+(n&1)); for(let i=0;i<4;i++) b[i]=id.charCodeAt(i);
+  new DataView(b.buffer).setUint32(4,n,true); b.set(data,8); return b; }
+const u24=(a,o,v)=>{ a[o]=v&255; a[o+1]=(v>>8)&255; a[o+2]=(v>>16)&255; };
+async function encodeSeq(files,{fps,width,quality,once},onProg){
+  const first=await createImageBitmap(files[0]);
+  let W=first.width, H=first.height;
+  if(width&&W>width){ H=Math.max(1,Math.round(H*width/W)); W=width; }
+  first.close&&first.close();
+  const cv=document.createElement("canvas"); cv.width=W; cv.height=H; const cx=cv.getContext("2d");
+  cx.imageSmoothingEnabled=true; cx.imageSmoothingQuality="high";
+  const dur=Math.max(1,Math.round(1000/fps)), frames=[];
+  for(let i=0;i<files.length;i++){
+    onProg&&onProg(i+1,files.length);
+    const bm=await createImageBitmap(files[i]); cx.clearRect(0,0,W,H); cx.drawImage(bm,0,0,W,H); bm.close&&bm.close();
+    const blob=await new Promise(r=>cv.toBlob(r,"image/webp",quality));
+    if(!blob||blob.type!=="image/webp") throw new Error("이 브라우저는 WebP 변환을 지원하지 않아요. 크롬이나 엣지에서 해 주세요.");
+    const parts=riffChunks(await blob.arrayBuffer()).filter(c=>c.id==="ALPH"||c.id==="VP8 "||c.id==="VP8L");
+    const hdr=new Uint8Array(16); u24(hdr,0,0); u24(hdr,3,0); u24(hdr,6,W-1); u24(hdr,9,H-1); u24(hdr,12,dur); hdr[15]=0x02; // no blend
+    const body=[hdr,...parts.map(c=>chunk(c.id,c.data))]; const len=body.reduce((a,b)=>a+b.length,0);
+    const fr=new Uint8Array(len); let o=0; for(const b of body){ fr.set(b,o); o+=b.length; }
+    frames.push(chunk("ANMF",fr));
+  }
+  const vp8x=new Uint8Array(10); vp8x[0]=0x10|0x02; u24(vp8x,4,W-1); u24(vp8x,7,H-1);
+  const anim=new Uint8Array(6); new DataView(anim.buffer).setUint16(4,once?1:0,true);
+  const parts=[chunk("VP8X",vp8x),chunk("ANIM",anim),...frames];
+  const size=4+parts.reduce((a,b)=>a+b.length,0);
+  const head=new Uint8Array(12); head.set([82,73,70,70],0); new DataView(head.buffer).setUint32(4,size,true); head.set([87,69,66,80],8);
+  return {blob:new Blob([head,...parts],{type:"image/webp"}),W,H};
+}
+/* modal: resolves {file} (merged webp), {split:true}, or null */
+function seqModal(files,{allowSplit}={}){
+  files=natSort(files.filter(isPng));
+  const M=document.getElementById("seqModal"), img=M.querySelector(".seq-prev img"), busy=M.querySelector(".busy"),
+    info=M.querySelector(".seq-info"), res=M.querySelector(".seq-res"), ok=document.getElementById("seqOk"),
+    nm=document.getElementById("seqName"), fps=document.getElementById("seqFps"), wd=document.getElementById("seqW"),
+    q=document.getElementById("seqQ"), once=document.getElementById("seqOnce"), split=document.getElementById("seqSplit");
+  return new Promise(resolve=>{
+    if(!webpOK()){ toast("이 브라우저는 WebP 변환을 지원하지 않아요. 크롬이나 엣지에서 해 주세요.",true); resolve(null); return; }
+    let out=null, url="", run=0;
+    nm.value=seqBase(files[0].name); split.hidden=!allowSplit; ok.disabled=true; img.removeAttribute("src"); res.textContent="";
+    info.textContent=`PNG ${files.length}장 · ${files[0].name} ~ ${files[files.length-1].name}`;
+    createImageBitmap(files[0]).then(b=>{ info.textContent+=` · 원본 ${b.width}×${b.height}`; b.close&&b.close(); }).catch(()=>{});
+    const build=async()=>{ const my=++run; ok.disabled=true; busy.hidden=false;
+      try{ const r=await encodeSeq(files,{fps:+fps.value,width:+wd.value,quality:+q.value,once:once.checked},(i,n)=>{ if(my===run) busy.textContent=`변환 중… ${i} / ${n}`; });
+        if(my!==run) return; out=r; if(url) URL.revokeObjectURL(url); url=URL.createObjectURL(r.blob); img.src=url;
+        res.textContent=`결과: ${r.W}×${r.H} · ${files.length}프레임 · ${(files.length/ +fps.value).toFixed(1)}초 · ${(r.blob.size/1024/1024).toFixed(2)}MB`;
+        if(r.blob.size>95*1024*1024){ res.textContent+=" — 너무 커요. 크기나 화질을 낮춰 주세요."; } else ok.disabled=false;
+      }catch(e){ if(my===run){ res.textContent=""; toast(e.message||"변환하지 못했어요",true); } }
+      finally{ if(my===run) busy.hidden=true; } };
+    const close=v=>{ run++; M.classList.remove("on"); [fps,wd,q,once].forEach(el=>el.onchange=null); if(url&&!(v&&v.file)) URL.revokeObjectURL(url); resolve(v); };
+    [fps,wd,q,once].forEach(el=>el.onchange=build);
+    document.getElementById("seqCancel").onclick=()=>close(null);
+    split.onclick=()=>close({split:true});
+    ok.onclick=()=>{ if(!out) return; const base=nfc(nm.value.trim()||seqBase(files[0].name)).replace(/[\\/:*?"<>|#%]/g,"_");
+      close({file:new File([out.blob],base+".webp",{type:"image/webp"}),label:base}); };
+    M.classList.add("on"); build();
+  });
+}
+async function gatherForSlot(fs){ // returns one file for a slot, merging PNG sequences
+  const pngs=fs.filter(isPng);
+  if(pngs.length>=2){ const r=await seqModal(pngs); return r&&r.file||null; }
+  return fs[0]||null;
 }
 
 /* ---------- cards ---------- */
@@ -860,15 +975,23 @@ function card(arr, idx, dir){
   return c;
 }
 function addCard(arr, dir){
-  const b=document.createElement("button"); b.className="addcard"; b.innerHTML="<b style='font-size:22px'>＋</b>작업물 추가";
-  b.onclick=async()=>{ const f=await chooseFile(); if(!f||!accept(f)) return; const name=nfc(f.name);
-    const blob=await snap(f); if(!blob) return;
-    PENDING.set(`media/${dir}/${name}`,{blob,url:URL.createObjectURL(blob)}); arr.push([name.replace(/\.[^.]+$/,""),name]); markDirty(); render(); };
-  b.addEventListener("dragover",e=>{ if(editing) e.preventDefault(); });
-  b.addEventListener("drop",async e=>{ if(!editing) return; e.preventDefault(); e.stopPropagation(); const fs=[...e.dataTransfer.files];
+  const b=document.createElement("button"); b.className="addcard";
+  b.innerHTML="<b style='font-size:22px'>＋</b>작업물 추가<small style='font-weight:400;font-size:11.5px;opacity:.7'>PNG 여러 장·폴더 → 모션으로 합치기</small>";
+  const addFiles=async fs=>{ let n=0;
     for(const f of fs){ if(!accept(f)) continue; const blob=await snap(f); if(!blob) continue; const name=nfc(f.name);
-      PENDING.set(`media/${dir}/${name}`,{blob,url:URL.createObjectURL(blob)}); arr.push([name.replace(/\.[^.]+$/,""),name]); }
-    markDirty(); render(); });
+      PENDING.set(`media/${dir}/${name}`,{blob,url:URL.createObjectURL(blob)}); arr.push([name.replace(/\.[^.]+$/,""),name]); n++; }
+    if(n){ markDirty(); render(); } };
+  const handle=async fs=>{ if(!fs.length) return;
+    const pngs=fs.filter(isPng);
+    if(pngs.length>=2){ const r=await seqModal(pngs,{allowSplit:true}); if(!r) return;
+      if(r.split){ await addFiles(fs); return; }
+      const rest=fs.filter(f=>!isPng(f)); await addFiles([r.file,...rest]);
+      const it=arr.find(x=>x[1]===r.file.name); if(it){ it[0]=r.label; render(); }
+      toast(`"${r.file.name}" 만들었어요 · 저장하기를 눌러야 올라가요`); return; }
+    await addFiles(fs); };
+  b.onclick=async()=>handle(await chooseFiles());
+  b.addEventListener("dragover",e=>{ if(editing) e.preventDefault(); });
+  b.addEventListener("drop",async e=>{ if(!editing) return; e.preventDefault(); e.stopPropagation(); handle(await filesFromDrop(e)); });
   return b;
 }
 const SEL=new WeakMap(), FOLD=new WeakSet();
