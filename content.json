@@ -53,11 +53,11 @@
       "items": [
        [
         "attack_red_skill1",
-        "attack_red_skill1.gif"
+        "Jack_attack_red_skill1.webp"
        ],
        [
         "attack_red_skill2",
-        "attack_red_skill2.gif"
+        "Jack_attack_red_skill2.webp"
        ],
        [
         "blue_attack_air",
@@ -69,15 +69,15 @@
        ],
        [
         "attack_blue_fall",
-        "attack_blue_fall.gif"
+        "Jack_attack_blue_fall1.webp"
        ],
        [
         "R2B_ground2",
-        "R2B_ground2.gif"
+        "Jack_R2B_ground2.webp"
        ],
        [
         "R2B_air1",
-        "Jack_R2B_air1.gif"
+        "Jack_R2B_air1.webp"
        ]
       ]
      }
