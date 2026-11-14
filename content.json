@@ -130,43 +130,27 @@
      "items": [
       [
        "Arachne_talk",
-       "Arachne_talk.gif"
+       "Arachne_talk.webp"
       ],
       [
        "Arachne_Notice",
-       "Arachne_Notice.gif"
-      ],
-      [
-       "Arachne_look_idle",
-       "Arachne_look_idle.gif"
+       "Arachne_Notice.webp"
       ],
       [
        "Arachne_Block",
-       "Arachne_Block.gif"
-      ],
-      [
-       "Arachne_Block_idle",
-       "Arachne_Block_idle.gif"
+       "Arachne_Block.webp"
       ],
       [
        "Arachne_Standoff",
-       "Arachne_Standoff.gif"
-      ],
-      [
-       "Arachne_Standoff_idle",
-       "Arachne_Standoff_idle.gif"
+       "Arachne_Standoff.webp"
       ],
       [
        "Arachne_Laugh",
-       "Arachne_Laugh.gif"
+       "Arachne_Laugh.webp"
       ],
       [
        "Arachne_Battle_Start",
-       "Arachne_Battle_Start.gif"
-      ],
-      [
-       "Arachne_Battle_Start2",
-       "Arachne_Battle_Start2.gif"
+       "Arachne_Battle_Start.webp"
       ],
       [
        "Tea Table_idle",
@@ -191,10 +175,6 @@
       [
        "Pero_Smirk",
        "Pero_Smirk.gif"
-      ],
-      [
-       "Pero_run_candy",
-       "Pero_run_candy.gif"
       ]
      ],
      "strip": {
