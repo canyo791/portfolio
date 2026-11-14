@@ -153,7 +153,22 @@ body.editing .ytin{display:flex}
 .modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 .modal .hint{font-size:12.5px;color:var(--mid);margin-top:8px}
 .modal a{font-weight:500}
-#seqModal .panel{max-width:760px}
+#seqModal .panel{max-width:900px}
+.seq-rows{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.seq-rows .sh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.seq-rows .sh b{font-size:14px}.seq-rows .sh span{font-size:12px;color:var(--mid)}
+.seq-row{display:grid;grid-template-columns:44px 1fr auto auto auto;gap:10px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;background:#fff;font-size:13px}
+.seq-row.off{opacity:.45}
+.seq-row .th{width:44px;height:44px;border-radius:6px;object-fit:contain;background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 0 0/10px 10px}
+.seq-row .nm{min-width:0}.seq-row .nm b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.seq-row .nm small{color:var(--mid)}
+.seq-row select{border:1.5px solid var(--ink);border-radius:7px;padding:4px 6px;font:inherit;font-size:12.5px;background:#fff}
+.seq-row .lay{font-weight:700}
+.seq-row .ib{display:flex;gap:2px}
+.seq-row .ib button{border:1px solid var(--line);background:#fff;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:13px}
+.seq-row .ib button:hover{background:var(--ink);color:#fff}
+.seq-add{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:12.5px;color:var(--mid)}
+#seqModal.drag .panel{outline:3px dashed var(--ink);outline-offset:-10px}
+@media(max-width:720px){.seq-row{grid-template-columns:44px 1fr;}.seq-row>*:nth-child(n+3){grid-column:2}}
 .seq-body{display:grid;grid-template-columns:1fr 250px;gap:18px;align-items:start}
 .seq-prev{position:relative;border:1.5px solid var(--ink);border-radius:12px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;
  background:#fff repeating-conic-gradient(#ececec 0 25%,#fff 0 50%) 0 0/18px 18px}
@@ -748,10 +763,16 @@ html,body{overflow-x:clip}
    <label>속도 (fps)<select id="seqFps"><option>8</option><option>10</option><option selected>12</option><option>15</option><option>24</option><option>30</option></select></label>
    <label>크기 (가로)<select id="seqW"><option value="800">800px · 가볍게</option><option value="1200" selected>1200px · 기본</option><option value="1600">1600px · 크게</option><option value="0">원본 크기</option></select></label>
    <label>화질<select id="seqQ"><option value="0.8">보통 · 용량 작게</option><option value="0.9" selected>좋음 · 기본</option><option value="1">최고 · 무손실 (용량 큼)</option></select></label>
+   <label id="seqShortL" hidden>짧은 레이어는<select id="seqShort"><option value="loop" selected>반복해서 채우기</option><option value="hold">마지막 프레임 유지</option><option value="hide">끝나면 사라짐</option></select></label>
    <label class="row2"><input id="seqOnce" type="checkbox"> 한 번만 재생 (반복 안 함)</label>
    <div class="seq-res"></div>
    <div class="seq-info">여백은 자르지 않고 원본 비율 그대로 유지해요. 프레임은 파일 이름 순서(_0001, _0002…)대로 이어져요.</div>
   </div>
+ </div>
+ <div class="seq-rows">
+  <div class="sh"><b>시퀀스 · 레이어</b><span>같은 레이어끼리는 목록 순서대로 <b>이어지고</b>, 다른 레이어는 위아래로 <b>겹쳐져요</b>. 목록에서 위에 있는 레이어가 앞(위)에 보여요.</span></div>
+  <div id="seqList"></div>
+  <div class="seq-add"><button class="btn sm" id="seqMore">＋ 시퀀스 더 추가</button><span>다른 폴더의 PNG(무기, 이펙트, 다음 동작 등)를 고르거나 이 창에 폴더를 끌어다 놓아도 돼요.</span></div>
  </div>
  <div class="acts"><button class="btn sm" id="seqCancel">취소</button><button class="btn sm" id="seqSplit" hidden>합치지 않고 따로 추가</button><button class="btn sm dark" id="seqOk" disabled>넣기</button></div>
 </div></div>
@@ -861,7 +882,7 @@ async function filesFromDrop(e){
   const items=[...(e.dataTransfer.items||[])].map(i=>i.webkitGetAsEntry&&i.webkitGetAsEntry()).filter(Boolean);
   if(!items.some(en=>en.isDirectory)) return [...e.dataTransfer.files];
   const out=[];
-  const walk=async(en,depth)=>{ if(en.isFile){ out.push(await new Promise((r,j)=>en.file(r,j))); return; }
+  const walk=async(en,depth)=>{ if(en.isFile){ const f=await new Promise((r,j)=>en.file(r,j)); try{ f._dir=en.fullPath.replace(/\/[^/]*$/,""); }catch{} out.push(f); return; }
     if(!en.isDirectory||depth>2) return; const rd=en.createReader(); let batch;
     do{ batch=await new Promise((r,j)=>rd.readEntries(r,j)); for(const c of batch) await walk(c,depth+1); }while(batch.length); };
   for(const en of items) await walk(en,0);
@@ -874,21 +895,36 @@ function riffChunks(buf){ const v=new DataView(buf), out=[]; let o=12;
 function chunk(id,data){ const n=data.length, b=new Uint8Array(8+n+(n&1)); for(let i=0;i<4;i++) b[i]=id.charCodeAt(i);
   new DataView(b.buffer).setUint32(4,n,true); b.set(data,8); return b; }
 const u24=(a,o,v)=>{ a[o]=v&255; a[o+1]=(v>>8)&255; a[o+2]=(v>>16)&255; };
-async function encodeSeq(files,{fps,width,quality,once},onProg){
-  const first=await createImageBitmap(files[0]);
-  let W=first.width, H=first.height;
-  if(width&&W>width){ H=Math.max(1,Math.round(H*width/W)); W=width; }
-  first.close&&first.close();
+function groupSeqs(files){
+  const m=new Map();
+  natSort(files.filter(isPng)).forEach(f=>{ const base=seqBase(f.name), dir=f._dir||f.webkitRelativePath.replace(/\/[^/]*$/,"")||"";
+    const k=dir+"|"+base; if(!m.has(k)) m.set(k,{name:base,dir,files:[]}); m.get(k).files.push(f); });
+  return [...m.values()].sort((x,y)=>(x.dir+"|"+x.name).localeCompare(y.dir+"|"+y.name,undefined,{numeric:true}));
+}
+/* rows: [{files,layer,rep,on}] — same layer = played in order, different layers = stacked (first-listed layer in front) */
+async function encodeSeq(rows,{fps,width,quality,once,short},onProg){
+  rows=rows.filter(r=>r.on&&r.files.length);
+  if(!rows.length) throw new Error("켜진 시퀀스가 없어요");
+  const order=[], tracks=new Map();
+  rows.forEach(r=>{ if(!tracks.has(r.layer)){ tracks.set(r.layer,[]); order.push(r.layer); } const t=tracks.get(r.layer); for(let k=0;k<(r.rep||1);k++) t.push(...r.files); });
+  const back2front=order.slice().reverse().map(l=>tracks.get(l));
+  const first=await createImageBitmap(rows[0].files[0]);
+  const W0=first.width, H0=first.height; first.close&&first.close();
+  const sc=(width&&W0>width)?width/W0:1, W=Math.round(W0*sc), H=Math.max(1,Math.round(H0*sc));
+  const total=Math.max(...back2front.map(t=>t.length));
   const cv=document.createElement("canvas"); cv.width=W; cv.height=H; const cx=cv.getContext("2d");
   cx.imageSmoothingEnabled=true; cx.imageSmoothingQuality="high";
   const dur=Math.max(1,Math.round(1000/fps)), frames=[];
-  for(let i=0;i<files.length;i++){
-    onProg&&onProg(i+1,files.length);
-    const bm=await createImageBitmap(files[i]); cx.clearRect(0,0,W,H); cx.drawImage(bm,0,0,W,H); bm.close&&bm.close();
+  for(let i=0;i<total;i++){
+    onProg&&onProg(i+1,total); cx.clearRect(0,0,W,H);
+    for(const t of back2front){ let f=null;
+      if(i<t.length) f=t[i]; else if(short==="loop") f=t[i%t.length]; else if(short==="hold") f=t[t.length-1];
+      if(!f) continue; const bm=await createImageBitmap(f); const dw=bm.width*sc, dh=bm.height*sc;
+      cx.drawImage(bm,(W-dw)/2,(H-dh)/2,dw,dh); bm.close&&bm.close(); }
     const blob=await new Promise(r=>cv.toBlob(r,"image/webp",quality));
     if(!blob||blob.type!=="image/webp") throw new Error("이 브라우저는 WebP 변환을 지원하지 않아요. 크롬이나 엣지에서 해 주세요.");
     const parts=riffChunks(await blob.arrayBuffer()).filter(c=>c.id==="ALPH"||c.id==="VP8 "||c.id==="VP8L");
-    const hdr=new Uint8Array(16); u24(hdr,0,0); u24(hdr,3,0); u24(hdr,6,W-1); u24(hdr,9,H-1); u24(hdr,12,dur); hdr[15]=0x02; // no blend
+    const hdr=new Uint8Array(16); u24(hdr,6,W-1); u24(hdr,9,H-1); u24(hdr,12,dur); hdr[15]=0x02;
     const body=[hdr,...parts.map(c=>chunk(c.id,c.data))]; const len=body.reduce((a,b)=>a+b.length,0);
     const fr=new Uint8Array(len); let o=0; for(const b of body){ fr.set(b,o); o+=b.length; }
     frames.push(chunk("ANMF",fr));
@@ -898,35 +934,68 @@ async function encodeSeq(files,{fps,width,quality,once},onProg){
   const parts=[chunk("VP8X",vp8x),chunk("ANIM",anim),...frames];
   const size=4+parts.reduce((a,b)=>a+b.length,0);
   const head=new Uint8Array(12); head.set([82,73,70,70],0); new DataView(head.buffer).setUint32(4,size,true); head.set([87,69,66,80],8);
-  return {blob:new Blob([head,...parts],{type:"image/webp"}),W,H};
+  return {blob:new Blob([head,...parts],{type:"image/webp"}),W,H,total,layers:order.length};
 }
-/* modal: resolves {file} (merged webp), {split:true}, or null */
+const LAYERS="ABCDEF";
+/* modal: resolves {file,label} (merged webp), {split:true}, or null */
 function seqModal(files,{allowSplit}={}){
-  files=natSort(files.filter(isPng));
   const M=document.getElementById("seqModal"), img=M.querySelector(".seq-prev img"), busy=M.querySelector(".busy"),
-    info=M.querySelector(".seq-info"), res=M.querySelector(".seq-res"), ok=document.getElementById("seqOk"),
+    info=M.querySelector(".seq-opts .seq-info"), res=M.querySelector(".seq-res"), ok=document.getElementById("seqOk"),
     nm=document.getElementById("seqName"), fps=document.getElementById("seqFps"), wd=document.getElementById("seqW"),
-    q=document.getElementById("seqQ"), once=document.getElementById("seqOnce"), split=document.getElementById("seqSplit");
+    q=document.getElementById("seqQ"), once=document.getElementById("seqOnce"), split=document.getElementById("seqSplit"),
+    shortL=document.getElementById("seqShortL"), short=document.getElementById("seqShort"), list=document.getElementById("seqList");
   return new Promise(resolve=>{
     if(!webpOK()){ toast("이 브라우저는 WebP 변환을 지원하지 않아요. 크롬이나 엣지에서 해 주세요.",true); resolve(null); return; }
-    let out=null, url="", run=0;
-    nm.value=seqBase(files[0].name); split.hidden=!allowSplit; ok.disabled=true; img.removeAttribute("src"); res.textContent="";
-    info.textContent=`PNG ${files.length}장 · ${files[0].name} ~ ${files[files.length-1].name}`;
-    createImageBitmap(files[0]).then(b=>{ info.textContent+=` · 원본 ${b.width}×${b.height}`; b.close&&b.close(); }).catch(()=>{});
-    const build=async()=>{ const my=++run; ok.disabled=true; busy.hidden=false;
-      try{ const r=await encodeSeq(files,{fps:+fps.value,width:+wd.value,quality:+q.value,once:once.checked},(i,n)=>{ if(my===run) busy.textContent=`변환 중… ${i} / ${n}`; });
+    let out=null, url="", run=0, tmr=0, nameTouched=false;
+    const rows=[]; const thumbs=[];
+    const addFiles=fs=>{ groupSeqs(fs).forEach(g=>rows.push({...g,layer:"A",rep:1,on:true})); };
+    addFiles(files); if(rows[0]) rows[0].main=true;
+    nm.value=rows[0]?rows[0].name:"motion"; nm.oninput=()=>nameTouched=true;
+    split.hidden=!allowSplit; ok.disabled=true; img.removeAttribute("src"); res.textContent="";
+    const draw=()=>{
+      list.innerHTML="";
+      rows.forEach((r,i)=>{ const d=document.createElement("div"); d.className="seq-row"+(r.on?"":" off");
+        d.innerHTML=`<img class="th" alt=""><div class="nm"><b></b><small>${r.files.length}프레임${r.dir?" · "+r.dir.replace(/^\//,""):""}</small></div>
+          <select class="lay" title="레이어">${LAYERS.split("").map(l=>`<option ${l===r.layer?"selected":""}>${l}</option>`).join("")}</select>
+          <select class="rp" title="반복 횟수">${[1,2,3,4,5,6,8].map(n=>`<option value="${n}" ${n===r.rep?"selected":""}>×${n}</option>`).join("")}</select>
+          <div class="ib"><button class="up" title="위로">↑</button><button class="dn" title="아래로">↓</button><button class="eye" title="켜기/끄기">${r.on?"◉":"○"}</button><button class="x" title="빼기">✕</button></div>`;
+        d.querySelector("b").textContent=r.name;
+        const th=d.querySelector(".th"); if(!r.thumb) r.thumb=URL.createObjectURL(r.files[0]), thumbs.push(r.thumb); th.src=r.thumb;
+        d.querySelector(".lay").onchange=e=>{ r.layer=e.target.value; draw(); sched(); };
+        d.querySelector(".rp").onchange=e=>{ r.rep=+e.target.value; sched(); };
+        d.querySelector(".up").onclick=()=>{ if(i){ rows.splice(i-1,0,rows.splice(i,1)[0]); draw(); sched(); } };
+        d.querySelector(".dn").onclick=()=>{ if(i<rows.length-1){ rows.splice(i+1,0,rows.splice(i,1)[0]); draw(); sched(); } };
+        d.querySelector(".eye").onclick=()=>{ r.on=!r.on; draw(); sched(); };
+        d.querySelector(".x").onclick=()=>{ rows.splice(i,1); draw(); sched(); };
+        list.appendChild(d); });
+      const on=rows.filter(r=>r.on), lays=new Set(on.map(r=>r.layer));
+      shortL.hidden=lays.size<2;
+      const nfr=on.reduce((a,r)=>a+r.files.length*r.rep,0);
+      info.textContent=rows.length?`시퀀스 ${rows.length}개 · 레이어 ${lays.size}개`+(rows.length===1?` · PNG ${nfr}장`:""):"PNG를 추가해 주세요";
+      if(!nameTouched&&rows.length) nm.value=(rows.find(r=>r.main)||rows[0]).name;
+    };
+    const build=async()=>{ const my=++run; ok.disabled=true; if(!rows.some(r=>r.on)){ res.textContent="켜진 시퀀스가 없어요"; img.removeAttribute("src"); return; } busy.hidden=false;
+      try{ const r=await encodeSeq(rows,{fps:+fps.value,width:+wd.value,quality:+q.value,once:once.checked,short:short.value},(i,n)=>{ if(my===run) busy.textContent=`변환 중… ${i} / ${n}`; });
         if(my!==run) return; out=r; if(url) URL.revokeObjectURL(url); url=URL.createObjectURL(r.blob); img.src=url;
-        res.textContent=`결과: ${r.W}×${r.H} · ${files.length}프레임 · ${(files.length/ +fps.value).toFixed(1)}초 · ${(r.blob.size/1024/1024).toFixed(2)}MB`;
-        if(r.blob.size>95*1024*1024){ res.textContent+=" — 너무 커요. 크기나 화질을 낮춰 주세요."; } else ok.disabled=false;
+        res.textContent=`결과: ${r.W}×${r.H} · ${r.total}프레임 · ${(r.total/ +fps.value).toFixed(1)}초 · ${(r.blob.size/1024/1024).toFixed(2)}MB`;
+        if(r.blob.size>95*1024*1024) res.textContent+=" — 너무 커요. 크기나 화질을 낮춰 주세요."; else ok.disabled=false;
       }catch(e){ if(my===run){ res.textContent=""; toast(e.message||"변환하지 못했어요",true); } }
       finally{ if(my===run) busy.hidden=true; } };
-    const close=v=>{ run++; M.classList.remove("on"); [fps,wd,q,once].forEach(el=>el.onchange=null); if(url&&!(v&&v.file)) URL.revokeObjectURL(url); resolve(v); };
-    [fps,wd,q,once].forEach(el=>el.onchange=build);
+    const sched=()=>{ clearTimeout(tmr); ok.disabled=true; tmr=setTimeout(build,350); };
+    const onDrag=e=>{ if(!isFileDrag(e)) return; e.preventDefault(); M.classList.add("drag"); };
+    const onLeave=e=>{ if(e.target===M) M.classList.remove("drag"); };
+    const onDrop=async e=>{ if(!isFileDrag(e)) return; e.preventDefault(); e.stopPropagation(); M.classList.remove("drag"); const fs=await filesFromDrop(e); addFiles(fs); draw(); sched(); };
+    M.addEventListener("dragover",onDrag); M.addEventListener("dragleave",onLeave); M.addEventListener("drop",onDrop);
+    document.getElementById("seqMore").onclick=async()=>{ const fs=await chooseFiles(); if(fs.length){ addFiles(fs); draw(); sched(); } };
+    const close=v=>{ run++; clearTimeout(tmr); M.classList.remove("on","drag"); [fps,wd,q,once,short].forEach(el=>el.onchange=null);
+      M.removeEventListener("dragover",onDrag); M.removeEventListener("dragleave",onLeave); M.removeEventListener("drop",onDrop);
+      thumbs.forEach(u=>URL.revokeObjectURL(u)); if(url&&!(v&&v.file)) URL.revokeObjectURL(url); resolve(v); };
+    [fps,wd,q,once,short].forEach(el=>el.onchange=sched);
     document.getElementById("seqCancel").onclick=()=>close(null);
     split.onclick=()=>close({split:true});
-    ok.onclick=()=>{ if(!out) return; const base=nfc(nm.value.trim()||seqBase(files[0].name)).replace(/[\\/:*?"<>|#%]/g,"_");
+    ok.onclick=()=>{ if(!out) return; const base=nfc(nm.value.trim()||"motion").replace(/[\\/:*?"<>|#%]/g,"_");
       close({file:new File([out.blob],base+".webp",{type:"image/webp"}),label:base}); };
-    M.classList.add("on"); build();
+    M.classList.add("on"); draw(); build();
   });
 }
 async function gatherForSlot(fs){ // returns one file for a slot, merging PNG sequences
