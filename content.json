@@ -197,8 +197,8 @@
      }
     },
     {
-     "ko": "새끼거미",
-     "en": "Spiderling",
+     "ko": "보스패턴",
+     "en": "boss pattern",
      "items": [
       [
        "Move",
@@ -225,16 +225,8 @@
        "Arachne_Groggy.gif"
       ],
       [
-       "Arachne_Groggy_Start",
-       "Arachne_Groggy_Start.gif"
-      ],
-      [
-       "Arachne_Groggy_Loop",
-       "Arachne_Groggy_Loop.gif"
-      ],
-      [
-       "Arachne_Groggy_End",
-       "Arachne_Groggy_End.gif"
+       "Arachne_Charge",
+       "Arachne_Charge_Start.webp"
       ]
      ]
     },
