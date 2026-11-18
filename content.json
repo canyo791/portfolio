@@ -350,20 +350,12 @@
      "note": "(사용X) 표시는 최종 빌드에 쓰이지 않은 모션 · 공격 모션의 이펙트는 예시용으로 첨부한 리소스예요.",
      "items": [
       [
-       "idle (사용X)",
-       "idle_Trident01_test.gif"
-      ],
-      [
-       "Weapon_Summon (사용X)",
-       "무기꺼내는모션idle.mp4"
+       "Run2",
+       "1022_피버모션01.gif"
       ],
       [
        "Run1 (사용X)",
        "1112_기본run.gif"
-      ],
-      [
-       "Run2",
-       "1022_피버모션01.gif"
       ],
       [
        "Fever Sprint",
@@ -401,6 +393,14 @@
       [
        "Bind (구속)",
        "1204_구속_발버둥.mp4"
+      ],
+      [
+       "idle (사용X)",
+       "idle_Trident01_test.gif"
+      ],
+      [
+       "Weapon_Summon (사용X)",
+       "무기꺼내는모션idle.mp4"
       ]
      ]
     },
