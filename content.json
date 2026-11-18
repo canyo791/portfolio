@@ -213,6 +213,10 @@
        "Arachne_Groggy.gif"
       ],
       [
+       "Arachne_Charge",
+       "Arachne_Charge_Start.webp"
+      ],
+      [
        "Move",
        "spider_minion_move.webp"
       ],
@@ -223,10 +227,6 @@
       [
        "Boom_ver2",
        "spider_minion_jump.webp"
-      ],
-      [
-       "Arachne_Charge",
-       "Arachne_Charge_Start.webp"
       ]
      ]
     },
