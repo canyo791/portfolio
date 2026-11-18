@@ -201,18 +201,6 @@
      "en": "boss pattern",
      "items": [
       [
-       "Move",
-       "spider_minion_move.webp"
-      ],
-      [
-       "Boom_ver1",
-       "spider_minion_pre_explode.webp"
-      ],
-      [
-       "Boom_ver2",
-       "spider_minion_jump.webp"
-      ],
-      [
        "Spawn",
        "Arachne_skill5_mouth_charge.webp"
       ],
@@ -223,6 +211,18 @@
       [
        "Arachne_Groggy",
        "Arachne_Groggy.gif"
+      ],
+      [
+       "Move",
+       "spider_minion_move.webp"
+      ],
+      [
+       "Boom_ver1",
+       "spider_minion_pre_explode.webp"
+      ],
+      [
+       "Boom_ver2",
+       "spider_minion_jump.webp"
       ],
       [
        "Arachne_Charge",
