@@ -671,6 +671,17 @@ body,body *:not(svg):not(svg *){font-family:'Noto Sans KR',system-ui,sans-serif!
 @media(max-width:860px){.bstage{min-height:300px}}
 .ctrbox{position:relative;overflow:hidden}
 img.ctr{position:absolute!important;max-width:none!important;max-height:none!important;object-fit:fill!important;right:auto!important;bottom:auto!important;inset:auto;transform:none}
+
+/* per-project tone for motion areas (mid tones so light & dark characters both read) */
+.theme-hallow-stone{--stagebg:#cbc3d6;--tilebg:#cbc3d6}
+.theme-devi-rush{--stagebg:#d9c6ce;--tilebg:#d9c6ce}
+.theme-project-vs{--stagebg:#d3e1ea;--tilebg:#d3e1ea}
+.theme-hallow-stone .board{--panel:#241f2d!important;--bd:rgba(255,255,255,.12)!important;color:#f3ede6!important}
+.theme-devi-rush .board{--panel:#2a121b!important;--bd:rgba(255,255,255,.12)!important;color:#fbe8ee!important}
+.theme-project-vs .board{--panel:#fff!important;--bd:#213a72!important;color:#213a72!important}
+.theme-hallow-stone .card,.theme-devi-rush .card{border-color:rgba(255,255,255,.12)!important}
+.theme-hallow-stone .card{background:#241f2d!important}.theme-devi-rush .card{background:#2a121b!important}
+.btl{opacity:.85}
 </style>
 </head>
 <body>
