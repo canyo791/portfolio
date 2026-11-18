@@ -618,6 +618,59 @@ html,body{overflow-x:clip}
 .board .zoombtn{background:var(--acc);color:#fff;border-color:var(--acc)}
 .board .zoombtn:hover{background:var(--ink);border-color:var(--ink);color:#fff}
 @media (max-width:860px){.board{grid-template-columns:1fr}.bmain{border-right:none;border-bottom:1.5px solid var(--bd)}.btiles{grid-template-columns:repeat(4,1fr)}}
+
+/* ===================== CLEAN: one font, no ornaments, solid colors ===================== */
+:root{--serif:'Noto Sans KR',system-ui,sans-serif;--kserif:'Noto Sans KR',system-ui,sans-serif;--stagebg:#d3d2d8;--tilebg:#d3d2d8}
+body,body *:not(svg):not(svg *){font-family:'Noto Sans KR',system-ui,sans-serif!important;font-style:normal!important}
+/* headings: same family, consistent weights */
+.hero h1,.phead h3,.band h2,.contact h2,.stage .nm b{font-weight:700!important;letter-spacing:-.025em!important}
+.hero h1{font-size:clamp(44px,5.6vw,72px)!important;line-height:1.02!important}
+.phead h3{font-size:clamp(34px,4vw,46px)!important}
+.contact h2{font-size:40px!important}
+.hero .eyebrow,.team,.ghead .en,.work .en,.band .no{font-size:15px!important;font-weight:500!important;letter-spacing:.02em}
+.hero .kname,.ghead h4,.sub,.work h3,.modal h3,.lb .t{font-weight:700!important}
+.ghead h4{font-size:20px!important}.work h3{font-size:22px!important}.sub{font-size:16px!important}
+.btitle{font-size:15px!important;font-weight:700!important;letter-spacing:.06em;text-transform:uppercase}
+.showcase .sc-title{font-size:15px!important;font-weight:700!important}
+.card .cap{font-size:13px!important}
+/* remove ornaments / patterns */
+.damask,.cross,.lace,.contact .ribbon,.hero2 .deco,.hero2 .pearl,.tbg .d,.horns,.band::after,.band .ko::before{display:none!important}
+.ph{background-image:none!important}
+.band{background:var(--ink)!important}
+.contact{background:var(--ink)!important}
+.hero2{background:var(--paper)!important}
+.ghead .rule{height:1px!important;background:currentColor!important;opacity:.2!important}
+.ghead .rule::after{display:none!important}
+.theme-project-vs h3>.ed:first-child{background:none!important;padding:0!important}
+/* themes: flat color only */
+.theme-hallow-stone .tbg{background:#1a1621!important}
+.theme-devi-rush .tbg{background:#1d0c13!important}
+.theme-project-vs .tbg{background:#f6f1e7!important}
+.showcase{box-shadow:none!important}
+.theme-hallow-stone .showcase{background:#241f2d!important;border:1px solid rgba(255,255,255,.12)!important}
+.theme-devi-rush .showcase{background:#2a121b!important;border:1px solid rgba(255,255,255,.12)!important}
+.theme-project-vs .showcase{background:#fff!important;border:1.5px solid #213a72!important}
+.theme-project-vs .showcase .screen{border:1px solid rgba(33,58,114,.25)!important}
+.theme-project-vs .card{border-width:1.5px!important}
+.theme-project-vs .card:hover{box-shadow:0 10px 24px -14px rgba(0,0,0,.45)!important}
+.theme-project-vs .card .cap{border-top-width:1px!important}
+.theme-project-vs .board{border-width:1.5px!important}
+/* media backgrounds: one neutral mid-tone so both light and dark characters read clearly */
+.board{--stage:var(--stagebg)!important;--panel:#f4f3f6!important}
+.btm{background:var(--tilebg)!important}
+.bt.on .btm{background:var(--tilebg)!important}
+.card .m,.theme-hallow-stone .card .m,.theme-devi-rush .card .m,.theme-project-vs .card .m{background:var(--stagebg)!important}
+.lb .row img,.lb .row video{background:var(--stagebg)!important}
+.seq-prev{background:var(--stagebg)!important}
+/* playback stage: always vertically + horizontally centered */
+.bmain{display:flex!important;flex-direction:column}
+.bstage{flex:1 1 auto;aspect-ratio:auto!important;min-height:400px;padding:0!important;position:relative}
+.bstage>*{position:absolute!important;top:56px;bottom:24px;left:24px;width:calc(100% - 48px)!important;height:auto!important;max-height:none!important;object-fit:contain;object-position:center}
+.bstage:has(>:nth-child(2))>*{width:calc(50% - 30px)!important}
+.bstage:has(>:nth-child(2))>:nth-child(2){left:calc(50% + 6px)}
+@media(max-width:860px){.bstage{min-height:300px}}
+.ctrbox{position:relative;overflow:hidden}
+img.ctr{position:absolute!important;max-width:none!important;max-height:none!important;object-fit:fill!important;right:auto!important;bottom:auto!important;inset:auto;transform:none}
 </style>
 </head>
 <body>
@@ -818,8 +871,8 @@ function mediaFor(dir,file,reel){
   const p=`media/${dir}/${file}`;
   if(PENDING.has(p)){ const u=PENDING.get(p).url;
     if(isVid(file)){ const v=document.createElement("video"); v.src=u; v.playsInline=true; if(reel) v.controls=true; else {v.muted=true;v.loop=true;io.observe(v);} return v; }
-    const i=new Image(); i.src=u; return i; }
-  return mediaEl(enc(p), reel);
+    const i=new Image(); i.src=u; i.dataset.mk=nfc(`${dir}/${file}`); return i; }
+  const m=mediaEl(enc(p), reel); if(m.tagName==="IMG") m.dataset.mk=nfc(`${dir}/${file}`); return m;
 }
 function ytId(s){ s=(s||"").trim(); const m=s.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/); return m?m[1]:(/^[\w-]{11}$/.test(s)?s:""); }
 function ytEl(id, autoplay){
@@ -828,6 +881,36 @@ function ytEl(id, autoplay){
   f.title="YouTube video"; f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen=true; f.loading="lazy"; return f;
 }
 
+
+/* ---------- keep each motion's drawing centered in its frame (canvas margins preserved in files) ---------- */
+let BBOX={};
+fetch("media/bbox.json",{cache:"no-cache"}).then(r=>r.ok?r.json():{}).then(j=>{ BBOX=j||{}; document.querySelectorAll("img.ctr").forEach(placeC); }).catch(()=>{});
+const CPAD=el=>el.classList.contains("bstage")?[56,24,24,24]:el.classList.contains("btm")?[6,6,6,6]:[10,10,10,10];
+function localBox(img){ // fallback: first frame alpha bounds
+  try{ const W=img.naturalWidth,H=img.naturalHeight, k=Math.min(1,256/Math.max(W,H)), w=Math.max(1,Math.round(W*k)), h=Math.max(1,Math.round(H*k));
+    const c=document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d",{willReadFrequently:true}); x.drawImage(img,0,0,w,h);
+    const d=x.getImageData(0,0,w,h).data; let x0=w,y0=h,x1=-1,y1=-1, opaque=true;
+    for(let y=0;y<h;y++) for(let X=0;X<w;X++){ const a=d[(y*w+X)*4+3]; if(a<250) opaque=false; if(a>10){ if(X<x0)x0=X; if(X>x1)x1=X; if(y<y0)y0=y; if(y>y1)y1=y; } }
+    if(opaque||x1<0) return null; return [x0/k,y0/k,(x1+1)/k,(y1+1)/k,W,H]; }catch{ return null; } }
+function placeC(img){
+  const box=img.parentElement; if(!box||!img.naturalWidth) return;
+  if(box.classList.contains("bstage")&&box.children.length>1){ img.classList.remove("ctr"); ["left","top","width","height"].forEach(k=>img.style.removeProperty(k)); return; }
+  let b=BBOX[img.dataset.mk]; if(!b){ if(img._lb===undefined) img._lb=localBox(img); b=img._lb; }
+  if(!b){ img.classList.remove("ctr"); ["left","top","width","height"].forEach(k=>img.style.removeProperty(k)); return; }
+  const [t,r,bt,l]=CPAD(box), aw=box.clientWidth-l-r, ah=box.clientHeight-t-bt; if(aw<=0||ah<=0) return;
+  const W=img.naturalWidth, H=img.naturalHeight, sx=W/b[4], sy=H/b[5];
+  const s=Math.min(aw/W, ah/H), cx=(b[0]+b[2])/2*sx*s, cy=(b[1]+b[3])/2*sy*s;
+  img.classList.add("ctr"); box.classList.add("ctrbox");
+  const set=(k,v)=>img.style.setProperty(k,v+"px","important");
+  set("width",W*s); set("height",H*s); set("left",l+aw/2-cx); set("top",t+ah/2-cy);
+}
+const cRO=new ResizeObserver(es=>es.forEach(e=>e.target.querySelectorAll(":scope>img[data-mk]").forEach(placeC)));
+function centerize(root){
+  root.querySelectorAll(".bstage>img[data-mk], .btm>img[data-mk], .card .slot>img[data-mk]").forEach(img=>{
+    if(img._c) return; img._c=1; const box=img.parentElement; if(!box._ro){ box._ro=1; cRO.observe(box); }
+    if(img.complete&&img.naturalWidth) placeC(img); img.addEventListener("load",()=>placeC(img)); });
+}
+new MutationObserver(()=>{ cancelAnimationFrame(centerize._r); centerize._r=requestAnimationFrame(()=>centerize(document)); }).observe(document.body,{childList:true,subtree:true});
 /* ---------- editable text ---------- */
 let B=[];
 const E=(obj,prop,tag="span",cls="")=>{ B.push([obj,prop]); return `<${tag} class="ed ${cls}" data-b="${B.length-1}"></${tag}>`; };
@@ -1396,6 +1479,23 @@ async function b64(blob){ const u8=new Uint8Array(await blob.arrayBuffer()); let
   for(let i=0;i<u8.length;i+=CH) s+=String.fromCharCode.apply(null,u8.subarray(i,i+CH)); return btoa(s); }
 const errText=e=>(e&&(e.message||e.name))||String(e);
 const b64text=s=>b64(new Blob([s],{type:"text/plain"}));
+async function blobBox(blob){ // union of non-transparent pixels across all frames (ImageDecoder) or first frame
+  const scan=(src,W,H)=>{ const k=Math.min(1,256/Math.max(W,H)), w=Math.max(1,Math.round(W*k)), h=Math.max(1,Math.round(H*k));
+    const c=document.createElement("canvas"); c.width=w; c.height=h; const x=c.getContext("2d",{willReadFrequently:true}); x.drawImage(src,0,0,w,h);
+    const d=x.getImageData(0,0,w,h).data; let r=[w,h,-1,-1], op=true;
+    for(let y=0;y<h;y++) for(let X=0;X<w;X++){ const a=d[(y*w+X)*4+3]; if(a<250) op=false; if(a>10){ if(X<r[0])r[0]=X; if(X>r[2])r[2]=X; if(y<r[1])r[1]=y; if(y>r[3])r[3]=y; } }
+    return {op, r:r[2]<0?null:[r[0]/k,r[1]/k,(r[2]+1)/k,(r[3]+1)/k]}; };
+  let W,H,u=null,opaque=true;
+  const add=o=>{ if(!o.op) opaque=false; if(o.r) u=u?[Math.min(u[0],o.r[0]),Math.min(u[1],o.r[1]),Math.max(u[2],o.r[2]),Math.max(u[3],o.r[3])]:o.r; };
+  try{
+    if(window.ImageDecoder&&await ImageDecoder.isTypeSupported(blob.type)){
+      const dec=new ImageDecoder({data:blob.stream(),type:blob.type}); await dec.tracks.ready; const n=Math.min(dec.tracks.selectedTrack.frameCount||1,120);
+      for(let i=0;i<n;i++){ const {image}=await dec.decode({frameIndex:i}); W=image.displayWidth; H=image.displayHeight; add(scan(image,W,H)); image.close(); }
+      dec.close();
+    } else { const bm=await createImageBitmap(blob); W=bm.width; H=bm.height; add(scan(bm,W,H)); bm.close&&bm.close(); }
+  }catch{ return null; }
+  return (opaque||!u)?null:[...u.map(Math.round),W,H];
+}
 saveBtn.onclick=async()=>{
   if(!TOKEN){ openToken(); return; }
   saveBtn.disabled=true; const total=PENDING.size;
@@ -1412,6 +1512,11 @@ saveBtn.onclick=async()=>{
       catch(e){ throw new Error(`"${nm}" 올리기 실패 — ${errText(e)}`); }
       tree.push({path,mode:"100644",type:"blob",sha:bl.sha}); }
     say("내용 저장 중…");
+    let bbChanged=false;
+    for(const [path,{blob}] of PENDING){ if(!/\.(gif|webp|png)$/i.test(path)) continue; const key=nfc(path.replace(/^media\//,""));
+      const bb=await blobBox(blob); if(bb) BBOX[key]=bb; else delete BBOX[key]; bbChanged=true; }
+    if(bbChanged){ const bj=await gh(`/repos/${REPO}/git/blobs`,{method:"POST",body:JSON.stringify({content:await b64text(JSON.stringify(BBOX)),encoding:"base64"})});
+      tree.push({path:"media/bbox.json",mode:"100644",type:"blob",sha:bj.sha}); }
     const cj=await gh(`/repos/${REPO}/git/blobs`,{method:"POST",body:JSON.stringify({content:await b64text(JSON.stringify(DATA,null,1)),encoding:"base64"})});
     tree.push({path:"content.json",mode:"100644",type:"blob",sha:cj.sha});
     const nt=await gh(`/repos/${REPO}/git/trees`,{method:"POST",body:JSON.stringify({base_tree:base.tree.sha,tree})});
