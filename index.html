@@ -682,6 +682,7 @@ img.ctr{position:absolute!important;max-width:none!important;max-height:none!imp
 .theme-hallow-stone .card,.theme-devi-rush .card{border-color:rgba(255,255,255,.12)!important}
 .theme-hallow-stone .card{background:#241f2d!important}.theme-devi-rush .card{background:#2a121b!important}
 .btl{opacity:.85}
+.mailalt{margin-top:10px;font-size:13px;opacity:.75}.mailalt a{color:inherit;text-decoration:underline;text-underline-offset:3px}.mailalt a:hover{opacity:1;color:var(--accent,#f7c6d4)}
 </style>
 </head>
 <body>
@@ -788,10 +789,11 @@ img.ctr{position:absolute!important;max-width:none!important;max-height:none!imp
  <h2>Thank you</h2>
  <p>함께 움직임을 만들 기회를 기다리고 있어요.</p>
  <div class="acts">
-  <a class="btn" id="mailBtn" href="mailto:hnnin791@gmail.com">✉ 메일 보내기</a>
+  <a class="btn" id="mailBtn" href="mailto:hnnin791@gmail.com" target="_blank" rel="noopener">✉ Gmail로 메일 보내기</a>
   <button class="btn" id="copyMail">이메일 주소 복사</button>
  </div>
  <div class="mailtxt" id="mailTxt">hnnin791@gmail.com</div>
+ <div class="mailalt"><a id="mailNaver" href="#" target="_blank" rel="noopener">네이버 메일로 쓰기</a> · <a id="mailApp" href="mailto:hnnin791@gmail.com">PC 메일 앱으로 쓰기</a></div>
 </section>
 <footer>© Yoon Hyemin · 2D Animator <button class="mgr" id="mgrLink">관리</button></footer>
 
@@ -1220,7 +1222,10 @@ const PWC={"hallow-stone":"#f5a25a","devi-rush":"#ff3d79","project-vs":"#35b7e5"
 const PROF0={eyebrow:"Portfolio — 2D Animator",first:"Yoon",last:"Hyemin",kname:"윤혜민",pill:"2D ANIMATOR",email:"hnnin791@gmail.com",
   tools:[["Spine 2D",1],["Clip Studio",0],["Photoshop",0],["3ds Max",0],["ZBrush",0],["Unity",0]]};
 function profEmail(){ return (DATA.profile&&DATA.profile.email)||PROF0.email; }
-function syncMail(){ const m=profEmail(); const a=document.getElementById("mailBtn"); if(a) a.href="mailto:"+m; const t=document.getElementById("mailTxt"); if(t) t.textContent=m; }
+function syncMail(){ const m=profEmail(), su=encodeURIComponent("[포트폴리오] 문의드립니다"), to=encodeURIComponent(m);
+  const a=document.getElementById("mailBtn"); if(a) a.href=`https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${su}`;
+  const n=document.getElementById("mailNaver"); if(n){ n.href="https://mail.naver.com/"; n.onclick=()=>{ try{ navigator.clipboard.writeText(m); toast("이메일 주소를 복사했어요 · 네이버 메일 '받는사람'에 붙여넣기(Ctrl+V) 해 주세요"); }catch{} }; }
+  const ap=document.getElementById("mailApp"); if(ap) ap.href=`mailto:${m}?subject=${su}`; const t=document.getElementById("mailTxt"); if(t) t.textContent=m; }
 function renderProfile(){
   const P=DATA.profile=Object.assign(JSON.parse(JSON.stringify(PROF0)),DATA.profile||{});
   document.querySelectorAll("[data-prof]").forEach(el=>{ const n=el.cloneNode(false); el.replaceWith(n); bindText(n,P,el.dataset.prof);
